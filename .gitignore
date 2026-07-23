@@ -1,0 +1,55 @@
+## OS / editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+## Python cache / virtual envs
+__pycache__/
+*.py[cod]
+*.pyd
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+## Packaging / build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+## Test / coverage / type checking
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+## Jupyter
+.ipynb_checkpoints/
+
+## Logs / temp files
+*.log
+*.tmp
+tmp/
+temp/
+
+## Local environment / secrets
+.env
+.env.*
+*.key
+*.pem
+secrets/
+
+## Git / dependency manager state
+.gitignore
+.gitmodules
+.DS_Store

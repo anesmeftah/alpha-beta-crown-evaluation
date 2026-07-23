@@ -1,0 +1,1473 @@
+INFO     10:35:56     [tensor_storage.py:70] Hugepage enabled for branch-and-bound domains.
+Configurations:
+
+general:
+  device: cuda
+  seed: 100
+  conv_mode: patches
+  deterministic: false
+  double_fp: false
+  loss_reduction_func: sum
+  sparse_alpha: true
+  sparse_interm: true
+  save_adv_example: false
+  verify_onnxruntime_output: false
+  eval_adv_example: false
+  onnx_adv_example: false
+  show_adv_example: false
+  precompile_jit: false
+  reset_seed_after_precompile: false
+  prepare_only: false
+  complete_verifier: bab
+  enable_incomplete_verification: true
+  csv_name: cifar2020_instances.csv
+  results_file: out.txt
+  root_path: ../../vnncomp2021/benchmarks/cifar2020
+  deterministic_opt: false
+  graph_optimizer: 'Customized("custom_graph_optimizer", "default_optimizer")'
+  buffer_has_batchdim: false
+  save_output: false
+  output_file: out.pkl
+  return_optimized_model: false
+  store_all_specs_on_cpu: false
+  adhoc_tuning: null
+model:
+  name: null
+  path: null
+  onnx_path: null
+  onnx_path_prefix: ''
+  cache_onnx_conversion: false
+  debug_onnx: false
+  onnx_quirks: null
+  input_shape: null
+  onnx_loader: default_onnx_and_vnnlib_loader
+  onnx_optimization_flags: []
+  onnx_vnnlib_joint_optimization_flags: none
+  check_optimized: false
+  flatten_final_output: false
+  optimize_graph: null
+  with_jacobian: false
+  bound_opts: null
+data:
+  start: 138
+  end: 203
+  select_instance: null
+  num_outputs: 10
+  mean: 0.0
+  std: 1.0
+  pkl_path: null
+  dataset: null
+  data_filter_path: null
+  data_idx_file: null
+specification:
+  type: lp
+  robustness_type: verified-acc
+  norm: .inf
+  epsilon: null
+  epsilon_min: 0.0
+  vnnlib_path: null
+  vnnlib_path_prefix: ''
+  shrink_eps: null
+  rhs_offset: null
+solver:
+  batch_size: 200
+  auto_enlarge_batch_size: true
+  batched_crown_auto_enlarge_max_vram_ratio: 0.9
+  min_batch_size_ratio: 0.1
+  use_float64_in_last_iteration: false
+  early_stop_patience: 10
+  start_save_best: 0.5
+  bound_prop_method: alpha-crown
+  init_bound_prop_method: same
+  prune_after_crown: true
+  optimize_disjuncts_separately: false
+  build_batch_size: 1000000
+  skip_with_refined_bound: true
+  forward_before_compute_bounds: false
+  crown:
+    batch_size: 1000000000
+    max_crown_size: 1000000000
+    activation_bound_option: adaptive
+    compare_crown_with_ibp: false
+  alpha-crown:
+    alpha: true
+    lr_alpha: 0.1
+    iteration: 100
+    share_alphas: false
+    lr_decay: 0.98
+    full_conv_alpha: true
+    max_coeff_mul: .inf
+    matmul_share_alphas: false
+    disable_optimization: []
+    max_time: 1.0
+    alpha_dtype: float16
+    input_split_alpha_iteration: 5
+    input_split_lr_alpha: 0.05
+  invprop:
+    apply_output_constraints_to: []
+    tighten_input_bounds: false
+    best_of_oc_and_no_oc: false
+    directly_optimize: []
+    oc_lr: 0.1
+    share_gammas: false
+  beta-crown:
+    lr_alpha: 0.01
+    lr_beta: 0.01
+    lr_decay: 0.98
+    optimizer: adam
+    iteration: 50
+    beta: true
+    beta_warmup: true
+    enable_opt_interm_bounds: false
+    all_node_split_LP: false
+  forward:
+    refine: false
+    max_dim: 10000
+    reset_threshold: 1.0
+  mip:
+    unstable_neuron_threshold: 0
+    parallel_solvers: null
+    solver_threads: 1
+    refine_neuron_timeout: 15
+    refine_neuron_time_percentage: 0.8
+    early_stop: true
+    adv_warmup: true
+    mip_solver: gurobi
+    skip_unsafe: false
+    topk_filter: 1.0
+    sliding_window: -1
+    extra_constraint: false
+    refine_neuron_timeout_increasement: 0
+    timeout_neuron_percentage: 0.3
+    remaining_timeout_threshold: 1
+    remove_unstable_neurons: false
+    formulation: mip
+    output_cut: false
+bab:
+  max_domains: .inf
+  decision_thresh: 0
+  timeout: 360
+  timeout_scale: 1
+  max_iterations: -1
+  override_timeout: null
+  get_upper_bound: false
+  pruning_in_iteration: true
+  pruning_in_iteration_ratio: 0.2
+  sort_targets: false
+  batched_domain_list: true
+  optimized_interm: ''
+  interm_transfer: true
+  recompute_interm: false
+  sort_domain_interval: -1
+  tree_traversal: depth_first
+  hugetensor_allocator: true
+  cut:
+    enabled: false
+    cuts_path: null
+    bab_cut: false
+    lp_cut: false
+    lr: 0.01
+    lr_decay: 1.0
+    iteration: 100
+    bab_iteration: -1
+    early_stop_patience: -1
+    lr_beta: 0.02
+    number_cuts: 50
+    topk_cuts_in_filter: 1000
+    batch_size_primal: 100
+    max_num: 1000000000
+    patches_cut: false
+    cplex_cuts: false
+    cplex_cuts_wait: 0
+    cplex_cuts_revpickup: true
+    cut_reference_bounds: true
+    fix_intermediate_bounds: false
+    manual_cuts: null
+    record_cplex_cut_to: null
+    read_cplex_cut_from: null
+    biccos:
+      enabled: false
+      auto_param: true
+      constraint_strengthening: true
+      drop_ratio: 0.5
+      max_infer_iter: 20
+      max_domain: 10000.0
+      heuristic: neuron_influence_score
+      save_cuts: false
+      multi_tree_branching:
+        enabled: false
+        restore_best_tree: true
+        keep_n_best_domains: 50
+        target_batch_size: 200
+        iterations: 3
+  clip_n_verify:
+    rearrange_constraints: false
+    alpha_crown: false
+    prune: false
+    final_layer: false
+    clip_input_domain:
+      enabled: false
+      clip_type: relaxed
+      clip_neuron_selection_type: ratio
+      clip_neuron_selection_value: -1.0
+      clip_iterations: 1
+      clip_calculate_volume_metrics: false
+    clip_interm_domain:
+      enabled: false
+      with_input: false
+      clip_in_alpha_crown: false
+      topk_objective: 20
+  branching:
+    method: kfsb
+    candidates: 10
+    reduceop: max
+    enable_intermediate_bound_opt: false
+    branching_input_and_activation: false
+    branching_input_and_activation_order: [input, relu]
+    branching_input_iterations: 30
+    branching_relu_iterations: 50
+    save_visited_domains_to: ''
+    nonlinear_split:
+      method: bbps
+      disable: false
+      branching_point_method: uniform
+      num_branches: 2
+      filter: false
+      filter_beta: false
+      filter_clamp: false
+      filter_batch_size: 10000
+      filter_iterations: 25
+      relu_only: false
+      loose_tanh_threshold: null
+      branching_point:
+        db_path: branching_points.pt
+        num_iterations: 1000
+        batch_size: 1000000
+        range_l: -5.0
+        range_u: 5.0
+        log_interval: 100
+        step_size_1d: 0.01
+        step_size: 0.2
+    input_split:
+      split_hint: null
+      enable: false
+      reorder_bab: false
+      input_dim_threshold: 20
+      adv_check: 0
+      split_partitions: 2
+      sb_margin_weight: 1.0
+      sb_sum: false
+      sb_primary_spec: null
+      bf_backup_thresh: -1
+      bf_rhs_offset: 0
+      bf_iters: 1000000000.0
+      bf_batch_size: 100000
+      bf_zero_crossing_score: false
+      touch_zero_score: 0
+      ibp_enhancement: true
+      compare_with_old_bounds: true
+      update_rhs_with_attack: false
+      sb_coeff_thresh: 0.001
+      sort_index: null
+      sort_descending: true
+      show_progress: false
+      presplit_domains: null
+      skip_getting_worst_domain: false
+  branching_decision_precompute:
+    enable: true
+  attack:
+    enabled: false
+    beam_candidates: 8
+    beam_depth: 7
+    max_dive_fix_ratio: 0.8
+    min_local_free_ratio: 0.2
+    mip_start_iteration: 5
+    mip_timeout: 30.0
+    adv_pool_threshold: null
+    refined_mip_attacker: false
+    refined_batch_size: null
+attack:
+  general_attack: true
+  pgd_order: before
+  pgd_steps: 100
+  pgd_restarts: 30
+  pgd_batch_size: 100000000
+  pgd_early_stop: true
+  pgd_lr_decay: 0.99
+  pgd_alpha: auto
+  pgd_alpha_scale: false
+  pgd_loss_mode: null
+  pgd_restart_when_stuck: false
+  enable_mip_attack: false
+  adv_saver: default_adv_saver
+  adv_verifier: default_adv_verifier
+  early_stop_condition: default_early_stop_condition
+  adv_example_finalizer: default_adv_example_finalizer
+  pgd_loss: default_pgd_loss
+  cex_path: ./test_cex.txt
+  attack_mode: PGD
+  attack_tolerance: 0.0
+  attack_func: attack_with_general_specs
+  gama_lambda: 10.0
+  gama_decay: 0.9
+  input_split:
+    pgd_steps: 100
+    pgd_restarts: 30
+    pgd_alpha: auto
+  input_split_check_adv:
+    enabled: auto
+    pgd_steps: 5
+    pgd_restarts: 5
+    pgd_alpha: auto
+    max_num_domains: 10
+debug:
+  view_model: false
+  lp_test: null
+  rescale_vnnlib_ptb: null
+  test_optimized_bounds: false
+  test_optimized_bounds_after_n_iterations: 0
+  print_verbose_decisions: false
+  biccos_mip_sanity_check: false
+  sanity_check: 0
+  z_split_enabled: false
+  save_minimal_config: null
+  save_minimal_config_omit_keys: []
+solving:
+  solving_mode: false
+  obj_index: 0
+
+Experiments at Thu Jul 23 10:35:56 2026 on pop-os
+customized start/end sample from instance 138 to 203 in cifar2020_instances.csv
+Internal results will be saved to out.txt.
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 0, vnnlib ID: 138 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Using onnx nets/convBigRELU__PGD.onnx
+Using vnnlib specs/cifar10/cifar10_spec_idx_1_eps_0.00784.vnnlib
+Precompiled vnnlib file found at ../../vnncomp2021/benchmarks/cifar2020/specs/cifar10/cifar10_spec_idx_1_eps_0.00784.vnnlib.compiled
+Loading onnx ../../vnncomp2021/benchmarks/cifar2020/nets/convBigRELU__PGD.onnx with quirks {}
+Finished onnx model loading in 0.0488 seconds
+Finished vnnlib processing in 0.187200 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=30, alpha=0.001960787922143936, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[2.10332155, 2.24422431, 6.04683113, 6.81625271, 6.36043358, 7.71419239,
+         8.37107944, 7.19934273, 2.94592571]], device='cuda:0')
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[1.92331553, 2.01942849, 5.83069372, 6.52470016, 6.09926891, 7.35627794,
+         8.08682823, 6.88076496, 2.74040556]], device='cuda:0')
+Total number of violation:  0
+Attack finished in 1.5239 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/0): BoundInput(name=/0, inputs=[], perturbed=True)
+  (/15): BoundBuffers(name=/15, inputs=[], perturbed=False)
+  (/16): BoundBuffers(name=/16, inputs=[], perturbed=False)
+  (/17): BoundParams(name=/17, inputs=[], perturbed=False)
+  (/18): BoundParams(name=/18, inputs=[], perturbed=False)
+  (/19): BoundParams(name=/19, inputs=[], perturbed=False)
+  (/20): BoundParams(name=/20, inputs=[], perturbed=False)
+  (/21): BoundParams(name=/21, inputs=[], perturbed=False)
+  (/22): BoundParams(name=/22, inputs=[], perturbed=False)
+  (/23): BoundParams(name=/23, inputs=[], perturbed=False)
+  (/24): BoundParams(name=/24, inputs=[], perturbed=False)
+  (/25): BoundParams(name=/25, inputs=[], perturbed=False)
+  (/26): BoundParams(name=/26, inputs=[], perturbed=False)
+  (/27): BoundParams(name=/27, inputs=[], perturbed=False)
+  (/28): BoundParams(name=/28, inputs=[], perturbed=False)
+  (/29): BoundParams(name=/29, inputs=[], perturbed=False)
+  (/30): BoundParams(name=/30, inputs=[], perturbed=False)
+  (/31): BoundSub(name=/31, inputs=[/0, /15], perturbed=True)
+  (/input-3): BoundConv(name=/input-3, inputs=[/input/mul, /17, /18], perturbed=True)
+  (/input-7): BoundRelu(name=/input-7, inputs=[/input-3], perturbed=True)
+  (/input-11): BoundConv(name=/input-11, inputs=[/input-7, /19, /20], perturbed=True)
+  (/input-15): BoundRelu(name=/input-15, inputs=[/input-11], perturbed=True)
+  (/input-19): BoundConv(name=/input-19, inputs=[/input-15, /21, /22], perturbed=True)
+  (/input-23): BoundRelu(name=/input-23, inputs=[/input-19], perturbed=True)
+  (/input-27): BoundConv(name=/input-27, inputs=[/input-23, /23, /24], perturbed=True)
+  (/40): BoundRelu(name=/40, inputs=[/input-27], perturbed=True)
+  (/41): BoundFlatten(name=/41, inputs=[/40], perturbed=True)
+  (/input-31): BoundLinear(name=/input-31, inputs=[/41, /25, /26], perturbed=True)
+  (/43): BoundRelu(name=/43, inputs=[/input-31], perturbed=True)
+  (/input-35): BoundLinear(name=/input-35, inputs=[/43, /27, /28], perturbed=True)
+  (/45): BoundRelu(name=/45, inputs=[/input-35], perturbed=True)
+  (/46): BoundLinear(name=/46, inputs=[/45, /29, /30], perturbed=True)
+  (/input/reciprocal): BoundReciprocal(name=/input/reciprocal, inputs=[/16], perturbed=False)
+  (/input/mul): BoundMul(name=/input/mul, inputs=[/31, /input/reciprocal], perturbed=True)
+)
+Original output in the first batch: tensor([[ 1.53358591,  1.36058855, -2.41646528, -3.17036009, -2.72811985,
+         -4.05723047, -4.74081135, -3.56831455,  3.64895511,  0.66742694]],
+       device='cuda:0')
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/input-7, inputs=[/input-3], perturbed=True)
+   BoundRelu(name=/input-15, inputs=[/input-11], perturbed=True)
+   BoundRelu(name=/input-23, inputs=[/input-19], perturbed=True)
+   BoundRelu(name=/40, inputs=[/input-27], perturbed=True)
+   BoundRelu(name=/43, inputs=[/input-31], perturbed=True)
+   BoundRelu(name=/45, inputs=[/input-35], perturbed=True)
+build batch [1/1]
+layer /input-7 using sparse-features alpha with shape [2777]; unstable size 2777; total size 32768 ([1, 32, 32, 32])
+layer /input-7 start_node /input-11 using sparse-spec alpha [2, 53, 1, 2777] with unstable size 52 total_size 8192 output_shape (32, 16, 16)
+layer /input-7 start_node /input-19 using sparse-spec alpha [2, 53, 1, 2777] with unstable size 52 total_size 64 output_shape 64
+layer /input-7 start_node /input-27 using sparse-spec alpha [2, 64, 1, 2777] with unstable size 63 total_size 4096 output_shape (64, 8, 8)
+layer /input-7 start_node /input-31 using sparse-spec alpha [2, 21, 1, 2777] with unstable size 20 total_size 512 output_shape torch.Size([512])
+layer /input-7 start_node /input-35 using sparse-spec alpha [2, 51, 1, 2777] with unstable size 50 total_size 512 output_shape torch.Size([512])
+layer /input-7 start_node /46 using full alpha [2, 9, 1, 2777] with unstable size None total_size 9 output_shape 9
+layer /input-15 using sparse-features alpha with shape [52]; unstable size 52; total size 8192 ([1, 32, 16, 16])
+layer /input-15 start_node /input-19 using sparse-spec alpha [2, 53, 1, 52] with unstable size 52 total_size 64 output_shape 64
+layer /input-15 start_node /input-27 using sparse-spec alpha [2, 64, 1, 52] with unstable size 63 total_size 4096 output_shape (64, 8, 8)
+layer /input-15 start_node /input-31 using sparse-spec alpha [2, 21, 1, 52] with unstable size 20 total_size 512 output_shape torch.Size([512])
+layer /input-15 start_node /input-35 using sparse-spec alpha [2, 51, 1, 52] with unstable size 50 total_size 512 output_shape torch.Size([512])
+layer /input-15 start_node /46 using full alpha [2, 9, 1, 52] with unstable size None total_size 9 output_shape 9
+layer /input-23 using sparse-features alpha with shape [807]; unstable size 807; total size 16384 ([1, 64, 16, 16])
+layer /input-23 start_node /input-27 using sparse-spec alpha [2, 64, 1, 807] with unstable size 63 total_size 4096 output_shape (64, 8, 8)
+layer /input-23 start_node /input-31 using sparse-spec alpha [2, 21, 1, 807] with unstable size 20 total_size 512 output_shape torch.Size([512])
+layer /input-23 start_node /input-35 using sparse-spec alpha [2, 51, 1, 807] with unstable size 50 total_size 512 output_shape torch.Size([512])
+layer /input-23 start_node /46 using full alpha [2, 9, 1, 807] with unstable size None total_size 9 output_shape 9
+layer /40 using sparse-features alpha with shape [63]; unstable size 63; total size 4096 ([1, 64, 8, 8])
+layer /40 start_node /input-31 using sparse-spec alpha [2, 21, 1, 63] with unstable size 20 total_size 512 output_shape torch.Size([512])
+layer /40 start_node /input-35 using sparse-spec alpha [2, 51, 1, 63] with unstable size 50 total_size 512 output_shape torch.Size([512])
+layer /40 start_node /46 using full alpha [2, 9, 1, 63] with unstable size None total_size 9 output_shape 9
+layer /43 using sparse-features alpha with shape [20]; unstable size 20; total size 512 ([1, 512])
+layer /43 start_node /input-35 using sparse-spec alpha [2, 51, 1, 20] with unstable size 50 total_size 512 output_shape torch.Size([512])
+layer /43 start_node /46 using full alpha [2, 9, 1, 20] with unstable size None total_size 9 output_shape 9
+layer /45 using sparse-features alpha with shape [50]; unstable size 50; total size 512 ([1, 512])
+layer /45 start_node /46 using full alpha [2, 9, 1, 50] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [1.6847541332244873, 1.590958833694458, 5.470015048980713, 6.179102420806885, 5.661049842834473, 6.996384620666504, 7.7244696617126465, 6.369281768798828, 2.3525190353393555]
+Verified with initial CROWN!
+verified with init bound!
+Result: safe-incomplete in 2.0058 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 1, vnnlib ID: 139 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Using onnx nets/convBigRELU__PGD.onnx
+Using vnnlib specs/cifar10/cifar10_spec_idx_2_eps_0.00784.vnnlib
+Precompiled vnnlib file found at ../../vnncomp2021/benchmarks/cifar2020/specs/cifar10/cifar10_spec_idx_2_eps_0.00784.vnnlib.compiled
+Loading onnx ../../vnncomp2021/benchmarks/cifar2020/nets/convBigRELU__PGD.onnx with quirks {}
+Finished onnx model loading in 0.0342 seconds
+Finished vnnlib processing in 0.001068 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=30, alpha=0.001960787922143936, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[1.13620138, 1.93838954, 4.78554153, 5.76655579, 4.82609653, 6.45144272,
+         7.60021353, 5.55662918, 2.50393438]], device='cuda:0')
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[0.93823230, 1.58367980, 4.51122236, 5.43171978, 4.46696281, 6.04950428,
+         7.22803688, 5.18507671, 2.20720315]], device='cuda:0')
+Total number of violation:  0
+Attack finished in 1.1634 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/0): BoundInput(name=/0, inputs=[], perturbed=True)
+  (/15): BoundBuffers(name=/15, inputs=[], perturbed=False)
+  (/16): BoundBuffers(name=/16, inputs=[], perturbed=False)
+  (/17): BoundParams(name=/17, inputs=[], perturbed=False)
+  (/18): BoundParams(name=/18, inputs=[], perturbed=False)
+  (/19): BoundParams(name=/19, inputs=[], perturbed=False)
+  (/20): BoundParams(name=/20, inputs=[], perturbed=False)
+  (/21): BoundParams(name=/21, inputs=[], perturbed=False)
+  (/22): BoundParams(name=/22, inputs=[], perturbed=False)
+  (/23): BoundParams(name=/23, inputs=[], perturbed=False)
+  (/24): BoundParams(name=/24, inputs=[], perturbed=False)
+  (/25): BoundParams(name=/25, inputs=[], perturbed=False)
+  (/26): BoundParams(name=/26, inputs=[], perturbed=False)
+  (/27): BoundParams(name=/27, inputs=[], perturbed=False)
+  (/28): BoundParams(name=/28, inputs=[], perturbed=False)
+  (/29): BoundParams(name=/29, inputs=[], perturbed=False)
+  (/30): BoundParams(name=/30, inputs=[], perturbed=False)
+  (/31): BoundSub(name=/31, inputs=[/0, /15], perturbed=True)
+  (/input-3): BoundConv(name=/input-3, inputs=[/input/mul, /17, /18], perturbed=True)
+  (/input-7): BoundRelu(name=/input-7, inputs=[/input-3], perturbed=True)
+  (/input-11): BoundConv(name=/input-11, inputs=[/input-7, /19, /20], perturbed=True)
+  (/input-15): BoundRelu(name=/input-15, inputs=[/input-11], perturbed=True)
+  (/input-19): BoundConv(name=/input-19, inputs=[/input-15, /21, /22], perturbed=True)
+  (/input-23): BoundRelu(name=/input-23, inputs=[/input-19], perturbed=True)
+  (/input-27): BoundConv(name=/input-27, inputs=[/input-23, /23, /24], perturbed=True)
+  (/40): BoundRelu(name=/40, inputs=[/input-27], perturbed=True)
+  (/41): BoundFlatten(name=/41, inputs=[/40], perturbed=True)
+  (/input-31): BoundLinear(name=/input-31, inputs=[/41, /25, /26], perturbed=True)
+  (/43): BoundRelu(name=/43, inputs=[/input-31], perturbed=True)
+  (/input-35): BoundLinear(name=/input-35, inputs=[/43, /27, /28], perturbed=True)
+  (/45): BoundRelu(name=/45, inputs=[/input-35], perturbed=True)
+  (/46): BoundLinear(name=/46, inputs=[/45, /29, /30], perturbed=True)
+  (/input/reciprocal): BoundReciprocal(name=/input/reciprocal, inputs=[/16], perturbed=False)
+  (/input/mul): BoundMul(name=/input/mul, inputs=[/31, /input/reciprocal], perturbed=True)
+)
+Original output in the first batch: tensor([[ 1.58165216,  0.73087865, -2.11052990, -3.06539321, -2.15301275,
+         -3.75451660, -4.93986082, -2.86286330,  2.72059512,  0.14111266]],
+       device='cuda:0')
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/input-7, inputs=[/input-3], perturbed=True)
+   BoundRelu(name=/input-15, inputs=[/input-11], perturbed=True)
+   BoundRelu(name=/input-23, inputs=[/input-19], perturbed=True)
+   BoundRelu(name=/40, inputs=[/input-27], perturbed=True)
+   BoundRelu(name=/43, inputs=[/input-31], perturbed=True)
+   BoundRelu(name=/45, inputs=[/input-35], perturbed=True)
+build batch [1/1]
+layer /input-7 using sparse-features alpha with shape [2594]; unstable size 2594; total size 32768 ([1, 32, 32, 32])
+layer /input-7 start_node /input-11 using sparse-spec alpha [2, 113, 1, 2594] with unstable size 112 total_size 8192 output_shape (32, 16, 16)
+layer /input-7 start_node /input-19 using sparse-spec alpha [2, 51, 1, 2594] with unstable size 50 total_size 64 output_shape 64
+layer /input-7 start_node /input-27 using sparse-spec alpha [2, 90, 1, 2594] with unstable size 89 total_size 4096 output_shape (64, 8, 8)
+layer /input-7 start_node /input-31 using sparse-spec alpha [2, 38, 1, 2594] with unstable size 37 total_size 512 output_shape torch.Size([512])
+layer /input-7 start_node /input-35 using sparse-spec alpha [2, 80, 1, 2594] with unstable size 79 total_size 512 output_shape torch.Size([512])
+layer /input-7 start_node /46 using full alpha [2, 9, 1, 2594] with unstable size None total_size 9 output_shape 9
+layer /input-15 using sparse-features alpha with shape [112]; unstable size 112; total size 8192 ([1, 32, 16, 16])
+layer /input-15 start_node /input-19 using sparse-spec alpha [2, 51, 1, 112] with unstable size 50 total_size 64 output_shape 64
+layer /input-15 start_node /input-27 using sparse-spec alpha [2, 90, 1, 112] with unstable size 89 total_size 4096 output_shape (64, 8, 8)
+layer /input-15 start_node /input-31 using sparse-spec alpha [2, 38, 1, 112] with unstable size 37 total_size 512 output_shape torch.Size([512])
+layer /input-15 start_node /input-35 using sparse-spec alpha [2, 80, 1, 112] with unstable size 79 total_size 512 output_shape torch.Size([512])
+layer /input-15 start_node /46 using full alpha [2, 9, 1, 112] with unstable size None total_size 9 output_shape 9
+layer /input-23 using sparse-features alpha with shape [1127]; unstable size 1127; total size 16384 ([1, 64, 16, 16])
+layer /input-23 start_node /input-27 using sparse-spec alpha [2, 90, 1, 1127] with unstable size 89 total_size 4096 output_shape (64, 8, 8)
+layer /input-23 start_node /input-31 using sparse-spec alpha [2, 38, 1, 1127] with unstable size 37 total_size 512 output_shape torch.Size([512])
+layer /input-23 start_node /input-35 using sparse-spec alpha [2, 80, 1, 1127] with unstable size 79 total_size 512 output_shape torch.Size([512])
+layer /input-23 start_node /46 using full alpha [2, 9, 1, 1127] with unstable size None total_size 9 output_shape 9
+layer /40 using sparse-features alpha with shape [89]; unstable size 89; total size 4096 ([1, 64, 8, 8])
+layer /40 start_node /input-31 using sparse-spec alpha [2, 38, 1, 89] with unstable size 37 total_size 512 output_shape torch.Size([512])
+layer /40 start_node /input-35 using sparse-spec alpha [2, 80, 1, 89] with unstable size 79 total_size 512 output_shape torch.Size([512])
+layer /40 start_node /46 using full alpha [2, 9, 1, 89] with unstable size None total_size 9 output_shape 9
+layer /43 using sparse-features alpha with shape [37]; unstable size 37; total size 512 ([1, 512])
+layer /43 start_node /input-35 using sparse-spec alpha [2, 80, 1, 37] with unstable size 79 total_size 512 output_shape torch.Size([512])
+layer /43 start_node /46 using full alpha [2, 9, 1, 37] with unstable size None total_size 9 output_shape 9
+layer /45 using sparse-features alpha with shape [79]; unstable size 79; total size 512 ([1, 512])
+layer /45 start_node /46 using full alpha [2, 9, 1, 79] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [0.25890839099884033, 0.6084194183349609, 3.6160244941711426, 4.57140588760376, 3.552879810333252, 5.074854850769043, 6.274741172790527, 4.121077537536621, 1.1721110343933105]
+Verified with initial CROWN!
+verified with init bound!
+Result: safe-incomplete in 1.3785 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 2, vnnlib ID: 140 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Using onnx nets/convBigRELU__PGD.onnx
+Using vnnlib specs/cifar10/cifar10_spec_idx_3_eps_0.00784.vnnlib
+Precompiled vnnlib file found at ../../vnncomp2021/benchmarks/cifar2020/specs/cifar10/cifar10_spec_idx_3_eps_0.00784.vnnlib.compiled
+Loading onnx ../../vnncomp2021/benchmarks/cifar2020/nets/convBigRELU__PGD.onnx with quirks {}
+Finished onnx model loading in 0.0302 seconds
+Finished vnnlib processing in 0.001061 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=30, alpha=0.001960787922143936, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[5.21198177, 2.04372072, 5.47729301, 2.49821854, 6.66026878, 7.79298782,
+         4.90600777, 0.69833994, 5.45660686]], device='cuda:0')
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[4.72081518, 1.77925277, 5.18328476, 2.20520210, 6.26770163, 7.42515993,
+         4.47586536, 0.41408801, 4.99040842]], device='cuda:0')
+Total number of violation:  0
+Attack finished in 1.1656 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/0): BoundInput(name=/0, inputs=[], perturbed=True)
+  (/15): BoundBuffers(name=/15, inputs=[], perturbed=False)
+  (/16): BoundBuffers(name=/16, inputs=[], perturbed=False)
+  (/17): BoundParams(name=/17, inputs=[], perturbed=False)
+  (/18): BoundParams(name=/18, inputs=[], perturbed=False)
+  (/19): BoundParams(name=/19, inputs=[], perturbed=False)
+  (/20): BoundParams(name=/20, inputs=[], perturbed=False)
+  (/21): BoundParams(name=/21, inputs=[], perturbed=False)
+  (/22): BoundParams(name=/22, inputs=[], perturbed=False)
+  (/23): BoundParams(name=/23, inputs=[], perturbed=False)
+  (/24): BoundParams(name=/24, inputs=[], perturbed=False)
+  (/25): BoundParams(name=/25, inputs=[], perturbed=False)
+  (/26): BoundParams(name=/26, inputs=[], perturbed=False)
+  (/27): BoundParams(name=/27, inputs=[], perturbed=False)
+  (/28): BoundParams(name=/28, inputs=[], perturbed=False)
+  (/29): BoundParams(name=/29, inputs=[], perturbed=False)
+  (/30): BoundParams(name=/30, inputs=[], perturbed=False)
+  (/31): BoundSub(name=/31, inputs=[/0, /15], perturbed=True)
+  (/input-3): BoundConv(name=/input-3, inputs=[/input/mul, /17, /18], perturbed=True)
+  (/input-7): BoundRelu(name=/input-7, inputs=[/input-3], perturbed=True)
+  (/input-11): BoundConv(name=/input-11, inputs=[/input-7, /19, /20], perturbed=True)
+  (/input-15): BoundRelu(name=/input-15, inputs=[/input-11], perturbed=True)
+  (/input-19): BoundConv(name=/input-19, inputs=[/input-15, /21, /22], perturbed=True)
+  (/input-23): BoundRelu(name=/input-23, inputs=[/input-19], perturbed=True)
+  (/input-27): BoundConv(name=/input-27, inputs=[/input-23, /23, /24], perturbed=True)
+  (/40): BoundRelu(name=/40, inputs=[/input-27], perturbed=True)
+  (/41): BoundFlatten(name=/41, inputs=[/40], perturbed=True)
+  (/input-31): BoundLinear(name=/input-31, inputs=[/41, /25, /26], perturbed=True)
+  (/43): BoundRelu(name=/43, inputs=[/input-31], perturbed=True)
+  (/input-35): BoundLinear(name=/input-35, inputs=[/43, /27, /28], perturbed=True)
+  (/45): BoundRelu(name=/45, inputs=[/input-35], perturbed=True)
+  (/46): BoundLinear(name=/46, inputs=[/45, /29, /30], perturbed=True)
+  (/input/reciprocal): BoundReciprocal(name=/input/reciprocal, inputs=[/16], perturbed=False)
+  (/input/mul): BoundMul(name=/input/mul, inputs=[/31, /input/reciprocal], perturbed=True)
+)
+Original output in the first batch: tensor([[ 2.30432177, -3.00657988,  0.21387893, -3.24690866, -0.20710365,
+         -4.43119144, -5.64681435, -2.65091920,  1.58110762, -3.23933291]],
+       device='cuda:0')
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/input-7, inputs=[/input-3], perturbed=True)
+   BoundRelu(name=/input-15, inputs=[/input-11], perturbed=True)
+   BoundRelu(name=/input-23, inputs=[/input-19], perturbed=True)
+   BoundRelu(name=/40, inputs=[/input-27], perturbed=True)
+   BoundRelu(name=/43, inputs=[/input-31], perturbed=True)
+   BoundRelu(name=/45, inputs=[/input-35], perturbed=True)
+build batch [1/1]
+layer /input-7 using sparse-features alpha with shape [2437]; unstable size 2437; total size 32768 ([1, 32, 32, 32])
+layer /input-7 start_node /input-11 using sparse-spec alpha [2, 60, 1, 2437] with unstable size 59 total_size 8192 output_shape (32, 16, 16)
+layer /input-7 start_node /input-19 using sparse-spec alpha [2, 52, 1, 2437] with unstable size 51 total_size 64 output_shape 64
+layer /input-7 start_node /input-27 using sparse-spec alpha [2, 77, 1, 2437] with unstable size 76 total_size 4096 output_shape (64, 8, 8)
+layer /input-7 start_node /input-31 using sparse-spec alpha [2, 25, 1, 2437] with unstable size 24 total_size 512 output_shape torch.Size([512])
+layer /input-7 start_node /input-35 using sparse-spec alpha [2, 47, 1, 2437] with unstable size 46 total_size 512 output_shape torch.Size([512])
+layer /input-7 start_node /46 using full alpha [2, 9, 1, 2437] with unstable size None total_size 9 output_shape 9
+layer /input-15 using sparse-features alpha with shape [59]; unstable size 59; total size 8192 ([1, 32, 16, 16])
+layer /input-15 start_node /input-19 using sparse-spec alpha [2, 52, 1, 59] with unstable size 51 total_size 64 output_shape 64
+layer /input-15 start_node /input-27 using sparse-spec alpha [2, 77, 1, 59] with unstable size 76 total_size 4096 output_shape (64, 8, 8)
+layer /input-15 start_node /input-31 using sparse-spec alpha [2, 25, 1, 59] with unstable size 24 total_size 512 output_shape torch.Size([512])
+layer /input-15 start_node /input-35 using sparse-spec alpha [2, 47, 1, 59] with unstable size 46 total_size 512 output_shape torch.Size([512])
+layer /input-15 start_node /46 using full alpha [2, 9, 1, 59] with unstable size None total_size 9 output_shape 9
+layer /input-23 using sparse-features alpha with shape [964]; unstable size 964; total size 16384 ([1, 64, 16, 16])
+layer /input-23 start_node /input-27 using sparse-spec alpha [2, 77, 1, 964] with unstable size 76 total_size 4096 output_shape (64, 8, 8)
+layer /input-23 start_node /input-31 using sparse-spec alpha [2, 25, 1, 964] with unstable size 24 total_size 512 output_shape torch.Size([512])
+layer /input-23 start_node /input-35 using sparse-spec alpha [2, 47, 1, 964] with unstable size 46 total_size 512 output_shape torch.Size([512])
+layer /input-23 start_node /46 using full alpha [2, 9, 1, 964] with unstable size None total_size 9 output_shape 9
+layer /40 using sparse-features alpha with shape [76]; unstable size 76; total size 4096 ([1, 64, 8, 8])
+layer /40 start_node /input-31 using sparse-spec alpha [2, 25, 1, 76] with unstable size 24 total_size 512 output_shape torch.Size([512])
+layer /40 start_node /input-35 using sparse-spec alpha [2, 47, 1, 76] with unstable size 46 total_size 512 output_shape torch.Size([512])
+layer /40 start_node /46 using full alpha [2, 9, 1, 76] with unstable size None total_size 9 output_shape 9
+layer /43 using sparse-features alpha with shape [24]; unstable size 24; total size 512 ([1, 512])
+layer /43 start_node /input-35 using sparse-spec alpha [2, 47, 1, 24] with unstable size 46 total_size 512 output_shape torch.Size([512])
+layer /43 start_node /46 using full alpha [2, 9, 1, 24] with unstable size None total_size 9 output_shape 9
+layer /45 using sparse-features alpha with shape [46]; unstable size 46; total size 512 ([1, 512])
+layer /45 start_node /46 using full alpha [2, 9, 1, 46] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [3.7904491424560547, 1.3091728687286377, 4.592410564422607, 1.6740615367889404, 5.614009380340576, 6.770142555236816, 3.726884603500366, -0.02633380889892578, 4.217539310455322]
+prune_after_crown optimization in use
+  original spec size = torch.Size([1, 9])
+  pruned spec size = torch.Size([1, 1])
+Using alpha-CROWN to initialize bounds.
+
+all verified at 6th iter
+best_l after optimization: 0.001043558120727539
+alpha/beta optimization time: 0.7733328342437744
+initial alpha-crown bounds (first 10 items): [0.001043558120727539]
+Global lower bound: 0.001043558120727539
+verified with init bound!
+Result: safe-incomplete in 2.1461 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 3, vnnlib ID: 141 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Using onnx nets/convBigRELU__PGD.onnx
+Using vnnlib specs/cifar10/cifar10_spec_idx_4_eps_0.00784.vnnlib
+Precompiled vnnlib file found at ../../vnncomp2021/benchmarks/cifar2020/specs/cifar10/cifar10_spec_idx_4_eps_0.00784.vnnlib.compiled
+Loading onnx ../../vnncomp2021/benchmarks/cifar2020/nets/convBigRELU__PGD.onnx with quirks {}
+Finished onnx model loading in 0.0388 seconds
+Finished vnnlib processing in 0.001081 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=30, alpha=0.001960787922143936, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[4.44539118, 4.40643835, 0.79048657, 0.99726731, 0.36346936, 1.59449327,
+         2.90584135, 4.78587627, 4.92711401]], device='cuda:0')
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[4.04383326, 4.00258493, 0.67481542, 0.83277678, 0.23388314, 1.35370433,
+         2.60359097, 4.20570087, 4.56240368]], device='cuda:0')
+Total number of violation:  0
+Attack finished in 1.1676 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/0): BoundInput(name=/0, inputs=[], perturbed=True)
+  (/15): BoundBuffers(name=/15, inputs=[], perturbed=False)
+  (/16): BoundBuffers(name=/16, inputs=[], perturbed=False)
+  (/17): BoundParams(name=/17, inputs=[], perturbed=False)
+  (/18): BoundParams(name=/18, inputs=[], perturbed=False)
+  (/19): BoundParams(name=/19, inputs=[], perturbed=False)
+  (/20): BoundParams(name=/20, inputs=[], perturbed=False)
+  (/21): BoundParams(name=/21, inputs=[], perturbed=False)
+  (/22): BoundParams(name=/22, inputs=[], perturbed=False)
+  (/23): BoundParams(name=/23, inputs=[], perturbed=False)
+  (/24): BoundParams(name=/24, inputs=[], perturbed=False)
+  (/25): BoundParams(name=/25, inputs=[], perturbed=False)
+  (/26): BoundParams(name=/26, inputs=[], perturbed=False)
+  (/27): BoundParams(name=/27, inputs=[], perturbed=False)
+  (/28): BoundParams(name=/28, inputs=[], perturbed=False)
+  (/29): BoundParams(name=/29, inputs=[], perturbed=False)
+  (/30): BoundParams(name=/30, inputs=[], perturbed=False)
+  (/31): BoundSub(name=/31, inputs=[/0, /15], perturbed=True)
+  (/input-3): BoundConv(name=/input-3, inputs=[/input/mul, /17, /18], perturbed=True)
+  (/input-7): BoundRelu(name=/input-7, inputs=[/input-3], perturbed=True)
+  (/input-11): BoundConv(name=/input-11, inputs=[/input-7, /19, /20], perturbed=True)
+  (/input-15): BoundRelu(name=/input-15, inputs=[/input-11], perturbed=True)
+  (/input-19): BoundConv(name=/input-19, inputs=[/input-15, /21, /22], perturbed=True)
+  (/input-23): BoundRelu(name=/input-23, inputs=[/input-19], perturbed=True)
+  (/input-27): BoundConv(name=/input-27, inputs=[/input-23, /23, /24], perturbed=True)
+  (/40): BoundRelu(name=/40, inputs=[/input-27], perturbed=True)
+  (/41): BoundFlatten(name=/41, inputs=[/40], perturbed=True)
+  (/input-31): BoundLinear(name=/input-31, inputs=[/41, /25, /26], perturbed=True)
+  (/43): BoundRelu(name=/43, inputs=[/input-31], perturbed=True)
+  (/input-35): BoundLinear(name=/input-35, inputs=[/43, /27, /28], perturbed=True)
+  (/45): BoundRelu(name=/45, inputs=[/input-35], perturbed=True)
+  (/46): BoundLinear(name=/46, inputs=[/45, /29, /30], perturbed=True)
+  (/input/reciprocal): BoundReciprocal(name=/input/reciprocal, inputs=[/16], perturbed=False)
+  (/input/mul): BoundMul(name=/input/mul, inputs=[/31, /input/reciprocal], perturbed=True)
+)
+Original output in the first batch: tensor([[-2.64204288, -2.68171930,  0.97032189,  0.79112929,  1.40477300,
+          0.21786833,  1.75225580, -1.11267424, -2.98784995, -3.17563224]],
+       device='cuda:0')
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/input-7, inputs=[/input-3], perturbed=True)
+   BoundRelu(name=/input-15, inputs=[/input-11], perturbed=True)
+   BoundRelu(name=/input-23, inputs=[/input-19], perturbed=True)
+   BoundRelu(name=/40, inputs=[/input-27], perturbed=True)
+   BoundRelu(name=/43, inputs=[/input-31], perturbed=True)
+   BoundRelu(name=/45, inputs=[/input-35], perturbed=True)
+build batch [1/1]
+layer /input-7 using sparse-features alpha with shape [1906]; unstable size 1906; total size 32768 ([1, 32, 32, 32])
+layer /input-7 start_node /input-11 using sparse-spec alpha [2, 141, 1, 1906] with unstable size 140 total_size 8192 output_shape (32, 16, 16)
+layer /input-7 start_node /input-19 using sparse-spec alpha [2, 51, 1, 1906] with unstable size 50 total_size 64 output_shape 64
+layer /input-7 start_node /input-27 using sparse-spec alpha [2, 105, 1, 1906] with unstable size 104 total_size 4096 output_shape (64, 8, 8)
+layer /input-7 start_node /input-31 using sparse-spec alpha [2, 51, 1, 1906] with unstable size 50 total_size 512 output_shape torch.Size([512])
+layer /input-7 start_node /input-35 using sparse-spec alpha [2, 91, 1, 1906] with unstable size 90 total_size 512 output_shape torch.Size([512])
+layer /input-7 start_node /46 using full alpha [2, 9, 1, 1906] with unstable size None total_size 9 output_shape 9
+layer /input-15 using sparse-features alpha with shape [140]; unstable size 140; total size 8192 ([1, 32, 16, 16])
+layer /input-15 start_node /input-19 using sparse-spec alpha [2, 51, 1, 140] with unstable size 50 total_size 64 output_shape 64
+layer /input-15 start_node /input-27 using sparse-spec alpha [2, 105, 1, 140] with unstable size 104 total_size 4096 output_shape (64, 8, 8)
+layer /input-15 start_node /input-31 using sparse-spec alpha [2, 51, 1, 140] with unstable size 50 total_size 512 output_shape torch.Size([512])
+layer /input-15 start_node /input-35 using sparse-spec alpha [2, 91, 1, 140] with unstable size 90 total_size 512 output_shape torch.Size([512])
+layer /input-15 start_node /46 using full alpha [2, 9, 1, 140] with unstable size None total_size 9 output_shape 9
+layer /input-23 using sparse-features alpha with shape [1442]; unstable size 1442; total size 16384 ([1, 64, 16, 16])
+layer /input-23 start_node /input-27 using sparse-spec alpha [2, 105, 1, 1442] with unstable size 104 total_size 4096 output_shape (64, 8, 8)
+layer /input-23 start_node /input-31 using sparse-spec alpha [2, 51, 1, 1442] with unstable size 50 total_size 512 output_shape torch.Size([512])
+layer /input-23 start_node /input-35 using sparse-spec alpha [2, 91, 1, 1442] with unstable size 90 total_size 512 output_shape torch.Size([512])
+layer /input-23 start_node /46 using full alpha [2, 9, 1, 1442] with unstable size None total_size 9 output_shape 9
+layer /40 using sparse-features alpha with shape [104]; unstable size 104; total size 4096 ([1, 64, 8, 8])
+layer /40 start_node /input-31 using sparse-spec alpha [2, 51, 1, 104] with unstable size 50 total_size 512 output_shape torch.Size([512])
+layer /40 start_node /input-35 using sparse-spec alpha [2, 91, 1, 104] with unstable size 90 total_size 512 output_shape torch.Size([512])
+layer /40 start_node /46 using full alpha [2, 9, 1, 104] with unstable size None total_size 9 output_shape 9
+layer /43 using sparse-features alpha with shape [50]; unstable size 50; total size 512 ([1, 512])
+layer /43 start_node /input-35 using sparse-spec alpha [2, 91, 1, 50] with unstable size 90 total_size 512 output_shape torch.Size([512])
+layer /43 start_node /46 using full alpha [2, 9, 1, 50] with unstable size None total_size 9 output_shape 9
+layer /45 using sparse-features alpha with shape [90]; unstable size 90; total size 512 ([1, 512])
+layer /45 start_node /46 using full alpha [2, 9, 1, 90] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [2.741856575012207, 2.574784517288208, 0.1893446445465088, 0.4035520553588867, -0.1784793734550476, 0.8016729354858398, 1.5182379484176636, 2.759752035140991, 3.4832470417022705]
+prune_after_crown optimization in use
+  original spec size = torch.Size([1, 9])
+  pruned spec size = torch.Size([1, 1])
+Using alpha-CROWN to initialize bounds.
+best_l after optimization: -0.08899939060211182
+alpha/beta optimization time: 9.095792055130005
+initial alpha-crown bounds (first 10 items): [-0.08899939060211182]
+Global lower bound: -0.08899939060211182
+8 / 9 OR specs are verified.
+Verified OR indices (first 10 items): [0, 1, 2, 3, 5, 6, 7, 8]
+Verified OR lbs (first 10 items): [[inf], [inf], [inf], [inf], [inf], [inf], [inf], [inf]]
+Unverified OR indices (first 10 items): [4]
+Unverified OR lbs (first 10 items): [[-0.08899939060211182]]
+###### Verifying property Instance 3 ######
+Batch size: 1
+First 10 spec matrices
+C: tensor([[[ 0.,  0.,  0.,  0., -1.,  0.,  1.,  0.,  0.,  0.]]], device='cuda:0')
+RHS: tensor([[0.]], device='cuda:0')
+OR spec sizes: tensor([1], device='cuda:0', dtype=torch.int32)
+Remaining timeout: 289.3920783996582
+Model prediction is: tensor([-2.64204288, -2.68171930,  0.97032189,  0.79112929,  1.40477300,
+         0.21786833,  1.75225580, -1.11267424, -2.98784995, -3.17563224],
+       device='cuda:0')
+Activation BaB batch 1/1 
+build_with_refined_bounds batch [1/1]
+Optimizable variables initialized.
+all alpha initialized
+true A is required, we do a full backward CROWN pass to obtain it
+(alpha-)CROWN with fixed intermediate bounds: tensor([[-0.08899456]], device='cuda:0', grad_fn=<ViewBackward0>) tensor([[0.87272727]], device='cuda:0', grad_fn=<ViewBackward0>)
+Intermediate layers: /input-3,/input-11,/input-19,/input-27,/input-31,/input-35
+Keeping alphas for these layers: ['/46']
+Node /input-7 input 0: size torch.Size([32, 32, 32]) unstable 1906
+Node /input-15 input 0: size torch.Size([32, 16, 16]) unstable 136
+Node /input-23 input 0: size torch.Size([64, 16, 16]) unstable 1411
+Node /40 input 0: size torch.Size([64, 8, 8]) unstable 99
+Node /43 input 0: size torch.Size([512]) unstable 50
+Node /45 input 0: size torch.Size([512]) unstable 84
+-----------------
+# of unstable neurons: 3686
+-----------------
+
+BaB round 1
+batch: 1
+splitting decisions: 
+split level 0: [/input-35, 226] 
+best_l after optimization: -0.1196717619895935
+beta sum per layer: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+alpha/beta optimization time: 0.3910245895385742
+pruning_in_iteration open status: False
+ratio of positive domain = 0 / 2 = 0.0
+pruning-in-iteration extra time: 3.695487976074219e-05
+Time: pickout 0.0013    branching_decision 0.0001    decision 0.0001    set_bounds 0.0006    prepare 0.0004    transfer 0.0000    finalize 0.0007    func 0.4327    
+Accumulated time: bab_iteration 0.0000    pickout 0.0013    decision 0.0001    branching_decision 0.0001    set_bounds 0.0006    solve 0.0000    func 0.4327    prepare 0.0004    transfer 0.0000    finalize 0.0007    
+max lb -0.05917835235595703 min lb -0.060493409633636475
+Number of Verified Splits: 0 of 2
+Current worst splitting domains lb-rhs (depth):
+-0.06049 (1), -0.05918 (1), 
+Current (lb-rhs): -0.060493409633636475
+2 domains visited
+Length of domains: 2
+Cumulative time: 0.49111461639404297
+
+BaB round 2
+batch: 2
+splitting decisions: 
+split level 0: [/input-35, 219] [/input-35, 219] 
+best_l after optimization: -0.11388149857521057
+beta sum per layer: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+alpha/beta optimization time: 0.43654942512512207
+pruning_in_iteration open status: True
+ratio of positive domain = 2 / 4 = 0.5
+pruning-in-iteration extra time: 0.011043548583984375
+Time: pickout 0.0020    branching_decision 0.0001    decision 0.0001    set_bounds 0.0006    prepare 0.0005    transfer 0.0000    finalize 0.0006    func 0.4777    solve 0.4327    add 0.0007    bab_iteration 0.4356    
+Accumulated time: bab_iteration 0.4356    pickout 0.0033    decision 0.0001    branching_decision 0.0001    set_bounds 0.0012    solve 0.4327    func 0.9104    prepare 0.0009    transfer 0.0001    finalize 0.0013    add 0.0007    
+max lb 9.999999747378752e-05 min lb -0.05775034427642822
+Number of Verified Splits: 2 of 4
+Current worst splitting domains lb-rhs (depth):
+-0.05775 (2), -0.05633 (2), 
+Current (lb-rhs): -0.05775034427642822
+6 domains visited
+Length of domains: 2
+Cumulative time: 0.972161054611206
+
+BaB round 3
+batch: 2
+splitting decisions: 
+split level 0: [/input-35, 157] [/input-35, 281] 
+best_l after optimization: -0.16380637884140015
+beta sum per layer: [0.0, 0.0, 0.0, 0.0, 0.0, 0.2835260033607483]
+alpha/beta optimization time: 0.38580751419067383
+pruning_in_iteration open status: False
+ratio of positive domain = 0 / 4 = 0.0
+pruning-in-iteration extra time: 3.8623809814453125e-05
+Time: pickout 0.0016    branching_decision 0.0001    decision 0.0001    set_bounds 0.0006    prepare 0.0005    transfer 0.0000    finalize 0.0009    func 0.4484    solve 0.4777    add 0.0006    bab_iteration 0.4810    
+Accumulated time: bab_iteration 0.9166    pickout 0.0050    decision 0.0002    branching_decision 0.0002    set_bounds 0.0018    solve 0.9104    func 1.3587    prepare 0.0014    transfer 0.0001    finalize 0.0022    add 0.0013    
+max lb -0.0019498467445373535 min lb -0.056323111057281494
+Number of Verified Splits: 0 of 4
+Current worst splitting domains lb-rhs (depth):
+-0.05632 (3), -0.05606 (3), -0.04947 (3), -0.00195 (3), 
+Current (lb-rhs): -0.056323111057281494
+10 domains visited
+Length of domains: 4
+Cumulative time: 1.423637866973877
+
+BaB round 4
+batch: 4
+splitting decisions: 
+split level 0: [/input-35, 281] [/input-35, 157] [/input-31, 441] [/input-35, 157] 
+best_l after optimization: -0.22861233353614807
+beta sum per layer: [0.0, 0.0, 0.0, 0.0, 0.0, 0.8997213244438171]
+alpha/beta optimization time: 0.4553678035736084
+pruning_in_iteration open status: True
+ratio of positive domain = 2 / 8 = 0.25
+pruning-in-iteration extra time: 0.013433694839477539
+Time: pickout 0.0021    branching_decision 0.0001    decision 0.0001    set_bounds 0.0007    prepare 0.0006    transfer 0.0000    finalize 0.0009    func 0.5382    solve 0.4484    add 0.0007    bab_iteration 0.4515    
+Accumulated time: bab_iteration 1.3681    pickout 0.0070    decision 0.0003    branching_decision 0.0002    set_bounds 0.0025    solve 1.3588    func 1.8969    prepare 0.0020    transfer 0.0001    finalize 0.0031    add 0.0020    
+max lb 9.999999747378752e-05 min lb -0.049439311027526855
+Number of Verified Splits: 2 of 8
+Current worst splitting domains lb-rhs (depth):
+-0.04944 (4), -0.04899 (4), -0.04898 (4), -0.04882 (4), -0.01761 (4), -0.01497 (4), 
+Current (lb-rhs): -0.049439311027526855
+18 domains visited
+Length of domains: 6
+Cumulative time: 1.9653944969177246
+
+BaB round 5
+batch: 6
+splitting decisions: 
+split level 0: [/input-35, 367] [/input-35, 367] [/input-35, 367] [/input-35, 367] [/input-31, 441] [/input-35, 367] 
+best_l after optimization: -0.2754215896129608
+beta sum per layer: [0.0, 0.0, 0.0, 0.0, 0.0, 1.100372076034546]
+alpha/beta optimization time: 0.3881087303161621
+pruning_in_iteration open status: False
+ratio of positive domain = 1 / 12 = 0.08333333333333337
+pruning-in-iteration extra time: 3.8623809814453125e-05
+Time: pickout 0.0022    branching_decision 0.0001    decision 0.0001    set_bounds 0.0007    prepare 0.0007    transfer 0.0000    finalize 0.0013    func 0.5247    solve 0.5382    add 0.0007    bab_iteration 0.5417    
+Accumulated time: bab_iteration 1.9099    pickout 0.0092    decision 0.0003    branching_decision 0.0003    set_bounds 0.0032    solve 1.8970    func 2.4216    prepare 0.0027    transfer 0.0001    finalize 0.0044    add 0.0026    
+max lb 0.008791089057922363 min lb -0.03583967685699463
+Number of Verified Splits: 1 of 12
+Current worst splitting domains lb-rhs (depth):
+-0.03584 (5), -0.03567 (5), -0.03486 (5), -0.03486 (5), -0.03317 (5), -0.03303 (5), -0.03254 (5), -0.03061 (5), -0.00961 (5), -0.00276 (5), -0.00127 (5), 
+Current (lb-rhs): -0.03583967685699463
+30 domains visited
+Length of domains: 11
+Cumulative time: 2.4939098358154297
+
+BaB round 6
+batch: 11
+splitting decisions: 
+split level 0: [/input-31, 140] [/input-35, 390] [/input-35, 390] [/input-31, 140] [/input-35, 367] [/input-35, 390] [/input-31, 71] [/input-35, 390] [/input-31, 71] [/input-31, 71] 
+best_l after optimization: -0.23808340728282928
+beta sum per layer: [0.0, 0.0, 0.0, 0.0, 0.0, 1.959230899810791]
+alpha/beta optimization time: 0.45960283279418945
+pruning_in_iteration open status: True
+ratio of positive domain = 11 / 22 = 0.5
+pruning-in-iteration extra time: 0.013406753540039062
+Time: pickout 0.0027    branching_decision 0.0001    decision 0.0001    set_bounds 0.0009    prepare 0.0011    transfer 0.0000    finalize 0.0013    func 0.5975    solve 0.5248    add 0.0006    bab_iteration 0.5285    
+Accumulated time: bab_iteration 2.4384    pickout 0.0120    decision 0.0004    branching_decision 0.0003    set_bounds 0.0041    solve 2.4218    func 3.0191    prepare 0.0038    transfer 0.0002    finalize 0.0057    add 0.0033    
+max lb 9.999999747378752e-05 min lb -0.032588064670562744
+Number of Verified Splits: 11 of 22
+Current worst splitting domains lb-rhs (depth):
+-0.03259 (6), -0.03251 (6), -0.03057 (6), -0.02984 (6), -0.02867 (6), -0.02867 (6), -0.02735 (6), -0.02651 (6), -0.00112 (6), -0.00068 (6), -0.00068 (6), 
+Current (lb-rhs): -0.032588064670562744
+52 domains visited
+Length of domains: 11
+Cumulative time: 3.096010208129883
+
+BaB round 7
+batch: 11
+splitting decisions: 
+split level 0: [/input-35, 390] [/input-31, 71] [/input-31, 71] [/input-35, 390] [/input-35, 390] [/input-31, 71] [/input-35, 390] [/input-31, 140] [/input-31, 269] [/input-31, 269] 
+best_l after optimization: -0.2003721296787262
+beta sum per layer: [0.0, 0.0, 0.0, 0.0, 0.0, 1.5760772228240967]
+alpha/beta optimization time: 0.43587636947631836
+pruning_in_iteration open status: True
+ratio of positive domain = 14 / 22 = 0.6363636363636364
+pruning-in-iteration extra time: 0.012843608856201172
+Time: pickout 0.0027    branching_decision 0.0001    decision 0.0001    set_bounds 0.0009    prepare 0.0010    transfer 0.0000    finalize 0.0010    func 0.5398    solve 0.5975    add 0.0007    bab_iteration 0.6021    
+Accumulated time: bab_iteration 3.0405    pickout 0.0147    decision 0.0005    branching_decision 0.0004    set_bounds 0.0050    solve 3.0193    func 3.5590    prepare 0.0049    transfer 0.0002    finalize 0.0066    add 0.0039    
+max lb 9.999999747378752e-05 min lb -0.026778340339660645
+Number of Verified Splits: 14 of 22
+Current worst splitting domains lb-rhs (depth):
+-0.02678 (7), -0.02672 (7), -0.02662 (7), -0.02613 (7), -0.02613 (7), -0.02393 (7), -0.02384 (7), -0.02163 (7), 
+Current (lb-rhs): -0.026778340339660645
+74 domains visited
+Length of domains: 8
+Cumulative time: 3.640521287918091
+
+BaB round 8
+batch: 8
+splitting decisions: 
+split level 0: [/input-31, 71] [/input-35, 439] [/input-35, 439] [/input-31, 71] [/input-31, 140] [/input-35, 439] [/input-35, 424] [/input-35, 390] 
+best_l after optimization: -0.17932432889938354
+beta sum per layer: [0.0, 0.0, 0.0, 0.0, 0.0, 1.0487267971038818]
+alpha/beta optimization time: 0.4144613742828369
+pruning_in_iteration open status: True
+ratio of positive domain = 4 / 16 = 0.25
+pruning-in-iteration extra time: 0.011790275573730469
+Time: pickout 0.0023    branching_decision 0.0001    decision 0.0001    set_bounds 0.0008    prepare 0.0009    transfer 0.0000    finalize 0.0014    func 0.6148    solve 0.5399    add 0.0008    bab_iteration 0.5445    
+Accumulated time: bab_iteration 3.5850    pickout 0.0170    decision 0.0006    branching_decision 0.0005    set_bounds 0.0059    solve 3.5592    func 4.1738    prepare 0.0057    transfer 0.0002    finalize 0.0080    add 0.0048    
+max lb 9.999999747378752e-05 min lb -0.02381521463394165
+Number of Verified Splits: 4 of 16
+Current worst splitting domains lb-rhs (depth):
+-0.02382 (8), -0.02378 (8), -0.02051 (8), -0.01907 (8), -0.01907 (8), -0.01860 (8), -0.01722 (8), -0.01130 (8), -0.00837 (8), -0.00604 (8), -0.00598 (8), -0.00598 (8), 
+Current (lb-rhs): -0.02381521463394165
+90 domains visited
+Length of domains: 12
+Cumulative time: 4.259252071380615
+
+BaB round 9
+batch: 12
+splitting decisions: 
+split level 0: [/input-35, 439] [/input-35, 424] [/input-35, 424] [/input-35, 439] [/input-35, 439] [/input-35, 424] [/input-35, 439] [/input-35, 439] [/input-35, 424] [/input-35, 424] 
+best_l after optimization: -0.08893652260303497
+beta sum per layer: [0.0, 0.0, 0.0, 0.0, 0.0, 1.9792035818099976]
+alpha/beta optimization time: 0.4225280284881592
+pruning_in_iteration open status: True
+ratio of positive domain = 8 / 24 = 0.33333333333333337
+pruning-in-iteration extra time: 0.015139102935791016
+Time: pickout 0.0027    branching_decision 0.0001    decision 0.0001    set_bounds 0.0010    prepare 0.0010    transfer 0.0000    finalize 0.0016    func 0.6139    solve 0.6148    add 0.0006    bab_iteration 0.6187    
+Accumulated time: bab_iteration 4.2037    pickout 0.0196    decision 0.0007    branching_decision 0.0005    set_bounds 0.0069    solve 4.1740    func 4.7876    prepare 0.0068    transfer 0.0003    finalize 0.0096    add 0.0054    
+max lb 9.999999747378752e-05 min lb -0.016774117946624756
+Number of Verified Splits: 8 of 24
+Current worst splitting domains lb-rhs (depth):
+-0.01677 (9), -0.01672 (9), -0.01354 (9), -0.01126 (9), -0.00677 (9), -0.00677 (9), -0.00447 (9), -0.00402 (9), -0.00235 (9), -0.00161 (9), -0.00137 (9), -0.00137 (9), -0.00083 (9), -0.00081 (9), -0.00057 (9), -0.00052 (9), 
+Current (lb-rhs): -0.016774117946624756
+114 domains visited
+Length of domains: 16
+Cumulative time: 4.877621650695801
+
+BaB round 10
+batch: 16
+splitting decisions: 
+split level 0: [/input-35, 424] [/input-35, 396] [/input-35, 396] [/input-35, 424] [/input-35, 424] [/input-35, 396] [/input-35, 431] [/input-35, 424] [/input-35, 396] [/input-31, 441] 
+best_l after optimization: -0.04264013469219208
+beta sum per layer: [0.0, 0.0, 0.0, 0.0, 0.0, 2.7185144424438477]
+alpha/beta optimization time: 0.42952513694763184
+pruning_in_iteration open status: True
+ratio of positive domain = 17 / 32 = 0.53125
+pruning-in-iteration extra time: 0.012700796127319336
+Time: pickout 0.0030    branching_decision 0.0001    decision 0.0001    set_bounds 0.0012    prepare 0.0013    transfer 0.0000    finalize 0.0015    func 0.6102    solve 0.6139    add 0.0007    bab_iteration 0.6184    
+Accumulated time: bab_iteration 4.8221    pickout 0.0226    decision 0.0008    branching_decision 0.0006    set_bounds 0.0080    solve 4.7879    func 5.3978    prepare 0.0080    transfer 0.0003    finalize 0.0111    add 0.0060    
+max lb 9.999999747378752e-05 min lb -0.006745696067810059
+Number of Verified Splits: 17 of 32
+Current worst splitting domains lb-rhs (depth):
+-0.00675 (10), -0.00674 (10), -0.00473 (10), -0.00466 (10), -0.00400 (10), -0.00387 (10), -0.00384 (10), -0.00234 (10), -0.00167 (10), -0.00161 (10), -0.00137 (10), -0.00137 (10), -0.00060 (10), -0.00055 (10), -0.00025 (10), 
+Current (lb-rhs): -0.006745696067810059
+146 domains visited
+Length of domains: 15
+Cumulative time: 5.492825031280518
+
+BaB round 11
+batch: 15
+splitting decisions: 
+split level 0: [/input-35, 431] [/input-35, 431] [/input-35, 431] [/input-35, 431] [/input-35, 431] [/input-35, 431] [/input-35, 431] [/input-35, 431] [/input-35, 431] [/input-35, 431] 
+
+all verified at 0th iter
+best_l after optimization: 0.24712997674942017
+beta sum per layer: [0.0, 0.0, 0.0, 0.0, 0.0, 2.117434501647949]
+alpha/beta optimization time: 0.007529497146606445
+pruning_in_iteration open status: False
+ratio of positive domain = 30 / 30 = 1.0
+pruning-in-iteration extra time: 3.337860107421875e-05
+Time: pickout 0.0030    branching_decision 0.0001    decision 0.0001    set_bounds 0.0011    prepare 0.0012    transfer 0.0000    finalize 0.0004    func 0.0119    solve 0.6102    add 0.0006    bab_iteration 0.6152    
+Accumulated time: bab_iteration 5.4373    pickout 0.0256    decision 0.0008    branching_decision 0.0007    set_bounds 0.0091    solve 5.3981    func 5.4097    prepare 0.0092    transfer 0.0003    finalize 0.0115    add 0.0066    
+max lb 0.014940857887268066 min lb 0.0018258094787597656
+Number of Verified Splits: 30 of 30
+Current (lb-rhs): 1.0000000116860974e-07
+176 domains visited
+Length of domains: 0
+Cumulative time: 5.508962154388428
+
+Result: safe in 16.1193 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 4, vnnlib ID: 142 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Using onnx nets/convBigRELU__PGD.onnx
+Using vnnlib specs/cifar10/cifar10_spec_idx_5_eps_0.00784.vnnlib
+Precompiled vnnlib file found at ../../vnncomp2021/benchmarks/cifar2020/specs/cifar10/cifar10_spec_idx_5_eps_0.00784.vnnlib.compiled
+Loading onnx ../../vnncomp2021/benchmarks/cifar2020/nets/convBigRELU__PGD.onnx with quirks {}
+Finished onnx model loading in 0.0364 seconds
+Finished vnnlib processing in 0.001157 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=30, alpha=0.001960787922143936, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[2.42206287, 2.78998995, 0.77205384, 1.45371938, 0.57822305, 1.93798923,
+         2.32421255, 3.82910252, 3.15181112]], device='cuda:0')
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[1.97235584, 2.24447346, 0.59640467, 1.28102648, 0.48008358, 1.72772849,
+         2.12731075, 3.30667448, 2.65640640]], device='cuda:0')
+Total number of violation:  0
+Attack finished in 1.1703 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/0): BoundInput(name=/0, inputs=[], perturbed=True)
+  (/15): BoundBuffers(name=/15, inputs=[], perturbed=False)
+  (/16): BoundBuffers(name=/16, inputs=[], perturbed=False)
+  (/17): BoundParams(name=/17, inputs=[], perturbed=False)
+  (/18): BoundParams(name=/18, inputs=[], perturbed=False)
+  (/19): BoundParams(name=/19, inputs=[], perturbed=False)
+  (/20): BoundParams(name=/20, inputs=[], perturbed=False)
+  (/21): BoundParams(name=/21, inputs=[], perturbed=False)
+  (/22): BoundParams(name=/22, inputs=[], perturbed=False)
+  (/23): BoundParams(name=/23, inputs=[], perturbed=False)
+  (/24): BoundParams(name=/24, inputs=[], perturbed=False)
+  (/25): BoundParams(name=/25, inputs=[], perturbed=False)
+  (/26): BoundParams(name=/26, inputs=[], perturbed=False)
+  (/27): BoundParams(name=/27, inputs=[], perturbed=False)
+  (/28): BoundParams(name=/28, inputs=[], perturbed=False)
+  (/29): BoundParams(name=/29, inputs=[], perturbed=False)
+  (/30): BoundParams(name=/30, inputs=[], perturbed=False)
+  (/31): BoundSub(name=/31, inputs=[/0, /15], perturbed=True)
+  (/input-3): BoundConv(name=/input-3, inputs=[/input/mul, /17, /18], perturbed=True)
+  (/input-7): BoundRelu(name=/input-7, inputs=[/input-3], perturbed=True)
+  (/input-11): BoundConv(name=/input-11, inputs=[/input-7, /19, /20], perturbed=True)
+  (/input-15): BoundRelu(name=/input-15, inputs=[/input-11], perturbed=True)
+  (/input-19): BoundConv(name=/input-19, inputs=[/input-15, /21, /22], perturbed=True)
+  (/input-23): BoundRelu(name=/input-23, inputs=[/input-19], perturbed=True)
+  (/input-27): BoundConv(name=/input-27, inputs=[/input-23, /23, /24], perturbed=True)
+  (/40): BoundRelu(name=/40, inputs=[/input-27], perturbed=True)
+  (/41): BoundFlatten(name=/41, inputs=[/40], perturbed=True)
+  (/input-31): BoundLinear(name=/input-31, inputs=[/41, /25, /26], perturbed=True)
+  (/43): BoundRelu(name=/43, inputs=[/input-31], perturbed=True)
+  (/input-35): BoundLinear(name=/input-35, inputs=[/43, /27, /28], perturbed=True)
+  (/45): BoundRelu(name=/45, inputs=[/input-35], perturbed=True)
+  (/46): BoundLinear(name=/46, inputs=[/45, /29, /30], perturbed=True)
+  (/input/reciprocal): BoundReciprocal(name=/input/reciprocal, inputs=[/16], perturbed=False)
+  (/input/mul): BoundMul(name=/input/mul, inputs=[/31, /input/reciprocal], perturbed=True)
+)
+Original output in the first batch: tensor([[-1.28621840, -1.72587204,  0.34030357, -0.36114472,  0.51551360,
+         -0.82705957,  1.08682692, -1.22953808, -2.74975324, -2.07859039]],
+       device='cuda:0')
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/input-7, inputs=[/input-3], perturbed=True)
+   BoundRelu(name=/input-15, inputs=[/input-11], perturbed=True)
+   BoundRelu(name=/input-23, inputs=[/input-19], perturbed=True)
+   BoundRelu(name=/40, inputs=[/input-27], perturbed=True)
+   BoundRelu(name=/43, inputs=[/input-31], perturbed=True)
+   BoundRelu(name=/45, inputs=[/input-35], perturbed=True)
+build batch [1/1]
+layer /input-7 using sparse-features alpha with shape [2267]; unstable size 2267; total size 32768 ([1, 32, 32, 32])
+layer /input-7 start_node /input-11 using sparse-spec alpha [2, 126, 1, 2267] with unstable size 125 total_size 8192 output_shape (32, 16, 16)
+layer /input-7 start_node /input-19 using sparse-spec alpha [2, 52, 1, 2267] with unstable size 51 total_size 64 output_shape 64
+layer /input-7 start_node /input-27 using sparse-spec alpha [2, 128, 1, 2267] with unstable size 127 total_size 4096 output_shape (64, 8, 8)
+layer /input-7 start_node /input-31 using sparse-spec alpha [2, 49, 1, 2267] with unstable size 48 total_size 512 output_shape torch.Size([512])
+layer /input-7 start_node /input-35 using sparse-spec alpha [2, 87, 1, 2267] with unstable size 86 total_size 512 output_shape torch.Size([512])
+layer /input-7 start_node /46 using full alpha [2, 9, 1, 2267] with unstable size None total_size 9 output_shape 9
+layer /input-15 using sparse-features alpha with shape [125]; unstable size 125; total size 8192 ([1, 32, 16, 16])
+layer /input-15 start_node /input-19 using sparse-spec alpha [2, 52, 1, 125] with unstable size 51 total_size 64 output_shape 64
+layer /input-15 start_node /input-27 using sparse-spec alpha [2, 128, 1, 125] with unstable size 127 total_size 4096 output_shape (64, 8, 8)
+layer /input-15 start_node /input-31 using sparse-spec alpha [2, 49, 1, 125] with unstable size 48 total_size 512 output_shape torch.Size([512])
+layer /input-15 start_node /input-35 using sparse-spec alpha [2, 87, 1, 125] with unstable size 86 total_size 512 output_shape torch.Size([512])
+layer /input-15 start_node /46 using full alpha [2, 9, 1, 125] with unstable size None total_size 9 output_shape 9
+layer /input-23 using sparse-features alpha with shape [1525]; unstable size 1525; total size 16384 ([1, 64, 16, 16])
+layer /input-23 start_node /input-27 using sparse-spec alpha [2, 128, 1, 1525] with unstable size 127 total_size 4096 output_shape (64, 8, 8)
+layer /input-23 start_node /input-31 using sparse-spec alpha [2, 49, 1, 1525] with unstable size 48 total_size 512 output_shape torch.Size([512])
+layer /input-23 start_node /input-35 using sparse-spec alpha [2, 87, 1, 1525] with unstable size 86 total_size 512 output_shape torch.Size([512])
+layer /input-23 start_node /46 using full alpha [2, 9, 1, 1525] with unstable size None total_size 9 output_shape 9
+layer /40 using sparse-features alpha with shape [127]; unstable size 127; total size 4096 ([1, 64, 8, 8])
+layer /40 start_node /input-31 using sparse-spec alpha [2, 49, 1, 127] with unstable size 48 total_size 512 output_shape torch.Size([512])
+layer /40 start_node /input-35 using sparse-spec alpha [2, 87, 1, 127] with unstable size 86 total_size 512 output_shape torch.Size([512])
+layer /40 start_node /46 using full alpha [2, 9, 1, 127] with unstable size None total_size 9 output_shape 9
+layer /43 using sparse-features alpha with shape [48]; unstable size 48; total size 512 ([1, 512])
+layer /43 start_node /input-35 using sparse-spec alpha [2, 87, 1, 48] with unstable size 86 total_size 512 output_shape torch.Size([512])
+layer /43 start_node /46 using full alpha [2, 9, 1, 48] with unstable size None total_size 9 output_shape 9
+layer /45 using sparse-features alpha with shape [86]; unstable size 86; total size 512 ([1, 512])
+layer /45 start_node /46 using full alpha [2, 9, 1, 86] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [0.6213288307189941, 0.9148877859115601, 0.10809874534606934, 0.7880440950393677, 0.04861569404602051, 1.065112590789795, 1.3054569959640503, 2.1476001739501953, 1.3784654140472412]
+Verified with initial CROWN!
+verified with init bound!
+Result: safe-incomplete in 1.4258 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 5, vnnlib ID: 143 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Using onnx nets/convBigRELU__PGD.onnx
+Using vnnlib specs/cifar10/cifar10_spec_idx_9_eps_0.00784.vnnlib
+Precompiled vnnlib file found at ../../vnncomp2021/benchmarks/cifar2020/specs/cifar10/cifar10_spec_idx_9_eps_0.00784.vnnlib.compiled
+Loading onnx ../../vnncomp2021/benchmarks/cifar2020/nets/convBigRELU__PGD.onnx with quirks {}
+Finished onnx model loading in 0.0317 seconds
+Finished vnnlib processing in 0.001151 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=30, alpha=0.001960787922143936, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[3.91072774, 4.00961208, 3.98014259, 4.96815205, 4.66642952, 4.02943516,
+         6.31254053, 1.95701265, 0.10213041]], device='cuda:0')
+Total number of violation:  0
+Processing batch 1/1...
+pgd early stop
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[ 3.47313118,  3.65622020,  3.56742811,  4.51253748,  4.24609280,
+          3.70231485,  5.83223200,  1.48527813, -0.10274529]], device='cuda:0')
+Total number of violation:  1
+Attack finished in 0.0275 seconds.
+PGD attack succeeded!
+
+Checking and Saving Counterexample in check_and_save_cex
+
+verified_status unsafe-pgd
+verified_success True
+Result: unsafe-pgd in 0.0770 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 6, vnnlib ID: 144 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Using onnx nets/convBigRELU__PGD.onnx
+Using vnnlib specs/cifar10/cifar10_spec_idx_10_eps_0.00784.vnnlib
+Precompiled vnnlib file found at ../../vnncomp2021/benchmarks/cifar2020/specs/cifar10/cifar10_spec_idx_10_eps_0.00784.vnnlib.compiled
+Loading onnx ../../vnncomp2021/benchmarks/cifar2020/nets/convBigRELU__PGD.onnx with quirks {}
+Finished onnx model loading in 0.0304 seconds
+Finished vnnlib processing in 0.001106 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=30, alpha=0.001960787922143936, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[6.64888287, 1.63941193, 2.39894223, 2.78129339, 2.38256407, 3.71164393,
+         3.81975007, 1.08572316, 6.28321648]], device='cuda:0')
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[6.30139112, 1.41672683, 2.02448320, 2.44475889, 1.92453170, 3.27746010,
+         3.39985538, 0.79555535, 5.80359983]], device='cuda:0')
+Total number of violation:  0
+Attack finished in 1.1730 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/0): BoundInput(name=/0, inputs=[], perturbed=True)
+  (/15): BoundBuffers(name=/15, inputs=[], perturbed=False)
+  (/16): BoundBuffers(name=/16, inputs=[], perturbed=False)
+  (/17): BoundParams(name=/17, inputs=[], perturbed=False)
+  (/18): BoundParams(name=/18, inputs=[], perturbed=False)
+  (/19): BoundParams(name=/19, inputs=[], perturbed=False)
+  (/20): BoundParams(name=/20, inputs=[], perturbed=False)
+  (/21): BoundParams(name=/21, inputs=[], perturbed=False)
+  (/22): BoundParams(name=/22, inputs=[], perturbed=False)
+  (/23): BoundParams(name=/23, inputs=[], perturbed=False)
+  (/24): BoundParams(name=/24, inputs=[], perturbed=False)
+  (/25): BoundParams(name=/25, inputs=[], perturbed=False)
+  (/26): BoundParams(name=/26, inputs=[], perturbed=False)
+  (/27): BoundParams(name=/27, inputs=[], perturbed=False)
+  (/28): BoundParams(name=/28, inputs=[], perturbed=False)
+  (/29): BoundParams(name=/29, inputs=[], perturbed=False)
+  (/30): BoundParams(name=/30, inputs=[], perturbed=False)
+  (/31): BoundSub(name=/31, inputs=[/0, /15], perturbed=True)
+  (/input-3): BoundConv(name=/input-3, inputs=[/input/mul, /17, /18], perturbed=True)
+  (/input-7): BoundRelu(name=/input-7, inputs=[/input-3], perturbed=True)
+  (/input-11): BoundConv(name=/input-11, inputs=[/input-7, /19, /20], perturbed=True)
+  (/input-15): BoundRelu(name=/input-15, inputs=[/input-11], perturbed=True)
+  (/input-19): BoundConv(name=/input-19, inputs=[/input-15, /21, /22], perturbed=True)
+  (/input-23): BoundRelu(name=/input-23, inputs=[/input-19], perturbed=True)
+  (/input-27): BoundConv(name=/input-27, inputs=[/input-23, /23, /24], perturbed=True)
+  (/40): BoundRelu(name=/40, inputs=[/input-27], perturbed=True)
+  (/41): BoundFlatten(name=/41, inputs=[/40], perturbed=True)
+  (/input-31): BoundLinear(name=/input-31, inputs=[/41, /25, /26], perturbed=True)
+  (/43): BoundRelu(name=/43, inputs=[/input-31], perturbed=True)
+  (/input-35): BoundLinear(name=/input-35, inputs=[/43, /27, /28], perturbed=True)
+  (/45): BoundRelu(name=/45, inputs=[/input-35], perturbed=True)
+  (/46): BoundLinear(name=/46, inputs=[/45, /29, /30], perturbed=True)
+  (/input/reciprocal): BoundReciprocal(name=/input/reciprocal, inputs=[/16], perturbed=False)
+  (/input/mul): BoundMul(name=/input/mul, inputs=[/31, /input/reciprocal], perturbed=True)
+)
+Original output in the first batch: tensor([[ 1.43827510, -5.26821661, -0.24924189, -1.00314915, -1.42481196,
+         -1.00641859, -2.44114685, -2.40455437,  0.35379440, -4.80686331]],
+       device='cuda:0')
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/input-7, inputs=[/input-3], perturbed=True)
+   BoundRelu(name=/input-15, inputs=[/input-11], perturbed=True)
+   BoundRelu(name=/input-23, inputs=[/input-19], perturbed=True)
+   BoundRelu(name=/40, inputs=[/input-27], perturbed=True)
+   BoundRelu(name=/43, inputs=[/input-31], perturbed=True)
+   BoundRelu(name=/45, inputs=[/input-35], perturbed=True)
+build batch [1/1]
+layer /input-7 using sparse-features alpha with shape [3119]; unstable size 3119; total size 32768 ([1, 32, 32, 32])
+layer /input-7 start_node /input-11 using sparse-spec alpha [2, 154, 1, 3119] with unstable size 153 total_size 8192 output_shape (32, 16, 16)
+layer /input-7 start_node /input-19 using sparse-spec alpha [2, 50, 1, 3119] with unstable size 49 total_size 64 output_shape 64
+layer /input-7 start_node /input-27 using sparse-spec alpha [2, 80, 1, 3119] with unstable size 79 total_size 4096 output_shape (64, 8, 8)
+layer /input-7 start_node /input-31 using sparse-spec alpha [2, 42, 1, 3119] with unstable size 41 total_size 512 output_shape torch.Size([512])
+layer /input-7 start_node /input-35 using sparse-spec alpha [2, 68, 1, 3119] with unstable size 67 total_size 512 output_shape torch.Size([512])
+layer /input-7 start_node /46 using full alpha [2, 9, 1, 3119] with unstable size None total_size 9 output_shape 9
+layer /input-15 using sparse-features alpha with shape [153]; unstable size 153; total size 8192 ([1, 32, 16, 16])
+layer /input-15 start_node /input-19 using sparse-spec alpha [2, 50, 1, 153] with unstable size 49 total_size 64 output_shape 64
+layer /input-15 start_node /input-27 using sparse-spec alpha [2, 80, 1, 153] with unstable size 79 total_size 4096 output_shape (64, 8, 8)
+layer /input-15 start_node /input-31 using sparse-spec alpha [2, 42, 1, 153] with unstable size 41 total_size 512 output_shape torch.Size([512])
+layer /input-15 start_node /input-35 using sparse-spec alpha [2, 68, 1, 153] with unstable size 67 total_size 512 output_shape torch.Size([512])
+layer /input-15 start_node /46 using full alpha [2, 9, 1, 153] with unstable size None total_size 9 output_shape 9
+layer /input-23 using sparse-features alpha with shape [1252]; unstable size 1252; total size 16384 ([1, 64, 16, 16])
+layer /input-23 start_node /input-27 using sparse-spec alpha [2, 80, 1, 1252] with unstable size 79 total_size 4096 output_shape (64, 8, 8)
+layer /input-23 start_node /input-31 using sparse-spec alpha [2, 42, 1, 1252] with unstable size 41 total_size 512 output_shape torch.Size([512])
+layer /input-23 start_node /input-35 using sparse-spec alpha [2, 68, 1, 1252] with unstable size 67 total_size 512 output_shape torch.Size([512])
+layer /input-23 start_node /46 using full alpha [2, 9, 1, 1252] with unstable size None total_size 9 output_shape 9
+layer /40 using sparse-features alpha with shape [79]; unstable size 79; total size 4096 ([1, 64, 8, 8])
+layer /40 start_node /input-31 using sparse-spec alpha [2, 42, 1, 79] with unstable size 41 total_size 512 output_shape torch.Size([512])
+layer /40 start_node /input-35 using sparse-spec alpha [2, 68, 1, 79] with unstable size 67 total_size 512 output_shape torch.Size([512])
+layer /40 start_node /46 using full alpha [2, 9, 1, 79] with unstable size None total_size 9 output_shape 9
+layer /43 using sparse-features alpha with shape [41]; unstable size 41; total size 512 ([1, 512])
+layer /43 start_node /input-35 using sparse-spec alpha [2, 68, 1, 41] with unstable size 67 total_size 512 output_shape torch.Size([512])
+layer /43 start_node /46 using full alpha [2, 9, 1, 41] with unstable size None total_size 9 output_shape 9
+layer /45 using sparse-features alpha with shape [67]; unstable size 67; total size 512 ([1, 512])
+layer /45 start_node /46 using full alpha [2, 9, 1, 67] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [5.069301605224609, 0.7301287651062012, 1.208320140838623, 1.5130958557128906, 0.9773769378662109, 2.1885757446289062, 2.55259370803833, 0.01476818323135376, 4.828361988067627]
+Verified with initial CROWN!
+verified with init bound!
+Result: safe-incomplete in 1.3858 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 7, vnnlib ID: 145 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Using onnx nets/convBigRELU__PGD.onnx
+Using vnnlib specs/cifar10/cifar10_spec_idx_11_eps_0.00784.vnnlib
+Precompiled vnnlib file found at ../../vnncomp2021/benchmarks/cifar2020/specs/cifar10/cifar10_spec_idx_11_eps_0.00784.vnnlib.compiled
+Loading onnx ../../vnncomp2021/benchmarks/cifar2020/nets/convBigRELU__PGD.onnx with quirks {}
+Finished onnx model loading in 0.0307 seconds
+Finished vnnlib processing in 0.001162 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=30, alpha=0.001960787922143936, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[4.01610422, 0.79393935, 4.92090893, 5.14588165, 6.17268562, 5.20948744,
+         5.59750652, 6.41273022, 2.51298881]], device='cuda:0')
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[3.53384590, 0.54247379, 4.48853302, 4.73461580, 5.69642401, 4.79567051,
+         5.15069485, 5.94854927, 1.94437659]], device='cuda:0')
+Total number of violation:  0
+Attack finished in 1.1736 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/0): BoundInput(name=/0, inputs=[], perturbed=True)
+  (/15): BoundBuffers(name=/15, inputs=[], perturbed=False)
+  (/16): BoundBuffers(name=/16, inputs=[], perturbed=False)
+  (/17): BoundParams(name=/17, inputs=[], perturbed=False)
+  (/18): BoundParams(name=/18, inputs=[], perturbed=False)
+  (/19): BoundParams(name=/19, inputs=[], perturbed=False)
+  (/20): BoundParams(name=/20, inputs=[], perturbed=False)
+  (/21): BoundParams(name=/21, inputs=[], perturbed=False)
+  (/22): BoundParams(name=/22, inputs=[], perturbed=False)
+  (/23): BoundParams(name=/23, inputs=[], perturbed=False)
+  (/24): BoundParams(name=/24, inputs=[], perturbed=False)
+  (/25): BoundParams(name=/25, inputs=[], perturbed=False)
+  (/26): BoundParams(name=/26, inputs=[], perturbed=False)
+  (/27): BoundParams(name=/27, inputs=[], perturbed=False)
+  (/28): BoundParams(name=/28, inputs=[], perturbed=False)
+  (/29): BoundParams(name=/29, inputs=[], perturbed=False)
+  (/30): BoundParams(name=/30, inputs=[], perturbed=False)
+  (/31): BoundSub(name=/31, inputs=[/0, /15], perturbed=True)
+  (/input-3): BoundConv(name=/input-3, inputs=[/input/mul, /17, /18], perturbed=True)
+  (/input-7): BoundRelu(name=/input-7, inputs=[/input-3], perturbed=True)
+  (/input-11): BoundConv(name=/input-11, inputs=[/input-7, /19, /20], perturbed=True)
+  (/input-15): BoundRelu(name=/input-15, inputs=[/input-11], perturbed=True)
+  (/input-19): BoundConv(name=/input-19, inputs=[/input-15, /21, /22], perturbed=True)
+  (/input-23): BoundRelu(name=/input-23, inputs=[/input-19], perturbed=True)
+  (/input-27): BoundConv(name=/input-27, inputs=[/input-23, /23, /24], perturbed=True)
+  (/40): BoundRelu(name=/40, inputs=[/input-27], perturbed=True)
+  (/41): BoundFlatten(name=/41, inputs=[/40], perturbed=True)
+  (/input-31): BoundLinear(name=/input-31, inputs=[/41, /25, /26], perturbed=True)
+  (/43): BoundRelu(name=/43, inputs=[/input-31], perturbed=True)
+  (/input-35): BoundLinear(name=/input-35, inputs=[/43, /27, /28], perturbed=True)
+  (/45): BoundRelu(name=/45, inputs=[/input-35], perturbed=True)
+  (/46): BoundLinear(name=/46, inputs=[/45, /29, /30], perturbed=True)
+  (/input/reciprocal): BoundReciprocal(name=/input/reciprocal, inputs=[/16], perturbed=False)
+  (/input/mul): BoundMul(name=/input/mul, inputs=[/31, /input/reciprocal], perturbed=True)
+)
+Original output in the first batch: tensor([[-1.08284914,  2.10764122, -2.06099129, -2.25476027, -3.28637624,
+         -2.32664418, -2.73502827, -3.57908368,  0.41564214,  2.88587904]],
+       device='cuda:0')
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/input-7, inputs=[/input-3], perturbed=True)
+   BoundRelu(name=/input-15, inputs=[/input-11], perturbed=True)
+   BoundRelu(name=/input-23, inputs=[/input-19], perturbed=True)
+   BoundRelu(name=/40, inputs=[/input-27], perturbed=True)
+   BoundRelu(name=/43, inputs=[/input-31], perturbed=True)
+   BoundRelu(name=/45, inputs=[/input-35], perturbed=True)
+build batch [1/1]
+layer /input-7 using sparse-features alpha with shape [2142]; unstable size 2142; total size 32768 ([1, 32, 32, 32])
+layer /input-7 start_node /input-11 using sparse-spec alpha [2, 99, 1, 2142] with unstable size 98 total_size 8192 output_shape (32, 16, 16)
+layer /input-7 start_node /input-19 using sparse-spec alpha [2, 55, 1, 2142] with unstable size 54 total_size 64 output_shape 64
+layer /input-7 start_node /input-27 using sparse-spec alpha [2, 88, 1, 2142] with unstable size 87 total_size 4096 output_shape (64, 8, 8)
+layer /input-7 start_node /input-31 using sparse-spec alpha [2, 36, 1, 2142] with unstable size 35 total_size 512 output_shape torch.Size([512])
+layer /input-7 start_node /input-35 using sparse-spec alpha [2, 64, 1, 2142] with unstable size 63 total_size 512 output_shape torch.Size([512])
+layer /input-7 start_node /46 using full alpha [2, 9, 1, 2142] with unstable size None total_size 9 output_shape 9
+layer /input-15 using sparse-features alpha with shape [98]; unstable size 98; total size 8192 ([1, 32, 16, 16])
+layer /input-15 start_node /input-19 using sparse-spec alpha [2, 55, 1, 98] with unstable size 54 total_size 64 output_shape 64
+layer /input-15 start_node /input-27 using sparse-spec alpha [2, 88, 1, 98] with unstable size 87 total_size 4096 output_shape (64, 8, 8)
+layer /input-15 start_node /input-31 using sparse-spec alpha [2, 36, 1, 98] with unstable size 35 total_size 512 output_shape torch.Size([512])
+layer /input-15 start_node /input-35 using sparse-spec alpha [2, 64, 1, 98] with unstable size 63 total_size 512 output_shape torch.Size([512])
+layer /input-15 start_node /46 using full alpha [2, 9, 1, 98] with unstable size None total_size 9 output_shape 9
+layer /input-23 using sparse-features alpha with shape [1066]; unstable size 1066; total size 16384 ([1, 64, 16, 16])
+layer /input-23 start_node /input-27 using sparse-spec alpha [2, 88, 1, 1066] with unstable size 87 total_size 4096 output_shape (64, 8, 8)
+layer /input-23 start_node /input-31 using sparse-spec alpha [2, 36, 1, 1066] with unstable size 35 total_size 512 output_shape torch.Size([512])
+layer /input-23 start_node /input-35 using sparse-spec alpha [2, 64, 1, 1066] with unstable size 63 total_size 512 output_shape torch.Size([512])
+layer /input-23 start_node /46 using full alpha [2, 9, 1, 1066] with unstable size None total_size 9 output_shape 9
+layer /40 using sparse-features alpha with shape [87]; unstable size 87; total size 4096 ([1, 64, 8, 8])
+layer /40 start_node /input-31 using sparse-spec alpha [2, 36, 1, 87] with unstable size 35 total_size 512 output_shape torch.Size([512])
+layer /40 start_node /input-35 using sparse-spec alpha [2, 64, 1, 87] with unstable size 63 total_size 512 output_shape torch.Size([512])
+layer /40 start_node /46 using full alpha [2, 9, 1, 87] with unstable size None total_size 9 output_shape 9
+layer /43 using sparse-features alpha with shape [35]; unstable size 35; total size 512 ([1, 512])
+layer /43 start_node /input-35 using sparse-spec alpha [2, 64, 1, 35] with unstable size 63 total_size 512 output_shape torch.Size([512])
+layer /43 start_node /46 using full alpha [2, 9, 1, 35] with unstable size None total_size 9 output_shape 9
+layer /45 using sparse-features alpha with shape [63]; unstable size 63; total size 512 ([1, 512])
+layer /45 start_node /46 using full alpha [2, 9, 1, 63] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [2.6845641136169434, -0.06525635719299316, 3.7390012741088867, 4.02590274810791, 4.8434600830078125, 4.054293155670166, 4.307663440704346, 5.100551605224609, 1.1214661598205566]
+prune_after_crown optimization in use
+  original spec size = torch.Size([1, 9])
+  pruned spec size = torch.Size([1, 1])
+Using alpha-CROWN to initialize bounds.
+
+all verified at 10th iter
+best_l after optimization: 0.0001736283302307129
+alpha/beta optimization time: 0.780569314956665
+initial alpha-crown bounds (first 10 items): [0.0001736283302307129]
+Global lower bound: 0.0001736283302307129
+verified with init bound!
+Result: safe-incomplete in 2.1639 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 8, vnnlib ID: 146 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Using onnx nets/convBigRELU__PGD.onnx
+Using vnnlib specs/cifar10/cifar10_spec_idx_13_eps_0.00784.vnnlib
+Precompiled vnnlib file found at ../../vnncomp2021/benchmarks/cifar2020/specs/cifar10/cifar10_spec_idx_13_eps_0.00784.vnnlib.compiled
+Loading onnx ../../vnncomp2021/benchmarks/cifar2020/nets/convBigRELU__PGD.onnx with quirks {}
+Finished onnx model loading in 0.0331 seconds
+Finished vnnlib processing in 0.001125 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=30, alpha=0.001960787922143936, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[5.37618256, 5.55552530, 4.02390480, 3.96543097, 3.38445163, 2.58805919,
+         5.78324986, 7.76949930, 6.04565525]], device='cuda:0')
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[5.10598803, 5.18622303, 3.85617161, 3.76134157, 3.21196938, 2.36910152,
+         5.47896099, 7.45106220, 5.77554417]], device='cuda:0')
+Total number of violation:  0
+Attack finished in 1.1749 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/0): BoundInput(name=/0, inputs=[], perturbed=True)
+  (/15): BoundBuffers(name=/15, inputs=[], perturbed=False)
+  (/16): BoundBuffers(name=/16, inputs=[], perturbed=False)
+  (/17): BoundParams(name=/17, inputs=[], perturbed=False)
+  (/18): BoundParams(name=/18, inputs=[], perturbed=False)
+  (/19): BoundParams(name=/19, inputs=[], perturbed=False)
+  (/20): BoundParams(name=/20, inputs=[], perturbed=False)
+  (/21): BoundParams(name=/21, inputs=[], perturbed=False)
+  (/22): BoundParams(name=/22, inputs=[], perturbed=False)
+  (/23): BoundParams(name=/23, inputs=[], perturbed=False)
+  (/24): BoundParams(name=/24, inputs=[], perturbed=False)
+  (/25): BoundParams(name=/25, inputs=[], perturbed=False)
+  (/26): BoundParams(name=/26, inputs=[], perturbed=False)
+  (/27): BoundParams(name=/27, inputs=[], perturbed=False)
+  (/28): BoundParams(name=/28, inputs=[], perturbed=False)
+  (/29): BoundParams(name=/29, inputs=[], perturbed=False)
+  (/30): BoundParams(name=/30, inputs=[], perturbed=False)
+  (/31): BoundSub(name=/31, inputs=[/0, /15], perturbed=True)
+  (/input-3): BoundConv(name=/input-3, inputs=[/input/mul, /17, /18], perturbed=True)
+  (/input-7): BoundRelu(name=/input-7, inputs=[/input-3], perturbed=True)
+  (/input-11): BoundConv(name=/input-11, inputs=[/input-7, /19, /20], perturbed=True)
+  (/input-15): BoundRelu(name=/input-15, inputs=[/input-11], perturbed=True)
+  (/input-19): BoundConv(name=/input-19, inputs=[/input-15, /21, /22], perturbed=True)
+  (/input-23): BoundRelu(name=/input-23, inputs=[/input-19], perturbed=True)
+  (/input-27): BoundConv(name=/input-27, inputs=[/input-23, /23, /24], perturbed=True)
+  (/40): BoundRelu(name=/40, inputs=[/input-27], perturbed=True)
+  (/41): BoundFlatten(name=/41, inputs=[/40], perturbed=True)
+  (/input-31): BoundLinear(name=/input-31, inputs=[/41, /25, /26], perturbed=True)
+  (/43): BoundRelu(name=/43, inputs=[/input-31], perturbed=True)
+  (/input-35): BoundLinear(name=/input-35, inputs=[/43, /27, /28], perturbed=True)
+  (/45): BoundRelu(name=/45, inputs=[/input-35], perturbed=True)
+  (/46): BoundLinear(name=/46, inputs=[/45, /29, /30], perturbed=True)
+  (/input/reciprocal): BoundReciprocal(name=/input/reciprocal, inputs=[/16], perturbed=False)
+  (/input/mul): BoundMul(name=/input/mul, inputs=[/31, /input/reciprocal], perturbed=True)
+)
+Original output in the first batch: tensor([[-2.69253135, -2.84786463, -1.32040298, -1.23288786, -0.63229597,
+          0.18333283, -3.10575867,  2.77746677, -5.12174940, -3.36199808]],
+       device='cuda:0')
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/input-7, inputs=[/input-3], perturbed=True)
+   BoundRelu(name=/input-15, inputs=[/input-11], perturbed=True)
+   BoundRelu(name=/input-23, inputs=[/input-19], perturbed=True)
+   BoundRelu(name=/40, inputs=[/input-27], perturbed=True)
+   BoundRelu(name=/43, inputs=[/input-31], perturbed=True)
+   BoundRelu(name=/45, inputs=[/input-35], perturbed=True)
+build batch [1/1]
+layer /input-7 using sparse-features alpha with shape [1556]; unstable size 1556; total size 32768 ([1, 32, 32, 32])
+layer /input-7 start_node /input-11 using sparse-spec alpha [2, 128, 1, 1556] with unstable size 127 total_size 8192 output_shape (32, 16, 16)
+layer /input-7 start_node /input-19 using sparse-spec alpha [2, 56, 1, 1556] with unstable size 55 total_size 64 output_shape 64
+layer /input-7 start_node /input-27 using sparse-spec alpha [2, 61, 1, 1556] with unstable size 60 total_size 4096 output_shape (64, 8, 8)
+layer /input-7 start_node /input-31 using sparse-spec alpha [2, 16, 1, 1556] with unstable size 15 total_size 512 output_shape torch.Size([512])
+layer /input-7 start_node /input-35 using sparse-spec alpha [2, 35, 1, 1556] with unstable size 34 total_size 512 output_shape torch.Size([512])
+layer /input-7 start_node /46 using full alpha [2, 9, 1, 1556] with unstable size None total_size 9 output_shape 9
+layer /input-15 using sparse-features alpha with shape [127]; unstable size 127; total size 8192 ([1, 32, 16, 16])
+layer /input-15 start_node /input-19 using sparse-spec alpha [2, 56, 1, 127] with unstable size 55 total_size 64 output_shape 64
+layer /input-15 start_node /input-27 using sparse-spec alpha [2, 61, 1, 127] with unstable size 60 total_size 4096 output_shape (64, 8, 8)
+layer /input-15 start_node /input-31 using sparse-spec alpha [2, 16, 1, 127] with unstable size 15 total_size 512 output_shape torch.Size([512])
+layer /input-15 start_node /input-35 using sparse-spec alpha [2, 35, 1, 127] with unstable size 34 total_size 512 output_shape torch.Size([512])
+layer /input-15 start_node /46 using full alpha [2, 9, 1, 127] with unstable size None total_size 9 output_shape 9
+layer /input-23 using sparse-features alpha with shape [810]; unstable size 810; total size 16384 ([1, 64, 16, 16])
+layer /input-23 start_node /input-27 using sparse-spec alpha [2, 61, 1, 810] with unstable size 60 total_size 4096 output_shape (64, 8, 8)
+layer /input-23 start_node /input-31 using sparse-spec alpha [2, 16, 1, 810] with unstable size 15 total_size 512 output_shape torch.Size([512])
+layer /input-23 start_node /input-35 using sparse-spec alpha [2, 35, 1, 810] with unstable size 34 total_size 512 output_shape torch.Size([512])
+layer /input-23 start_node /46 using full alpha [2, 9, 1, 810] with unstable size None total_size 9 output_shape 9
+layer /40 using sparse-features alpha with shape [60]; unstable size 60; total size 4096 ([1, 64, 8, 8])
+layer /40 start_node /input-31 using sparse-spec alpha [2, 16, 1, 60] with unstable size 15 total_size 512 output_shape torch.Size([512])
+layer /40 start_node /input-35 using sparse-spec alpha [2, 35, 1, 60] with unstable size 34 total_size 512 output_shape torch.Size([512])
+layer /40 start_node /46 using full alpha [2, 9, 1, 60] with unstable size None total_size 9 output_shape 9
+layer /43 using sparse-features alpha with shape [15]; unstable size 15; total size 512 ([1, 512])
+layer /43 start_node /input-35 using sparse-spec alpha [2, 35, 1, 15] with unstable size 34 total_size 512 output_shape torch.Size([512])
+layer /43 start_node /46 using full alpha [2, 9, 1, 15] with unstable size None total_size 9 output_shape 9
+layer /45 using sparse-features alpha with shape [34]; unstable size 34; total size 512 ([1, 512])
+layer /45 start_node /46 using full alpha [2, 9, 1, 34] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [4.6779046058654785, 4.628432750701904, 3.574903964996338, 3.4683070182800293, 3.022444725036621, 2.1126794815063477, 5.095930099487305, 6.981118202209473, 5.294537544250488]
+Verified with initial CROWN!
+verified with init bound!
+Result: safe-incomplete in 1.3835 seconds
+
