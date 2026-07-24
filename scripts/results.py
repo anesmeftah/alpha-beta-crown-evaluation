@@ -107,7 +107,7 @@ def main():
                 benchmark,
                 onnx_path,
                 vnnlib_path,
-                attack_time_str,
+                total_time_str,
                 status,
                 total_time_str
             ]
