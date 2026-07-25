@@ -8,7 +8,7 @@
 Formally verifying neural networks is critical for safety-critical applications such as autonomous driving, medical systems, and robotics. The **Verification of Neural Networks Competition (VNN-COMP)** provides a standardized benchmark suite to evaluate state-of-the-art verifiers.
 
 This repository focuses on evaluating the **reproducibility and performance** of **α,β-CROWN** (alpha-beta-CROWN), an award-winning neural network verifier. By running independent local evaluations against official competition benchmarks (starting with VNN-COMP **CIFAR2020**), this project aims to:
-- Assess verification result consistency (SAT / UNSAT / Timeout agreement rates).
+- Assess verification result consistency (SAT / UNSAT / Timeout / Unknown agreement rates).
 - Quantify performance and runtime variations across different execution environments.
 - Provide automated tools for log parsing, dataset normalization, and comparative statistical reporting.
 
@@ -116,15 +116,16 @@ The **CIFAR2020** benchmark from VNN-COMP evaluates certified robustness on Conv
 | **Total Evaluated** | 147 | 147 | 100% Evaluated |
 | **UNSAT (Safe)** | 103 | 103 | 100% Match |
 | **SAT (Unsafe / CEX)** | 35 | 34 | 97.1% Match |
-| **Timeout / Unknown** | 9 | 10 | 90.0% Match |
-| **Overall Verdict Match** | **146 / 147** | — | **99.32% Agreement** |
+| **Timeout** | 9 | 0 | Distinct from `unknown` |
+| **Unknown** | 0 | 10 | Distinct from `timeout` |
+| **Overall Verdict Match** | **137 / 147** | — | **93.2% Agreement** |
 ---
 
 ## 5. Conclusion
 
-This reproducibility study confirms that **α,β-CROWN is highly reproducible** across independent execution environments, achieving a **99.32% verdict agreement rate** on the VNN-COMP CIFAR2020 benchmark.
+This reproducibility study confirms that **α,β-CROWN is reproducible** across independent execution environments, achieving a **93.2% verdict agreement rate** on the VNN-COMP CIFAR2020 benchmark.
 
 ### Key Observations & Takeaways:
 1. **High Reliability:** Both SAT (counterexample generation) and UNSAT (safety certification) results transfer consistently between systems.
-2. **Sensitivity on Edge Instances:** Divergences occur exclusively on fringe instances near the 300-second timeout threshold, influenced by hardware performance, thread scheduling, or GPU solver timings.
+2. **Sensitivity on Edge Instances:** Divergences are concentrated in the slower instances near the 300-second timeout threshold, where the local run returns `unknown` instead of the official verdict.
 3. **Extensibility:** The modular parsing framework provided in `scripts/` enables extending this reproducibility benchmark suite to additional VNN-COMP benchmarks (such as ACASXu, MNIST, and ResNet).
