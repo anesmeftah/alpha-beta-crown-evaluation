@@ -128,4 +128,3 @@ This reproducibility study confirms that **α,β-CROWN is reproducible** across 
 ### Key Observations & Takeaways:
 1. **High Reliability:** Both SAT (counterexample generation) and UNSAT (safety certification) results transfer consistently between systems.
 2. **Sensitivity on Edge Instances:** Divergences are concentrated in the slower instances near the 300-second timeout threshold, where the local run returns `unknown` instead of the official verdict.
-3. **Extensibility:** The modular parsing framework provided in `scripts/` enables extending this reproducibility benchmark suite to additional VNN-COMP benchmarks (such as ACASXu, MNIST, and ResNet).
