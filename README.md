@@ -118,22 +118,6 @@ The **CIFAR2020** benchmark from VNN-COMP evaluates certified robustness on Conv
 | **SAT (Unsafe / CEX)** | 35 | 34 | 97.1% Match |
 | **Timeout / Unknown** | 9 | 10 | 90.0% Match |
 | **Overall Verdict Match** | **146 / 147** | — | **99.32% Agreement** |
-
-> **Note on Discrepancy:**
-> Only **1 property out of 147** showed a mismatch (Property #134: Official returned `SAT` in early iterations, whereas local execution timed out (`unknown`). No direct contradictory `SAT ↔ UNSAT` verdicts occurred.
-
-### 📈 Visualizations & Analysis
-
-#### 1. Confusion Matrix
-The confusion matrix highlights near-perfect alignment between local and official execution:
-
-![CIFAR2020 Confusion Matrix](figures/CIFAR2020%20confusion%20matrix.png)
-
-#### 2. Cumulative Solved-Over-Time Curve
-The cumulative curve compares solver efficiency over the 300-second window:
-
-![Solved Over Time Curve](figures/solved%20over%20time%20curve.png)
-
 ---
 
 ## 5. Conclusion
