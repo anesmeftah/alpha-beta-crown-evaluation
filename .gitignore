@@ -57,3 +57,5 @@ secrets/
 
 
 antigravity.md
+data/dataset/cifar10_test/
+data/dataset/hf_cifar10/
