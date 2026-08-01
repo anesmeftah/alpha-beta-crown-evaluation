@@ -42,6 +42,10 @@ class TestResult:
     # --- Spécifique à All-Clear (AC) ---
     verified_with_init_bound: bool = False # Certifié directement avec la borne initiale
 
+    @property
+    def status(self) -> str:
+        return self.verified_status
+
 
 def parser(file_path: str) -> Dict[int, TestResult]:
     tests = {}
@@ -75,6 +79,15 @@ def parser(file_path: str) -> Dict[int, TestResult]:
         tests[test_id] = get_test_summary(tests, test_id)
 
     return tests
+
+
+def parse_output(file_path: str) -> TestResult:
+    tests = parser(file_path)
+
+    if not tests:
+        return TestResult(file_path=file_path)
+
+    return next(iter(tests.values()))
 
 
 def check_type(text: str, violations: int) -> str:
