@@ -1,7 +1,7 @@
 general:
   root_path: /home/anasmefteh/crns/alpha-beta-crown-evaluation/benchmarks/Cifar2020
   csv_name: instances.csv
-  results_file: out.txt
+  results_file: abcrown_results.pkl
   complete_verifier: bab
 
 model:
@@ -11,7 +11,7 @@ model:
 
 data:
   start: 0
-  end: 20
+  end: 125
 
 
 solver:

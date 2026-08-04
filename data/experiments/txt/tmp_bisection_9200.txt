@@ -1,0 +1,1983 @@
+/home/anasmefteh/crns/alpha-beta-CROWN/.venv/lib/python3.11/site-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+INFO     18:19:37     [tensor_storage.py:70] Hugepage enabled for branch-and-bound domains.
+Configurations:
+
+general:
+  device: cuda
+  seed: 100
+  conv_mode: patches
+  deterministic: false
+  double_fp: false
+  loss_reduction_func: sum
+  sparse_alpha: true
+  sparse_interm: true
+  save_adv_example: false
+  verify_onnxruntime_output: false
+  eval_adv_example: false
+  onnx_adv_example: false
+  show_adv_example: false
+  precompile_jit: false
+  reset_seed_after_precompile: false
+  prepare_only: false
+  complete_verifier: bab
+  enable_incomplete_verification: true
+  csv_name: instances.csv
+  results_file: abcrown_results.pkl
+  root_path: /home/anasmefteh/crns/alpha-beta-crown-evaluation/benchmarks/Cifar2020
+  deterministic_opt: false
+  graph_optimizer: 'Customized("custom_graph_optimizer", "default_optimizer")'
+  buffer_has_batchdim: false
+  save_output: false
+  output_file: out.pkl
+  return_optimized_model: false
+  store_all_specs_on_cpu: false
+  adhoc_tuning: null
+model:
+  name: cifar_conv_small
+  path: /home/anasmefteh/crns/alpha-beta-crown-evaluation/benchmarks/models/eran/cifar_conv_small_pgd.pth
+  onnx_path: null
+  onnx_path_prefix: ''
+  cache_onnx_conversion: false
+  debug_onnx: false
+  onnx_quirks: null
+  input_shape: [-1, 3, 32, 32]
+  onnx_loader: default_onnx_and_vnnlib_loader
+  onnx_optimization_flags: []
+  onnx_vnnlib_joint_optimization_flags: none
+  check_optimized: false
+  flatten_final_output: false
+  optimize_graph: null
+  with_jacobian: false
+  bound_opts: null
+data:
+  start: 0
+  end: 125
+  select_instance: null
+  num_outputs: 10
+  mean: 0.0
+  std: 1.0
+  pkl_path: null
+  dataset: null
+  data_filter_path: null
+  data_idx_file: null
+specification:
+  type: lp
+  robustness_type: verified-acc
+  norm: .inf
+  epsilon: null
+  epsilon_min: 0.0
+  vnnlib_path: null
+  vnnlib_path_prefix: ''
+  shrink_eps: null
+  rhs_offset: null
+solver:
+  batch_size: 200
+  auto_enlarge_batch_size: true
+  batched_crown_auto_enlarge_max_vram_ratio: 0.9
+  min_batch_size_ratio: 0.1
+  use_float64_in_last_iteration: false
+  early_stop_patience: 10
+  start_save_best: 0.5
+  bound_prop_method: alpha-crown
+  init_bound_prop_method: same
+  prune_after_crown: true
+  optimize_disjuncts_separately: false
+  build_batch_size: 1000000
+  skip_with_refined_bound: true
+  forward_before_compute_bounds: false
+  crown:
+    batch_size: 1000000000
+    max_crown_size: 1000000000
+    activation_bound_option: adaptive
+    compare_crown_with_ibp: false
+  alpha-crown:
+    alpha: true
+    lr_alpha: 0.1
+    iteration: 100
+    share_alphas: false
+    lr_decay: 0.98
+    full_conv_alpha: true
+    max_coeff_mul: .inf
+    matmul_share_alphas: false
+    disable_optimization: []
+    max_time: 1.0
+    alpha_dtype: float16
+    input_split_alpha_iteration: 5
+    input_split_lr_alpha: 0.05
+  invprop:
+    apply_output_constraints_to: []
+    tighten_input_bounds: false
+    best_of_oc_and_no_oc: false
+    directly_optimize: []
+    oc_lr: 0.1
+    share_gammas: false
+  beta-crown:
+    lr_alpha: 0.01
+    lr_beta: 0.05
+    lr_decay: 0.98
+    optimizer: adam
+    iteration: 20
+    beta: true
+    beta_warmup: true
+    enable_opt_interm_bounds: false
+    all_node_split_LP: false
+  forward:
+    refine: false
+    max_dim: 10000
+    reset_threshold: 1.0
+  mip:
+    unstable_neuron_threshold: 0
+    parallel_solvers: null
+    solver_threads: 1
+    refine_neuron_timeout: 15
+    refine_neuron_time_percentage: 0.8
+    early_stop: true
+    adv_warmup: true
+    mip_solver: gurobi
+    skip_unsafe: false
+    topk_filter: 1.0
+    sliding_window: -1
+    extra_constraint: false
+    refine_neuron_timeout_increasement: 0
+    timeout_neuron_percentage: 0.3
+    remaining_timeout_threshold: 1
+    remove_unstable_neurons: false
+    formulation: mip
+    output_cut: false
+bab:
+  max_domains: .inf
+  decision_thresh: 0
+  timeout: 120
+  timeout_scale: 1
+  max_iterations: -1
+  override_timeout: null
+  get_upper_bound: false
+  pruning_in_iteration: true
+  pruning_in_iteration_ratio: 0.2
+  sort_targets: false
+  batched_domain_list: true
+  optimized_interm: ''
+  interm_transfer: true
+  recompute_interm: false
+  sort_domain_interval: -1
+  tree_traversal: depth_first
+  hugetensor_allocator: true
+  cut:
+    enabled: false
+    cuts_path: null
+    bab_cut: false
+    lp_cut: false
+    lr: 0.01
+    lr_decay: 1.0
+    iteration: 100
+    bab_iteration: -1
+    early_stop_patience: -1
+    lr_beta: 0.02
+    number_cuts: 50
+    topk_cuts_in_filter: 1000
+    batch_size_primal: 100
+    max_num: 1000000000
+    patches_cut: false
+    cplex_cuts: false
+    cplex_cuts_wait: 0
+    cplex_cuts_revpickup: true
+    cut_reference_bounds: true
+    fix_intermediate_bounds: false
+    manual_cuts: null
+    record_cplex_cut_to: null
+    read_cplex_cut_from: null
+    biccos:
+      enabled: false
+      auto_param: true
+      constraint_strengthening: true
+      drop_ratio: 0.5
+      max_infer_iter: 20
+      max_domain: 10000.0
+      heuristic: neuron_influence_score
+      save_cuts: false
+      multi_tree_branching:
+        enabled: false
+        restore_best_tree: true
+        keep_n_best_domains: 50
+        target_batch_size: 200
+        iterations: 3
+  clip_n_verify:
+    rearrange_constraints: false
+    alpha_crown: false
+    prune: false
+    final_layer: false
+    clip_input_domain:
+      enabled: false
+      clip_type: relaxed
+      clip_neuron_selection_type: ratio
+      clip_neuron_selection_value: -1.0
+      clip_iterations: 1
+      clip_calculate_volume_metrics: false
+    clip_interm_domain:
+      enabled: false
+      with_input: false
+      clip_in_alpha_crown: false
+      topk_objective: 20
+  branching:
+    method: kfsb
+    candidates: 10
+    reduceop: max
+    enable_intermediate_bound_opt: false
+    branching_input_and_activation: false
+    branching_input_and_activation_order: [input, relu]
+    branching_input_iterations: 30
+    branching_relu_iterations: 50
+    save_visited_domains_to: ''
+    nonlinear_split:
+      method: bbps
+      disable: false
+      branching_point_method: uniform
+      num_branches: 2
+      filter: false
+      filter_beta: false
+      filter_clamp: false
+      filter_batch_size: 10000
+      filter_iterations: 25
+      relu_only: false
+      loose_tanh_threshold: null
+      branching_point:
+        db_path: branching_points.pt
+        num_iterations: 1000
+        batch_size: 1000000
+        range_l: -5.0
+        range_u: 5.0
+        log_interval: 100
+        step_size_1d: 0.01
+        step_size: 0.2
+    input_split:
+      split_hint: null
+      enable: false
+      reorder_bab: false
+      input_dim_threshold: 20
+      adv_check: 0
+      split_partitions: 2
+      sb_margin_weight: 1.0
+      sb_sum: false
+      sb_primary_spec: null
+      bf_backup_thresh: -1
+      bf_rhs_offset: 0
+      bf_iters: 1000000000.0
+      bf_batch_size: 100000
+      bf_zero_crossing_score: false
+      touch_zero_score: 0
+      ibp_enhancement: true
+      compare_with_old_bounds: true
+      update_rhs_with_attack: false
+      sb_coeff_thresh: 0.001
+      sort_index: null
+      sort_descending: true
+      show_progress: false
+      presplit_domains: null
+      skip_getting_worst_domain: false
+  branching_decision_precompute:
+    enable: true
+  attack:
+    enabled: false
+    beam_candidates: 8
+    beam_depth: 7
+    max_dive_fix_ratio: 0.8
+    min_local_free_ratio: 0.2
+    mip_start_iteration: 5
+    mip_timeout: 30.0
+    adv_pool_threshold: null
+    refined_mip_attacker: false
+    refined_batch_size: null
+attack:
+  general_attack: true
+  pgd_order: before
+  pgd_steps: 100
+  pgd_restarts: 30
+  pgd_batch_size: 100000000
+  pgd_early_stop: true
+  pgd_lr_decay: 0.99
+  pgd_alpha: auto
+  pgd_alpha_scale: false
+  pgd_loss_mode: null
+  pgd_restart_when_stuck: false
+  enable_mip_attack: false
+  adv_saver: default_adv_saver
+  adv_verifier: default_adv_verifier
+  early_stop_condition: default_early_stop_condition
+  adv_example_finalizer: default_adv_example_finalizer
+  pgd_loss: default_pgd_loss
+  cex_path: ./test_cex.txt
+  attack_mode: PGD
+  attack_tolerance: 0.0
+  attack_func: attack_with_general_specs
+  gama_lambda: 10.0
+  gama_decay: 0.9
+  input_split:
+    pgd_steps: 100
+    pgd_restarts: 30
+    pgd_alpha: auto
+  input_split_check_adv:
+    enabled: auto
+    pgd_steps: 5
+    pgd_restarts: 5
+    pgd_alpha: auto
+    max_num_domains: 10
+debug:
+  view_model: false
+  lp_test: null
+  rescale_vnnlib_ptb: null
+  test_optimized_bounds: false
+  test_optimized_bounds_after_n_iterations: 0
+  print_verbose_decisions: false
+  biccos_mip_sanity_check: false
+  sanity_check: 0
+  z_split_enabled: false
+  save_minimal_config: null
+  save_minimal_config_omit_keys: []
+solving:
+  solving_mode: false
+  obj_index: 0
+
+Experiments at Tue Aug  4 18:19:37 2026 on pop-os
+Sequential(
+  (0): Conv2d(3, 16, kernel_size=(4, 4), stride=(2, 2))
+  (1): ReLU()
+  (2): Conv2d(16, 32, kernel_size=(4, 4), stride=(2, 2))
+  (3): ReLU()
+  (4): Flatten(start_dim=1, end_dim=-1)
+  (5): Linear(in_features=1152, out_features=100, bias=True)
+  (6): ReLU()
+  (7): Linear(in_features=100, out_features=10, bias=True)
+)
+Parameters:
+  0.weight: shape torch.Size([16, 3, 4, 4])
+  0.bias: shape torch.Size([16])
+  2.weight: shape torch.Size([32, 16, 4, 4])
+  2.bias: shape torch.Size([32])
+  5.weight: shape torch.Size([100, 1152])
+  5.bias: shape torch.Size([100])
+  7.weight: shape torch.Size([10, 100])
+  7.bias: shape torch.Size([10])
+no customized start/end sample, testing all samples in instances.csv
+Internal results will be saved to abcrown_results.pkl.
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 0, vnnlib ID: 0 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+3072 inputs and 10 outputs in vnnlib
+Finished vnnlib processing in 0.209851 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=30, alpha=0.007352948188781738, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[0.44926834, 7.62510586, 2.01578426, 2.69951773, 2.74658847, 2.59396982,
+         2.90039039, 4.84126854, 5.54698753]], device='cuda:0')
+Total number of violation:  0
+Processing batch 1/1...
+  0%|          | 0/100 [00:00<?, ?it/s] 12%|█▏        | 12/100 [00:00<00:00, 119.44it/s] 57%|█████▋    | 57/100 [00:00<00:00, 310.08it/s]100%|██████████| 100/100 [00:00<00:00, 335.75it/s]
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[0.01251197, 6.83893681, 1.48834050, 2.13143349, 2.33062315, 1.93342876,
+         2.32992983, 4.06293106, 4.78703594]], device='cuda:0')
+Total number of violation:  0
+Attack finished in 0.4822 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/input-1): BoundInput(name=/input-1, inputs=[], perturbed=True)
+  (/1): BoundParams(name=/1, inputs=[], perturbed=False)
+  (/2): BoundParams(name=/2, inputs=[], perturbed=False)
+  (/3): BoundParams(name=/3, inputs=[], perturbed=False)
+  (/4): BoundParams(name=/4, inputs=[], perturbed=False)
+  (/5): BoundParams(name=/5, inputs=[], perturbed=False)
+  (/6): BoundParams(name=/6, inputs=[], perturbed=False)
+  (/7): BoundParams(name=/7, inputs=[], perturbed=False)
+  (/8): BoundParams(name=/8, inputs=[], perturbed=False)
+  (/input): BoundConv(name=/input, inputs=[/input-1, /1, /2], perturbed=True)
+  (/input-4): BoundRelu(name=/input-4, inputs=[/input], perturbed=True)
+  (/input-8): BoundConv(name=/input-8, inputs=[/input-4, /3, /4], perturbed=True)
+  (/12): BoundRelu(name=/12, inputs=[/input-8], perturbed=True)
+  (/13): BoundFlatten(name=/13, inputs=[/12], perturbed=True)
+  (/input-12): BoundLinear(name=/input-12, inputs=[/13, /5, /6], perturbed=True)
+  (/15): BoundRelu(name=/15, inputs=[/input-12], perturbed=True)
+  (/16): BoundLinear(name=/16, inputs=[/15, /7, /8], perturbed=True)
+)
+Original output in the first batch: tensor([[ 2.77787113, -4.28104782,  1.21880674,  0.55572915,  0.44614378,
+          0.72909105,  0.29202834, -1.51936841,  3.22229767, -2.22797775]],
+       device='cuda:0')
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/input-4, inputs=[/input], perturbed=True)
+   BoundRelu(name=/12, inputs=[/input-8], perturbed=True)
+   BoundRelu(name=/15, inputs=[/input-12], perturbed=True)
+build batch [1/1]
+layer /input-4 using sparse-features alpha with shape [475]; unstable size 475; total size 3600 ([1, 16, 15, 15])
+layer /input-4 start_node /input-8 using sparse-spec alpha [2, 134, 1, 475] with unstable size 133 total_size 1152 output_shape (32, 6, 6)
+layer /input-4 start_node /input-12 using sparse-spec alpha [2, 28, 1, 475] with unstable size 27 total_size 100 output_shape torch.Size([100])
+layer /input-4 start_node /16 using full alpha [2, 9, 1, 475] with unstable size None total_size 9 output_shape 9
+layer /12 using sparse-features alpha with shape [133]; unstable size 133; total size 1152 ([1, 32, 6, 6])
+layer /12 start_node /input-12 using sparse-spec alpha [2, 28, 1, 133] with unstable size 27 total_size 100 output_shape torch.Size([100])
+layer /12 start_node /16 using full alpha [2, 9, 1, 133] with unstable size None total_size 9 output_shape 9
+layer /15 using sparse-features alpha with shape [27]; unstable size 27; total size 100 ([1, 100])
+layer /15 start_node /16 using full alpha [2, 9, 1, 27] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [-0.6599630117416382, 6.014246463775635, 0.8088935613632202, 1.4748225212097168, 1.4030647277832031, 1.3253200054168701, 1.5885367393493652, 3.2718706130981445, 4.164364814758301]
+prune_after_crown optimization in use
+  original spec size = torch.Size([1, 9])
+  pruned spec size = torch.Size([1, 1])
+Using alpha-CROWN to initialize bounds.
+best_l after optimization: -0.6352161169052124
+alpha/beta optimization time: 1.5749125480651855
+initial alpha-crown bounds (first 10 items): [-0.6352161169052124]
+Global lower bound: -0.6352161169052124
+8 / 9 OR specs are verified.
+Verified OR indices (first 10 items): [1, 2, 3, 4, 5, 6, 7, 8]
+Verified OR lbs (first 10 items): [[inf], [inf], [inf], [inf], [inf], [inf], [inf], [inf]]
+Unverified OR indices (first 10 items): [0]
+Unverified OR lbs (first 10 items): [[-0.6352161169052124]]
+###### Verifying property Instance 0 ######
+Batch size: 1
+First 10 spec matrices
+C: tensor([[[-1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  0.]]], device='cuda:0')
+RHS: tensor([[0.]], device='cuda:0')
+OR spec sizes: tensor([1], device='cuda:0', dtype=torch.int32)
+Remaining timeout: 117.41867733001709
+Model prediction is: tensor([ 2.77787113, -4.28104782,  1.21880674,  0.55572915,  0.44614378,
+         0.72909105,  0.29202834, -1.51936841,  3.22229767, -2.22797775],
+       device='cuda:0')
+Activation BaB batch 1/1 
+build_with_refined_bounds batch [1/1]
+Optimizable variables initialized.
+all alpha initialized
+directly get lb and ub from refined bounds
+c shape: torch.Size([1, 1, 10])
+lA shapes: [torch.Size([1, 1, 16, 15, 15]), torch.Size([1, 1, 32, 6, 6]), torch.Size([1, 1, 100])]
+(alpha-)CROWN with fixed intermediate bounds: tensor([[-0.63521612]], device='cuda:0') tensor([[inf]], device='cuda:0')
+Intermediate layers: /input,/input-8,/input-12
+Keeping alphas for these layers: ['/16']
+Node /input-4 input 0: size torch.Size([16, 15, 15]) unstable 475
+Node /12 input 0: size torch.Size([32, 6, 6]) unstable 129
+Node /15 input 0: size torch.Size([100]) unstable 27
+-----------------
+# of unstable neurons: 631
+-----------------
+
+BaB round 1
+batch: 1
+splitting decisions: 
+split level 0: [/input-12, 75] 
+split level 1: [/input-12, 93] 
+split level 2: [/input-12, 11] 
+split level 3: [/input-12, 71] 
+best_l after optimization: -2.536621570587158
+beta sum per layer: [0.0, 0.0, 9.65578556060791]
+alpha/beta optimization time: 0.1181340217590332
+pruning_in_iteration open status: False
+ratio of positive domain = 2 / 16 = 0.125
+pruning-in-iteration extra time: 6.914138793945312e-05
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.0009    branching_decision 0.0001    decision 0.0001    set_bounds 0.0011    prepare 0.0005    transfer 0.0000    finalize 0.0007    func 0.1603    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 0.0000    pickout 0.0009    decision 0.0001    branching_decision 0.0001    set_bounds 0.0011    solve 0.0000    func 0.1603    prepare 0.0005    transfer 0.0000    finalize 0.0007    
+max lb 0.03275027871131897 min lb -0.34555092453956604
+Number of Verified Splits: 2 of 16
+Current worst splitting domains lb-rhs (depth):
+-0.34555 (4), -0.32855 (4), -0.30428 (4), -0.28868 (4), -0.21798 (4), -0.19921 (4), -0.17732 (4), -0.16766 (4), -0.15727 (4), -0.14306 (4), -0.11491 (4), -0.09783 (4), -0.03344 (4), -0.02119 (4), 
+Current (lb-rhs): -0.34555092453956604
+16 domains visited
+Length of domains: 14
+Cumulative time: 0.23940515518188477
+
+BaB round 2
+batch: 14
+splitting decisions: 
+split level 0: [/input-12, 35] [/input-12, 35] [/input-12, 35] [/input-12, 35] [/input-12, 35] [/input-12, 35] [/input-12, 35] [/input-12, 35] [/input-12, 35] [/input-12, 35] 
+best_l after optimization: -2.5311546325683594
+beta sum per layer: [0.0, 0.0, 15.694353103637695]
+alpha/beta optimization time: 0.14508795738220215
+pruning_in_iteration open status: True
+ratio of positive domain = 7 / 28 = 0.25
+pruning-in-iteration extra time: 0.004870414733886719
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.0031    branching_decision 0.0001    decision 0.0002    set_bounds 0.0014    prepare 0.0010    transfer 0.0000    finalize 0.0009    func 0.1857    solve 0.1605    add 0.0008    bab_iteration 0.1636    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 0.1636    pickout 0.0040    decision 0.0003    branching_decision 0.0002    set_bounds 0.0025    solve 0.1605    func 0.3460    prepare 0.0015    transfer 0.0001    finalize 0.0016    add 0.0008    
+max lb 9.999999747378752e-05 min lb -0.23983359336853027
+Number of Verified Splits: 7 of 28
+Current worst splitting domains lb-rhs (depth):
+-0.23983 (5), -0.23972 (5), -0.23082 (5), -0.21778 (5), -0.19911 (5), -0.19386 (5), -0.18657 (5), -0.18284 (5), -0.14014 (5), -0.11685 (5), -0.08491 (5), -0.08181 (5), -0.08018 (5), -0.06487 (5), -0.05736 (5), -0.05686 (5), -0.04686 (5), -0.04264 (5), -0.02960 (5), -0.01977 (5), 
+Current (lb-rhs): -0.23983359336853027
+44 domains visited
+Length of domains: 21
+Cumulative time: 0.4309556484222412
+
+BaB round 3
+batch: 21
+splitting decisions: 
+split level 0: [/input-12, 48] [/input-12, 48] [/input-12, 48] [/input-12, 48] [/input-12, 48] [/input-12, 48] [/input-12, 48] [/input-12, 48] [/input-12, 48] [/input-12, 48] 
+best_l after optimization: -2.4562652111053467
+beta sum per layer: [0.0, 0.0, 17.82550811767578]
+alpha/beta optimization time: 0.12470269203186035
+pruning_in_iteration open status: True
+ratio of positive domain = 16 / 42 = 0.38095238095238093
+pruning-in-iteration extra time: 0.004816770553588867
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.0026    branching_decision 0.0001    decision 0.0002    set_bounds 0.0014    prepare 0.0009    transfer 0.0000    finalize 0.0010    func 0.1664    solve 0.1858    add 0.0009    bab_iteration 0.1915    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 0.3552    pickout 0.0066    decision 0.0004    branching_decision 0.0003    set_bounds 0.0038    solve 0.3463    func 0.5124    prepare 0.0024    transfer 0.0001    finalize 0.0026    add 0.0017    
+max lb 9.999999747378752e-05 min lb -0.1821754276752472
+Number of Verified Splits: 16 of 42
+Current worst splitting domains lb-rhs (depth):
+-0.18218 (6), -0.17741 (6), -0.17634 (6), -0.16044 (6), -0.15689 (6), -0.15033 (6), -0.14219 (6), -0.13467 (6), -0.13241 (6), -0.12875 (6), -0.12794 (6), -0.12295 (6), -0.10785 (6), -0.10552 (6), -0.08169 (6), -0.08145 (6), -0.07180 (6), -0.06119 (6), -0.05445 (6), -0.02844 (6), 
+Current (lb-rhs): -0.1821754276752472
+86 domains visited
+Length of domains: 26
+Cumulative time: 0.6028578281402588
+
+BaB round 4
+batch: 26
+splitting decisions: 
+split level 0: [/input-12, 90] [/input-12, 90] [/input-12, 90] [/input-12, 90] [/input-12, 90] [/input-12, 90] [/input-12, 90] [/input-12, 90] [/input-12, 90] [/input-12, 90] 
+best_l after optimization: -2.213092803955078
+beta sum per layer: [0.0, 0.0, 15.357511520385742]
+alpha/beta optimization time: 0.14504575729370117
+pruning_in_iteration open status: True
+ratio of positive domain = 28 / 52 = 0.5384615384615384
+pruning-in-iteration extra time: 0.00472259521484375
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.0025    branching_decision 0.0001    decision 0.0001    set_bounds 0.0015    prepare 0.0012    transfer 0.0000    finalize 0.0009    func 0.1860    solve 0.1665    add 0.0011    bab_iteration 0.1719    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 0.5271    pickout 0.0092    decision 0.0006    branching_decision 0.0003    set_bounds 0.0054    solve 0.5128    func 0.6984    prepare 0.0036    transfer 0.0001    finalize 0.0035    add 0.0028    
+max lb 9.999999747378752e-05 min lb -0.17185160517692566
+Number of Verified Splits: 28 of 52
+Current worst splitting domains lb-rhs (depth):
+-0.17185 (7), -0.16683 (7), -0.16658 (7), -0.15013 (7), -0.14697 (7), -0.14050 (7), -0.13172 (7), -0.12480 (7), -0.12273 (7), -0.11939 (7), -0.11830 (7), -0.11396 (7), -0.09802 (7), -0.09537 (7), -0.07248 (7), -0.07214 (7), -0.05998 (7), -0.05003 (7), -0.04261 (7), -0.01760 (7), 
+Current (lb-rhs): -0.17185160517692566
+138 domains visited
+Length of domains: 24
+Cumulative time: 0.794457197189331
+
+BaB round 5
+batch: 24
+splitting decisions: 
+split level 0: [/input-12, 8] [/input-12, 8] [/input-12, 8] [/input-12, 8] [/input-12, 8] [/input-12, 8] [/input-12, 8] [/input-12, 8] [/input-12, 8] [/input-12, 8] 
+best_l after optimization: -2.1052169799804688
+beta sum per layer: [0.0, 0.0, 10.104740142822266]
+alpha/beta optimization time: 0.1322774887084961
+pruning_in_iteration open status: True
+ratio of positive domain = 26 / 48 = 0.5416666666666667
+pruning-in-iteration extra time: 0.00424957275390625
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.0035    branching_decision 0.0001    decision 0.0002    set_bounds 0.0022    prepare 0.0014    transfer 0.0000    finalize 0.0009    func 0.1730    solve 0.1861    add 0.0010    bab_iteration 0.1916    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 0.7186    pickout 0.0127    decision 0.0007    branching_decision 0.0004    set_bounds 0.0076    solve 0.6989    func 0.8714    prepare 0.0050    transfer 0.0002    finalize 0.0045    add 0.0038    
+max lb 9.999999747378752e-05 min lb -0.16759349405765533
+Number of Verified Splits: 26 of 48
+Current worst splitting domains lb-rhs (depth):
+-0.16759 (8), -0.16247 (8), -0.16227 (8), -0.14570 (8), -0.14263 (8), -0.13628 (8), -0.12742 (8), -0.12055 (8), -0.11897 (8), -0.11545 (8), -0.11395 (8), -0.10959 (8), -0.09417 (8), -0.09105 (8), -0.06847 (8), -0.06811 (8), -0.05405 (8), -0.04456 (8), -0.03634 (8), -0.01167 (8), 
+Current (lb-rhs): -0.16759349405765533
+186 domains visited
+Length of domains: 22
+Cumulative time: 0.9744584560394287
+
+BaB round 6
+batch: 22
+splitting decisions: 
+split level 0: [/input-12, 59] [/input-12, 59] [/input-12, 59] [/input-12, 59] [/input-12, 59] [/input-12, 59] [/input-12, 59] [/input-12, 59] [/input-12, 59] [/input-12, 59] 
+best_l after optimization: -2.939626932144165
+beta sum per layer: [0.0, 0.0, 12.885705947875977]
+alpha/beta optimization time: 0.10786867141723633
+pruning_in_iteration open status: False
+ratio of positive domain = 7 / 44 = 0.15909090909090906
+pruning-in-iteration extra time: 6.723403930664062e-05
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.0024    branching_decision 0.0001    decision 0.0001    set_bounds 0.0014    prepare 0.0010    transfer 0.0000    finalize 0.0014    func 0.1514    solve 0.1731    add 0.0008    bab_iteration 0.1800    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 0.8986    pickout 0.0151    decision 0.0008    branching_decision 0.0005    set_bounds 0.0090    solve 0.8721    func 1.0229    prepare 0.0061    transfer 0.0002    finalize 0.0058    add 0.0046    
+max lb 0.02392125129699707 min lb -0.14818358421325684
+Number of Verified Splits: 8 of 44
+Current worst splitting domains lb-rhs (depth):
+-0.14818 (9), -0.14414 (9), -0.14314 (9), -0.13525 (9), -0.13052 (9), -0.12766 (9), -0.12324 (9), -0.11889 (9), -0.11707 (9), -0.10989 (9), -0.10792 (9), -0.10336 (9), -0.10125 (9), -0.10054 (9), -0.09947 (9), -0.09851 (9), -0.09637 (9), -0.09463 (9), -0.09205 (9), -0.08424 (9), 
+Current (lb-rhs): -0.14818358421325684
+230 domains visited
+Length of domains: 36
+Cumulative time: 1.1307644844055176
+
+BaB round 7
+batch: 36
+splitting decisions: 
+split level 0: [/input-12, 62] [/input-12, 62] [/input-12, 62] [/input-12, 62] [/input-12, 62] [/input-12, 62] [/input-12, 62] [/input-12, 62] [/input-12, 62] [/input-12, 62] 
+best_l after optimization: -3.8751611709594727
+beta sum per layer: [0.0, 0.0, 30.150829315185547]
+alpha/beta optimization time: 0.12657499313354492
+pruning_in_iteration open status: False
+ratio of positive domain = 7 / 72 = 0.09722222222222221
+pruning-in-iteration extra time: 0.0001628398895263672
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.0035    branching_decision 0.0001    decision 0.0001    set_bounds 0.0019    prepare 0.0014    transfer 0.0001    finalize 0.0127    func 0.2405    solve 0.1515    add 0.0007    bab_iteration 0.1563    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 1.0549    pickout 0.0186    decision 0.0010    branching_decision 0.0006    set_bounds 0.0110    solve 1.0236    func 1.2633    prepare 0.0075    transfer 0.0003    finalize 0.0185    add 0.0053    
+max lb 0.021275758743286133 min lb -0.13752999901771545
+Number of Verified Splits: 7 of 72
+Current worst splitting domains lb-rhs (depth):
+-0.13753 (10), -0.13268 (10), -0.13227 (10), -0.12416 (10), -0.12003 (10), -0.11574 (10), -0.11256 (10), -0.10640 (10), -0.10611 (10), -0.10076 (10), -0.09900 (10), -0.09642 (10), -0.08984 (10), -0.08925 (10), -0.08844 (10), -0.08815 (10), -0.08509 (10), -0.08410 (10), -0.08296 (10), -0.08218 (10), 
+Current (lb-rhs): -0.13752999901771545
+302 domains visited
+Length of domains: 65
+Cumulative time: 1.472940444946289
+
+BaB round 8
+batch: 65
+splitting decisions: 
+split level 0: [/input-8, 960] [/input-8, 960] [/input-8, 960] [/input-8, 960] [/input-8, 960] [/input-8, 960] [/input-8, 960] [/input-8, 960] [/input-8, 960] [/input-8, 1073] 
+best_l after optimization: -6.16438102722168
+beta sum per layer: [0.0, 4.596430778503418, 50.52056884765625]
+alpha/beta optimization time: 0.1408836841583252
+pruning_in_iteration open status: False
+ratio of positive domain = 17 / 130 = 0.13076923076923075
+pruning-in-iteration extra time: 7.772445678710938e-05
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.0221    branching_decision 0.0002    decision 0.0002    set_bounds 0.0020    prepare 0.0027    transfer 0.0000    finalize 0.0055    func 0.2418    solve 0.2407    add 0.0786    bab_iteration 0.3422    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 1.3971    pickout 0.0407    decision 0.0012    branching_decision 0.0008    set_bounds 0.0130    solve 1.2643    func 1.5051    prepare 0.0102    transfer 0.0004    finalize 0.0240    add 0.0839    
+max lb 0.018277645111083984 min lb -0.13118882477283478
+Number of Verified Splits: 17 of 130
+Current worst splitting domains lb-rhs (depth):
+-0.13119 (11), -0.13059 (11), -0.12796 (11), -0.11997 (11), -0.11879 (11), -0.11516 (11), -0.11402 (11), -0.11392 (11), -0.11252 (11), -0.10718 (11), -0.10711 (11), -0.10453 (11), -0.10255 (11), -0.10127 (11), -0.09828 (11), -0.09370 (11), -0.09301 (11), -0.09190 (11), -0.09017 (11), -0.08791 (11), 
+Current (lb-rhs): -0.13118882477283478
+432 domains visited
+Length of domains: 113
+Cumulative time: 1.7413232326507568
+
+BaB round 9
+batch: 113
+splitting decisions: 
+split level 0: [/input-8, 843] [/input-8, 843] [/input-8, 1038] [/input-8, 53] [/input-8, 1073] [/input-8, 843] [/input-8, 960] [/input-8, 960] [/input-8, 1038] [/input-8, 960] 
+best_l after optimization: -9.594701766967773
+beta sum per layer: [0.0, 17.229236602783203, 80.714111328125]
+alpha/beta optimization time: 0.1345980167388916
+pruning_in_iteration open status: False
+ratio of positive domain = 20 / 226 = 0.08849557522123896
+pruning-in-iteration extra time: 7.05718994140625e-05
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.0123    branching_decision 0.0001    decision 0.0002    set_bounds 0.0057    prepare 0.0051    transfer 0.0000    finalize 0.0088    func 0.2439    solve 0.2419    add 0.0018    bab_iteration 0.2684    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 1.6655    pickout 0.0530    decision 0.0014    branching_decision 0.0009    set_bounds 0.0187    solve 1.5063    func 1.7490    prepare 0.0154    transfer 0.0004    finalize 0.0328    add 0.0858    
+max lb 0.018042057752609253 min lb -0.12578293681144714
+Number of Verified Splits: 21 of 226
+Current worst splitting domains lb-rhs (depth):
+-0.12578 (12), -0.12568 (12), -0.12487 (12), -0.11455 (12), -0.11373 (12), -0.11372 (12), -0.11297 (12), -0.11287 (12), -0.11134 (12), -0.11051 (12), -0.10710 (12), -0.10631 (12), -0.10455 (12), -0.10251 (12), -0.10097 (12), -0.10007 (12), -0.09918 (12), -0.09898 (12), -0.09466 (12), -0.09414 (12), 
+Current (lb-rhs): -0.12578293681144714
+658 domains visited
+Length of domains: 205
+Cumulative time: 2.00713849067688
+
+BaB round 10
+batch: 200
+splitting decisions: 
+split level 0: [/input-8, 960] [/input-8, 843] [/input-8, 1063] [/input-8, 843] [/input-8, 1073] [/input-8, 53] [/input-8, 1038] [/input-8, 278] [/input-8, 1038] [/input-8, 843] 
+best_l after optimization: -14.563570022583008
+beta sum per layer: [0.0, 47.33790588378906, 134.10279846191406]
+alpha/beta optimization time: 0.12788915634155273
+pruning_in_iteration open status: False
+ratio of positive domain = 51 / 400 = 0.12749999999999995
+pruning-in-iteration extra time: 6.127357482910156e-05
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.0338    branching_decision 0.0002    decision 0.0002    set_bounds 0.0092    prepare 0.0074    transfer 0.0001    finalize 0.0208    func 0.3052    solve 0.2441    add 0.0031    bab_iteration 0.2658    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 1.9313    pickout 0.0868    decision 0.0016    branching_decision 0.0011    set_bounds 0.0279    solve 1.7504    func 2.0541    prepare 0.0228    transfer 0.0005    finalize 0.0536    add 0.0889    
+max lb 0.015591278672218323 min lb -0.12408046424388885
+Number of Verified Splits: 52 of 400
+Current worst splitting domains lb-rhs (depth):
+-0.12408 (13), -0.12287 (13), -0.12216 (13), -0.11289 (13), -0.11167 (13), -0.11133 (13), -0.11035 (13), -0.10978 (13), -0.10816 (13), -0.10465 (13), -0.10446 (13), -0.10428 (13), -0.10136 (13), -0.10055 (13), -0.10017 (13), -0.09921 (13), -0.09675 (13), -0.09609 (13), -0.09559 (13), -0.09483 (13), 
+Current (lb-rhs): -0.12408046424388885
+1058 domains visited
+Length of domains: 353
+current_vram/total_varm: 0.6GB/6.1GB, batch_size increase to 400
+Cumulative time: 2.358670711517334
+
+BaB round 11
+batch: 353
+splitting decisions: 
+split level 0: [/input-8, 1038] [/input-8, 1073] [/input-8, 843] [/input-8, 280] [/input-8, 843] [/input-8, 1038] [/input-8, 1038] [/input-8, 1073] [/input-8, 1073] [/input-8, 843] 
+best_l after optimization: -22.066856384277344
+beta sum per layer: [0.0, 112.60488891601562, 213.85791015625]
+alpha/beta optimization time: 0.17227935791015625
+pruning_in_iteration open status: False
+ratio of positive domain = 104 / 706 = 0.14730878186968843
+pruning-in-iteration extra time: 6.413459777832031e-05
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.0322    branching_decision 0.0002    decision 0.0002    set_bounds 0.0151    prepare 0.0132    transfer 0.0001    finalize 0.0287    func 0.4703    solve 0.3053    add 0.0023    bab_iteration 0.3515    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 2.2828    pickout 0.1190    decision 0.0018    branching_decision 0.0013    set_bounds 0.0430    solve 2.0557    func 2.5244    prepare 0.0360    transfer 0.0005    finalize 0.0823    add 0.0912    
+max lb 0.026729822158813477 min lb -0.12179771065711975
+Number of Verified Splits: 109 of 706
+Current worst splitting domains lb-rhs (depth):
+-0.12180 (14), -0.11899 (14), -0.11843 (14), -0.11060 (14), -0.10964 (14), -0.10900 (14), -0.10863 (14), -0.10673 (14), -0.10654 (14), -0.10509 (14), -0.10357 (14), -0.10267 (14), -0.10212 (14), -0.10094 (14), -0.09930 (14), -0.09817 (14), -0.09787 (14), -0.09740 (14), -0.09646 (14), -0.09401 (14), 
+Current (lb-rhs): -0.12179771065711975
+1764 domains visited
+Length of domains: 597
+Cumulative time: 2.87990140914917
+
+BaB round 12
+batch: 400
+splitting decisions: 
+split level 0: [/input-8, 1038] [/input-8, 1073] [/input-8, 960] [/input-8, 1038] [/input-8, 339] [/input-8, 53] [/input-8, 53] [/input-8, 235] [/input-8, 235] [/input-8, 278] 
+best_l after optimization: -22.25408935546875
+beta sum per layer: [0.0, 148.53289794921875, 216.83065795898438]
+alpha/beta optimization time: 0.20120739936828613
+pruning_in_iteration open status: False
+ratio of positive domain = 124 / 800 = 0.15500000000000003
+pruning-in-iteration extra time: 8.368492126464844e-05
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.0385    branching_decision 0.0002    decision 0.0003    set_bounds 0.0176    prepare 0.0146    transfer 0.0000    finalize 0.0212    func 0.5218    solve 0.4704    add 0.0027    bab_iteration 0.5212    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 2.8040    pickout 0.1575    decision 0.0021    branching_decision 0.0015    set_bounds 0.0607    solve 2.5261    func 3.0462    prepare 0.0507    transfer 0.0006    finalize 0.1035    add 0.0939    
+max lb 0.036622464656829834 min lb -0.12032686918973923
+Number of Verified Splits: 128 of 800
+Current worst splitting domains lb-rhs (depth):
+-0.12033 (15), -0.11899 (14), -0.11683 (15), -0.10914 (15), -0.10900 (14), -0.10737 (15), -0.10652 (15), -0.10482 (15), -0.10382 (15), -0.10357 (14), -0.10330 (15), -0.10090 (15), -0.10081 (15), -0.09930 (14), -0.09882 (15), -0.09873 (15), -0.09722 (15), -0.09646 (14), -0.09614 (15), -0.09575 (15), 
+Current (lb-rhs): -0.12032686918973923
+2564 domains visited
+Length of domains: 869
+current_vram/total_varm: 1.5GB/6.1GB, batch_size increase to 800
+Cumulative time: 3.4614527225494385
+
+BaB round 13
+batch: 800
+splitting decisions: 
+split level 0: [/input-8, 1038] [/input-8, 1038] [/input-8, 1038] [/input-8, 1063] [/input-8, 343] [/input-8, 1038] [/input-8, 278] [/input-8, 1073] [/input-8, 337] [/input-8, 1038] 
+best_l after optimization: -39.0329475402832
+beta sum per layer: [0.0, 328.10552978515625, 387.57281494140625]
+alpha/beta optimization time: 0.4062786102294922
+pruning_in_iteration open status: False
+ratio of positive domain = 310 / 1600 = 0.19374999999999998
+pruning-in-iteration extra time: 6.914138793945312e-05
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.0639    branching_decision 0.0003    decision 0.0004    set_bounds 0.0345    prepare 0.0291    transfer 0.0001    finalize 0.0369    func 0.9907    solve 0.5220    add 0.0027    bab_iteration 0.5815    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 3.3856    pickout 0.2214    decision 0.0024    branching_decision 0.0018    set_bounds 0.0952    solve 3.0480    func 4.0369    prepare 0.0797    transfer 0.0006    finalize 0.1404    add 0.0966    
+max lb 0.03019571304321289 min lb -0.11872437596321106
+Number of Verified Splits: 315 of 1600
+Current worst splitting domains lb-rhs (depth):
+-0.11872 (16), -0.11586 (15), -0.11162 (16), -0.10754 (16), -0.10731 (15), -0.10650 (15), -0.10346 (16), -0.10300 (16), -0.10219 (16), -0.10195 (15), -0.10099 (16), -0.10048 (16), -0.09953 (16), -0.09788 (16), -0.09650 (16), -0.09587 (15), -0.09484 (15), -0.09475 (16), -0.09472 (16), -0.09444 (16), 
+Current (lb-rhs): -0.11872437596321106
+4164 domains visited
+Length of domains: 1354
+current_vram/total_varm: 2.6GB/6.1GB, batch_size increase to 1600
+Cumulative time: 4.670762777328491
+
+BaB round 14
+batch: 1354
+splitting decisions: 
+split level 0: [/input-8, 337] [/input-8, 1063] [/input-8, 1063] [/input-8, 280] [/input-8, 1073] [/input-8, 367] [/input-8, 1038] [/input-8, 278] [/input-8, 53] [/input-8, 278] 
+best_l after optimization: -59.16501998901367
+beta sum per layer: [0.0, 624.2951049804688, 592.880615234375]
+alpha/beta optimization time: 0.7019820213317871
+pruning_in_iteration open status: True
+ratio of positive domain = 574 / 2708 = 0.21196454948301324
+pruning-in-iteration extra time: 7.748603820800781e-05
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1010    branching_decision 0.0004    decision 0.0005    set_bounds 0.0564    prepare 0.0482    transfer 0.0001    finalize 0.0606    func 1.6562    solve 0.9908    add 0.1190    bab_iteration 1.2093    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 4.5949    pickout 0.3224    decision 0.0029    branching_decision 0.0022    set_bounds 0.1515    solve 4.0388    func 5.6931    prepare 0.1279    transfer 0.0007    finalize 0.2010    add 0.2156    
+max lb 0.036665961146354675 min lb -0.11462279409170151
+Number of Verified Splits: 574 of 2708
+Current worst splitting domains lb-rhs (depth):
+-0.11462 (17), -0.10981 (16), -0.10901 (17), -0.10553 (16), -0.10408 (16), -0.10375 (17), -0.10344 (17), -0.10222 (17), -0.10046 (16), -0.09919 (17), -0.09906 (17), -0.09837 (17), -0.09807 (17), -0.09688 (17), -0.09673 (16), -0.09577 (17), -0.09564 (17), -0.09525 (17), -0.09475 (16), -0.09391 (16), 
+Current (lb-rhs): -0.11462279409170151
+6872 domains visited
+Length of domains: 2134
+Cumulative time: 6.499290466308594
+
+BaB round 15
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 53] [/input-8, 343] [/input-8, 343] [/input-8, 1027] [/input-8, 360] [/input-8, 360] [/input-8, 366] [/input-8, 1043] [/input-8, 843] [/input-8, 343] 
+best_l after optimization: -66.72396087646484
+beta sum per layer: [0.0, 735.377685546875, 629.8758544921875]
+alpha/beta optimization time: 0.7874000072479248
+pruning_in_iteration open status: True
+ratio of positive domain = 735 / 3200 = 0.22968750000000004
+pruning-in-iteration extra time: 0.0040740966796875
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1214    branching_decision 0.0005    decision 0.0005    set_bounds 0.1843    prepare 0.0569    transfer 0.0001    finalize 0.0704    func 1.8889    solve 1.6564    add 0.0137    bab_iteration 1.8285    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 6.4234    pickout 0.4438    decision 0.0034    branching_decision 0.0027    set_bounds 0.3358    solve 5.6952    func 7.5820    prepare 0.1848    transfer 0.0008    finalize 0.2714    add 0.2293    
+max lb 0.0001771971583366394 min lb -0.11146032810211182
+Number of Verified Splits: 735 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.11146 (18), -0.10759 (18), -0.10498 (17), -0.10348 (17), -0.10175 (18), -0.10077 (18), -0.10046 (16), -0.10028 (18), -0.10010 (18), -0.09924 (17), -0.09906 (17), -0.09696 (18), -0.09591 (18), -0.09545 (18), -0.09488 (18), -0.09452 (17), -0.09431 (18), -0.09411 (17), -0.09366 (18), -0.09240 (18), 
+Current (lb-rhs): -0.11146032810211182
+10072 domains visited
+Length of domains: 2999
+Cumulative time: 8.703652143478394
+
+BaB round 16
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 343] [/input-8, 1043] [/input-8, 122] [/input-8, 53] [/input-8, 366] [/input-8, 223] [/input-8, 343] [/input-8, 360] [/input-8, 1038] [/input-8, 1073] 
+best_l after optimization: -61.61322784423828
+beta sum per layer: [0.0, 786.909423828125, 583.211669921875]
+alpha/beta optimization time: 0.7605483531951904
+pruning_in_iteration open status: True
+ratio of positive domain = 782 / 3200 = 0.244375
+pruning-in-iteration extra time: 0.005523204803466797
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1211    branching_decision 0.0005    decision 0.0005    set_bounds 0.1884    prepare 0.0569    transfer 0.0001    finalize 0.0663    func 1.8420    solve 1.8891    add 0.0081    bab_iteration 2.2043    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 8.6277    pickout 0.5649    decision 0.0040    branching_decision 0.0032    set_bounds 0.5242    solve 7.5843    func 9.4240    prepare 0.2417    transfer 0.0008    finalize 0.3378    add 0.2374    
+max lb 9.999999747378752e-05 min lb -0.10934585332870483
+Number of Verified Splits: 782 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10935 (19), -0.10623 (19), -0.10175 (18), -0.10174 (18), -0.10046 (16), -0.10026 (18), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09816 (19), -0.09600 (18), -0.09561 (19), -0.09452 (17), -0.09431 (18), -0.09399 (19), -0.09379 (19), -0.09366 (18), -0.09277 (19), -0.09270 (18), -0.09240 (18), 
+Current (lb-rhs): -0.10934585332870483
+13272 domains visited
+Length of domains: 3817
+Cumulative time: 10.864380359649658
+
+BaB round 17
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 1073] [/input-8, 343] [/input-8, 360] [/input-8, 235] [/input-8, 1027] [/input-8, 235] [/input-8, 223] [/input-8, 360] [/input-8, 373] [/input-8, 366] 
+best_l after optimization: -53.64347457885742
+beta sum per layer: [0.0, 878.018798828125, 541.2745361328125]
+alpha/beta optimization time: 0.7371444702148438
+pruning_in_iteration open status: True
+ratio of positive domain = 907 / 3200 = 0.2834375
+pruning-in-iteration extra time: 0.005413532257080078
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1220    branching_decision 0.0005    decision 0.0006    set_bounds 0.0685    prepare 0.0597    transfer 0.0001    finalize 0.0662    func 1.8993    solve 1.8422    add 0.0075    bab_iteration 2.1607    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 10.7884    pickout 0.6868    decision 0.0045    branching_decision 0.0037    set_bounds 0.5927    solve 9.4265    func 11.3234    prepare 0.3015    transfer 0.0009    finalize 0.4039    add 0.2449    
+max lb 0.00022655725479125977 min lb -0.10876090079545975
+Number of Verified Splits: 907 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10043 (19), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09601 (19), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09373 (20), -0.09366 (18), -0.09324 (19), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), 
+Current (lb-rhs): -0.10876090079545975
+16472 domains visited
+Length of domains: 4510
+Cumulative time: 12.976503610610962
+
+BaB round 18
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 337] [/input-8, 277] [/input-8, 343] [/input-8, 1027] [/input-8, 278] [/input-8, 53] [/input-8, 223] [/input-8, 1026] [/input-8, 365] [/input-8, 278] 
+best_l after optimization: -46.13435745239258
+beta sum per layer: [0.0, 951.660400390625, 509.4902038574219]
+alpha/beta optimization time: 0.7186203002929688
+pruning_in_iteration open status: True
+ratio of positive domain = 958 / 3200 = 0.29937499999999995
+pruning-in-iteration extra time: 0.005771160125732422
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1391    branching_decision 0.0005    decision 0.0005    set_bounds 0.0694    prepare 0.0797    transfer 0.0001    finalize 0.0868    func 1.9297    solve 1.8995    add 0.0204    bab_iteration 2.1121    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 12.9005    pickout 0.8259    decision 0.0051    branching_decision 0.0042    set_bounds 0.6621    solve 11.3259    func 13.2531    prepare 0.3812    transfer 0.0010    finalize 0.4907    add 0.2653    
+max lb 9.999999747378752e-05 min lb -0.09972578287124634
+Number of Verified Splits: 958 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09973 (20), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09541 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09253 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), 
+Current (lb-rhs): -0.10876090079545975
+19672 domains visited
+Length of domains: 5152
+Cumulative time: 15.127232551574707
+
+BaB round 19
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 343] [/input-8, 278] [/input-8, 1063] [/input-8, 235] [/input-8, 53] [/input-8, 53] [/input-8, 278] [/input-8, 223] [/input-8, 49] [/input-8, 395] 
+best_l after optimization: -38.11186218261719
+beta sum per layer: [0.0, 986.9702758789062, 484.08447265625]
+alpha/beta optimization time: 0.685272216796875
+pruning_in_iteration open status: True
+ratio of positive domain = 1071 / 3200 = 0.3346875
+pruning-in-iteration extra time: 0.005984306335449219
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1364    branching_decision 0.0005    decision 0.0006    set_bounds 0.0692    prepare 0.0889    transfer 0.0002    finalize 0.1330    func 1.8950    solve 1.9298    add 0.0096    bab_iteration 2.1507    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 15.0513    pickout 0.9623    decision 0.0056    branching_decision 0.0047    set_bounds 0.7313    solve 13.2557    func 15.1480    prepare 0.4701    transfer 0.0012    finalize 0.6237    add 0.2749    
+max lb 0.00020384788513183594 min lb -0.09696447849273682
+Number of Verified Splits: 1071 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09696 (21), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), 
+Current (lb-rhs): -0.10876090079545975
+22872 domains visited
+Length of domains: 5681
+Cumulative time: 17.23766565322876
+
+BaB round 20
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 280] [/input-8, 1027] [/input-8, 1026] [/input-8, 121] [/input-8, 121] [/input-8, 1026] [/input-8, 280] [/input-8, 1027] [/input-8, 395] [/input-8, 121] 
+best_l after optimization: -34.72382354736328
+beta sum per layer: [0.0, 971.5703125, 463.9238586425781]
+alpha/beta optimization time: 0.665407657623291
+pruning_in_iteration open status: True
+ratio of positive domain = 1150 / 3200 = 0.359375
+pruning-in-iteration extra time: 0.0060727596282958984
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1396    branching_decision 0.0005    decision 0.0006    set_bounds 0.0691    prepare 0.1047    transfer 0.0001    finalize 0.1821    func 1.7794    solve 1.8951    add 0.0079    bab_iteration 2.1104    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 17.1617    pickout 1.1019    decision 0.0062    branching_decision 0.0052    set_bounds 0.8005    solve 15.1508    func 16.9274    prepare 0.5748    transfer 0.0013    finalize 0.8058    add 0.2827    
+max lb 0.00010526180267333984 min lb -0.09575098752975464
+Number of Verified Splits: 1150 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09575 (22), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), 
+Current (lb-rhs): -0.10876090079545975
+26072 domains visited
+Length of domains: 6131
+Cumulative time: 19.234753608703613
+
+BaB round 21
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 365] [/input-8, 365] [/input-8, 365] [/input-8, 366] [/input-8, 395] [/input-8, 337] [/input-8, 343] [/input-8, 339] [/input-8, 365] [/input-8, 365] 
+best_l after optimization: -32.73015594482422
+beta sum per layer: [0.023566637188196182, 989.1139526367188, 428.29949951171875]
+alpha/beta optimization time: 0.6607279777526855
+pruning_in_iteration open status: True
+ratio of positive domain = 1169 / 3200 = 0.36531250000000004
+pruning-in-iteration extra time: 0.0062503814697265625
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1374    branching_decision 0.0005    decision 0.0006    set_bounds 0.0708    prepare 0.0649    transfer 0.0001    finalize 0.0581    func 1.6007    solve 1.7795    add 0.0067    bab_iteration 1.9971    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 19.1587    pickout 1.2393    decision 0.0068    branching_decision 0.0057    set_bounds 0.8713    solve 16.9304    func 18.5281    prepare 0.6397    transfer 0.0014    finalize 0.8638    add 0.2895    
+max lb 0.00010836124420166016 min lb -0.09326088428497314
+Number of Verified Splits: 1169 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09326 (23), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), 
+Current (lb-rhs): -0.10876090079545975
+29272 domains visited
+Length of domains: 6562
+Cumulative time: 21.052815437316895
+
+BaB round 22
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 223] [/input-8, 366] [/input-8, 343] [/input-8, 236] [/input-8, 1043] [/input-8, 278] [/input-8, 277] [/input-12, 41] [/input-8, 339] [/input-8, 1065] 
+best_l after optimization: -29.896621704101562
+beta sum per layer: [0.2176269292831421, 1025.672119140625, 386.0540466308594]
+alpha/beta optimization time: 0.6358623504638672
+pruning_in_iteration open status: True
+ratio of positive domain = 1255 / 3200 = 0.3921875
+pruning-in-iteration extra time: 0.005892515182495117
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1269    branching_decision 0.0005    decision 0.0005    set_bounds 0.1996    prepare 0.0621    transfer 0.0001    finalize 0.0680    func 1.5502    solve 1.6009    add 0.0073    bab_iteration 1.8180    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 20.9768    pickout 1.3662    decision 0.0073    branching_decision 0.0062    set_bounds 1.0709    solve 18.5313    func 20.0783    prepare 0.7018    transfer 0.0015    finalize 0.9319    add 0.2967    
+max lb 0.00022280216217041016 min lb -0.08903592824935913
+Number of Verified Splits: 1255 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+32472 domains visited
+Length of domains: 6907
+Cumulative time: 22.93868589401245
+
+BaB round 23
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 337] [/input-12, 41] [/input-8, 365] [/input-12, 41] [/input-8, 49] [/input-8, 1043] [/input-12, 41] [/input-8, 223] [/input-12, 41] [/input-8, 366] 
+best_l after optimization: -27.762331008911133
+beta sum per layer: [0.4769274890422821, 1085.743896484375, 319.8623046875]
+alpha/beta optimization time: 0.6175966262817383
+pruning_in_iteration open status: True
+ratio of positive domain = 1348 / 3200 = 0.42125
+pruning-in-iteration extra time: 0.006252288818359375
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1278    branching_decision 0.0005    decision 0.0005    set_bounds 0.0701    prepare 0.0826    transfer 0.0001    finalize 0.0569    func 1.6445    solve 1.5503    add 0.0072    bab_iteration 1.8859    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 22.8626    pickout 1.4941    decision 0.0079    branching_decision 0.0067    set_bounds 1.1410    solve 20.0816    func 21.7228    prepare 0.7844    transfer 0.0015    finalize 0.9888    add 0.3039    
+max lb 0.00030234456062316895 min lb -0.08811533451080322
+Number of Verified Splits: 1348 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+35672 domains visited
+Length of domains: 7159
+Cumulative time: 24.78939414024353
+
+BaB round 24
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 232] [/input-8, 223] [/input-8, 337] [/input-8, 236] [/input-8, 236] [/input-8, 1042] [/input-8, 373] [/input-8, 280] [/input-8, 339] [/input-8, 277] 
+best_l after optimization: -26.779041290283203
+beta sum per layer: [0.8569183349609375, 1131.3804931640625, 275.39593505859375]
+alpha/beta optimization time: 0.6142139434814453
+pruning_in_iteration open status: True
+ratio of positive domain = 1359 / 3200 = 0.4246875
+pruning-in-iteration extra time: 0.006211996078491211
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1426    branching_decision 0.0005    decision 0.0005    set_bounds 0.0755    prepare 0.0627    transfer 0.0001    finalize 0.0640    func 1.4997    solve 1.6446    add 0.0064    bab_iteration 1.8507    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 24.7133    pickout 1.6367    decision 0.0084    branching_decision 0.0072    set_bounds 1.2165    solve 21.7262    func 23.2225    prepare 0.8471    transfer 0.0016    finalize 1.0528    add 0.3103    
+max lb 9.999999747378752e-05 min lb -0.08668380975723267
+Number of Verified Splits: 1359 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+38872 domains visited
+Length of domains: 7400
+Cumulative time: 26.516257762908936
+
+BaB round 25
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 373] [/input-8, 339] [/input-12, 41] [/input, 2386] [/input-8, 373] [/input-8, 367] [/input-8, 223] [/input-8, 347] [/input-8, 277] [/input-8, 373] 
+best_l after optimization: -28.56572723388672
+beta sum per layer: [2.7391629219055176, 1168.639404296875, 245.80955505371094]
+alpha/beta optimization time: 0.6697375774383545
+pruning_in_iteration open status: True
+ratio of positive domain = 1141 / 3200 = 0.3565625
+pruning-in-iteration extra time: 0.00616145133972168
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.2835    branching_decision 0.0005    decision 0.0005    set_bounds 0.0686    prepare 0.0865    transfer 0.0001    finalize 0.0698    func 1.6663    solve 1.4998    add 0.0073    bab_iteration 1.7268    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 26.4402    pickout 1.9202    decision 0.0089    branching_decision 0.0077    set_bounds 1.2851    solve 23.2260    func 24.8888    prepare 0.9337    transfer 0.0017    finalize 1.1226    add 0.3176    
+max lb 9.999999747378752e-05 min lb -0.07342904806137085
+Number of Verified Splits: 1141 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+42072 domains visited
+Length of domains: 7859
+Cumulative time: 28.544217109680176
+
+BaB round 26
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 360] [/input-8, 360] [/input-8, 339] [/input-8, 367] [/input-8, 223] [/input-12, 41] [/input-8, 1008] [/input-8, 339] [/input-8, 367] [/input-8, 373] 
+best_l after optimization: -27.464200973510742
+beta sum per layer: [4.983136177062988, 1226.5162353515625, 197.94921875]
+alpha/beta optimization time: 0.666327714920044
+pruning_in_iteration open status: True
+ratio of positive domain = 1150 / 3200 = 0.359375
+pruning-in-iteration extra time: 0.006012916564941406
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1309    branching_decision 0.0005    decision 0.0005    set_bounds 0.0707    prepare 0.0639    transfer 0.0002    finalize 0.0635    func 1.7623    solve 1.6665    add 0.0074    bab_iteration 2.0279    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 28.4681    pickout 2.0511    decision 0.0095    branching_decision 0.0082    set_bounds 1.3558    solve 24.8925    func 26.6511    prepare 0.9975    transfer 0.0019    finalize 1.1861    add 0.3250    
+max lb 9.999999747378752e-05 min lb -0.07017439603805542
+Number of Verified Splits: 1150 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+45272 domains visited
+Length of domains: 8309
+Cumulative time: 30.53834629058838
+
+BaB round 27
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 1026] [/input-8, 1043] [/input-8, 1026] [/input-8, 1026] [/input-8, 1065] [/input-8, 339] [/input-8, 1027] [/input-8, 1065] [/input-8, 1065] [/input-8, 367] 
+best_l after optimization: -26.909135818481445
+beta sum per layer: [7.50214958190918, 1243.2232666015625, 159.8819122314453]
+alpha/beta optimization time: 0.6706643104553223
+pruning_in_iteration open status: True
+ratio of positive domain = 1130 / 3200 = 0.353125
+pruning-in-iteration extra time: 0.005875825881958008
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1552    branching_decision 0.0005    decision 0.0006    set_bounds 0.0738    prepare 0.0893    transfer 0.0002    finalize 0.0616    func 1.8037    solve 1.7625    add 0.0273    bab_iteration 1.9941    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 30.4622    pickout 2.2063    decision 0.0100    branching_decision 0.0087    set_bounds 1.4295    solve 26.6549    func 28.4548    prepare 1.0869    transfer 0.0021    finalize 1.2477    add 0.3523    
+max lb 0.0001227855682373047 min lb -0.06738346815109253
+Number of Verified Splits: 1130 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+48472 domains visited
+Length of domains: 8779
+Cumulative time: 32.580169916152954
+
+BaB round 28
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 366] [/input-8, 844] [/input-8, 1065] [/input-8, 223] [/input-8, 223] [/input-8, 347] [/input-8, 121] [/input-8, 223] [/input-8, 223] [/input-8, 232] 
+best_l after optimization: -27.961009979248047
+beta sum per layer: [10.2566499710083, 1234.639892578125, 132.54379272460938]
+alpha/beta optimization time: 0.6959800720214844
+pruning_in_iteration open status: True
+ratio of positive domain = 1033 / 3200 = 0.32281249999999995
+pruning-in-iteration extra time: 0.006072521209716797
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1313    branching_decision 0.0005    decision 0.0005    set_bounds 0.0675    prepare 0.0639    transfer 0.0002    finalize 0.0645    func 1.6982    solve 1.8038    add 0.0073    bab_iteration 2.0418    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 32.5040    pickout 2.3376    decision 0.0106    branching_decision 0.0092    set_bounds 1.4970    solve 28.4587    func 30.1530    prepare 1.1508    transfer 0.0023    finalize 1.3121    add 0.3596    
+max lb 0.00015939772129058838 min lb -0.066578209400177
+Number of Verified Splits: 1033 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+51672 domains visited
+Length of domains: 9346
+Cumulative time: 34.48761773109436
+
+BaB round 29
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 280] [/input-8, 366] [/input-8, 280] [/input, 2372] [/input-8, 223] [/input-8, 1039] [/input-8, 1079] [/input-8, 1026] [/input-8, 1039] [/input-8, 236] 
+best_l after optimization: -26.111473083496094
+beta sum per layer: [12.781234741210938, 1232.0218505859375, 107.1218032836914]
+alpha/beta optimization time: 0.6839478015899658
+pruning_in_iteration open status: True
+ratio of positive domain = 1087 / 3200 = 0.33968750000000003
+pruning-in-iteration extra time: 0.005941629409790039
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1359    branching_decision 0.0005    decision 0.0005    set_bounds 0.2198    prepare 0.0652    transfer 0.0002    finalize 0.0643    func 1.6677    solve 1.6983    add 0.0084    bab_iteration 1.9074    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 34.4115    pickout 2.4735    decision 0.0111    branching_decision 0.0097    set_bounds 1.7168    solve 30.1570    func 31.8207    prepare 1.2160    transfer 0.0025    finalize 1.3764    add 0.3680    
+max lb 0.00010144710540771484 min lb -0.06349730491638184
+Number of Verified Splits: 1087 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+54872 domains visited
+Length of domains: 9859
+Cumulative time: 36.52001476287842
+
+BaB round 30
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 360] [/input-8, 373] [/input-8, 366] [/input-8, 366] [/input-8, 1027] [/input-8, 366] [/input-8, 1026] [/input-8, 1027] [/input-8, 1027] [/input-8, 1079] 
+best_l after optimization: -25.63040542602539
+beta sum per layer: [14.919778823852539, 1232.469970703125, 78.95863342285156]
+alpha/beta optimization time: 0.6852114200592041
+pruning_in_iteration open status: True
+ratio of positive domain = 1083 / 3200 = 0.33843749999999995
+pruning-in-iteration extra time: 0.006139039993286133
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1362    branching_decision 0.0005    decision 0.0006    set_bounds 0.0697    prepare 0.0667    transfer 0.0002    finalize 0.0643    func 1.8244    solve 1.6679    add 0.0067    bab_iteration 2.0324    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 36.4439    pickout 2.6097    decision 0.0117    branching_decision 0.0103    set_bounds 1.7866    solve 31.8249    func 33.6451    prepare 1.2827    transfer 0.0027    finalize 1.4407    add 0.3746    
+max lb 0.00014892220497131348 min lb -0.05992394685745239
+Number of Verified Splits: 1083 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+58072 domains visited
+Length of domains: 10376
+Cumulative time: 38.56021690368652
+
+BaB round 31
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 395] [/input-8, 1063] [/input-8, 366] [/input-8, 1007] [/input-8, 1079] [/input-8, 1007] [/input-8, 1039] [/input-8, 366] [/input-8, 1007] [/input-8, 844] 
+best_l after optimization: -23.919483184814453
+beta sum per layer: [15.23736572265625, 1237.3603515625, 62.24946594238281]
+alpha/beta optimization time: 0.67439866065979
+pruning_in_iteration open status: True
+ratio of positive domain = 1128 / 3200 = 0.35250000000000004
+pruning-in-iteration extra time: 0.005907297134399414
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1356    branching_decision 0.0005    decision 0.0005    set_bounds 0.0681    prepare 0.0671    transfer 0.0002    finalize 0.0642    func 1.8017    solve 1.8246    add 0.0078    bab_iteration 2.0402    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 38.4840    pickout 2.7453    decision 0.0122    branching_decision 0.0108    set_bounds 1.8547    solve 33.6495    func 35.4468    prepare 1.3498    transfer 0.0029    finalize 1.5049    add 0.3824    
+max lb 0.0003381967544555664 min lb -0.05815088748931885
+Number of Verified Splits: 1128 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+61272 domains visited
+Length of domains: 10848
+Cumulative time: 40.574145555496216
+
+BaB round 32
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 1039] [/input-8, 1063] [/input-8, 395] [/input-8, 280] [/input, 2305] [/input-12, 46] [/input-8, 395] [/input-8, 1057] [/input-8, 1057] [/input-8, 1057] 
+best_l after optimization: -21.349422454833984
+beta sum per layer: [18.13180160522461, 1238.54931640625, 50.97972106933594]
+alpha/beta optimization time: 0.6590864658355713
+pruning_in_iteration open status: True
+ratio of positive domain = 1189 / 3200 = 0.3715625
+pruning-in-iteration extra time: 0.005922794342041016
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1401    branching_decision 0.0007    decision 0.0007    set_bounds 0.0698    prepare 0.0699    transfer 0.0003    finalize 0.0653    func 1.6091    solve 1.8019    add 0.0065    bab_iteration 2.0139    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 40.4980    pickout 2.8853    decision 0.0129    branching_decision 0.0114    set_bounds 1.9244    solve 35.4513    func 37.0560    prepare 1.4197    transfer 0.0031    finalize 1.5702    add 0.3889    
+max lb 0.00031697750091552734 min lb -0.0552595853805542
+Number of Verified Splits: 1189 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+64472 domains visited
+Length of domains: 11259
+Cumulative time: 42.404648303985596
+
+BaB round 33
+batch: 1600
+splitting decisions: 
+split level 0: [/input-12, 46] [/input, 2386] [/input-8, 122] [/input-8, 1057] [/input, 2387] [/input, 2387] [/input-8, 1039] [/input-8, 1039] [/input, 2305] [/input-12, 46] 
+best_l after optimization: -19.81493377685547
+beta sum per layer: [28.303882598876953, 1220.61865234375, 34.38419723510742]
+alpha/beta optimization time: 0.6581764221191406
+pruning_in_iteration open status: True
+ratio of positive domain = 1192 / 3200 = 0.37250000000000005
+pruning-in-iteration extra time: 0.005839824676513672
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1417    branching_decision 0.0006    decision 0.0006    set_bounds 0.0684    prepare 0.0688    transfer 0.0001    finalize 0.0664    func 1.7750    solve 1.6092    add 0.0092    bab_iteration 1.8305    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 42.3284    pickout 3.0270    decision 0.0136    branching_decision 0.0120    set_bounds 1.9928    solve 37.0606    func 38.8310    prepare 1.4886    transfer 0.0032    finalize 1.6366    add 0.3981    
+max lb 0.00047647953033447266 min lb -0.046692609786987305
+Number of Verified Splits: 1192 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+67672 domains visited
+Length of domains: 11667
+Cumulative time: 44.399027824401855
+
+BaB round 34
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 122] [/input-8, 237] [/input, 2373] [/input-8, 1063] [/input-8, 1063] [/input, 2305] [/input-8, 1057] [/input, 2372] [/input-8, 122] [/input-8, 1063] 
+best_l after optimization: -18.105880737304688
+beta sum per layer: [38.92475509643555, 1195.609130859375, 31.195911407470703]
+alpha/beta optimization time: 0.651740550994873
+pruning_in_iteration open status: True
+ratio of positive domain = 1216 / 3200 = 0.38
+pruning-in-iteration extra time: 0.005949735641479492
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1447    branching_decision 0.0005    decision 0.0005    set_bounds 0.0670    prepare 0.0869    transfer 0.0001    finalize 0.2367    func 1.7802    solve 1.7752    add 0.0071    bab_iteration 1.9944    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 44.3228    pickout 3.1717    decision 0.0141    branching_decision 0.0125    set_bounds 2.0598    solve 38.8357    func 40.6111    prepare 1.5755    transfer 0.0033    finalize 1.8733    add 0.4052    
+max lb 0.00030356645584106445 min lb -0.04558849334716797
+Number of Verified Splits: 1216 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+70872 domains visited
+Length of domains: 12051
+Cumulative time: 46.400851249694824
+
+BaB round 35
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 122] [/input, 2334] [/input-8, 1063] [/input-8, 236] [/input, 2350] [/input-8, 1039] [/input-8, 848] [/input-8, 1063] [/input-8, 1079] [/input, 2289] 
+best_l after optimization: -18.53488540649414
+beta sum per layer: [51.89712142944336, 1172.561767578125, 18.871784210205078]
+alpha/beta optimization time: 0.6893553733825684
+pruning_in_iteration open status: True
+ratio of positive domain = 1080 / 3200 = 0.3375
+pruning-in-iteration extra time: 0.005793571472167969
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1488    branching_decision 0.0005    decision 0.0005    set_bounds 0.0680    prepare 0.0738    transfer 0.0001    finalize 0.0745    func 1.6953    solve 1.7803    add 0.0078    bab_iteration 2.0018    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 46.3246    pickout 3.3205    decision 0.0146    branching_decision 0.0130    set_bounds 2.1278    solve 40.6161    func 42.3065    prepare 1.6493    transfer 0.0034    finalize 1.9478    add 0.4130    
+max lb 0.000286102294921875 min lb -0.044045448303222656
+Number of Verified Splits: 1080 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+74072 domains visited
+Length of domains: 12571
+Cumulative time: 48.325148582458496
+
+BaB round 36
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2320] [/input, 2387] [/input-8, 1079] [/input, 2320] [/input, 2387] [/input, 2305] [/input-8, 334] [/input-8, 1069] [/input-8, 236] [/input, 1698] 
+best_l after optimization: -16.34732437133789
+beta sum per layer: [61.67429733276367, 1177.02197265625, 12.876190185546875]
+alpha/beta optimization time: 0.638195276260376
+pruning_in_iteration open status: True
+ratio of positive domain = 1267 / 3200 = 0.39593750000000005
+pruning-in-iteration extra time: 0.005961179733276367
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1528    branching_decision 0.0006    decision 0.0006    set_bounds 0.0691    prepare 0.0942    transfer 0.0001    finalize 0.0707    func 1.7648    solve 1.6954    add 0.0097    bab_iteration 1.9243    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 48.2489    pickout 3.4733    decision 0.0152    branching_decision 0.0136    set_bounds 2.1969    solve 42.3115    func 44.0713    prepare 1.7435    transfer 0.0034    finalize 2.0185    add 0.4227    
+max lb 0.00011619925498962402 min lb -0.04162853956222534
+Number of Verified Splits: 1267 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+77272 domains visited
+Length of domains: 12904
+Cumulative time: 50.32190728187561
+
+BaB round 37
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 1079] [/input-8, 334] [/input, 2334] [/input-8, 334] [/input, 2371] [/input-8, 1079] [/input-8, 1079] [/input, 2335] [/input-8, 334] [/input-8, 1079] 
+best_l after optimization: -15.827011108398438
+beta sum per layer: [69.05875396728516, 1151.30029296875, 9.243365287780762]
+alpha/beta optimization time: 0.6411387920379639
+pruning_in_iteration open status: True
+ratio of positive domain = 1254 / 3200 = 0.391875
+pruning-in-iteration extra time: 0.005982160568237305
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1539    branching_decision 0.0005    decision 0.0005    set_bounds 0.0712    prepare 0.0727    transfer 0.0001    finalize 0.0679    func 1.5702    solve 1.7649    add 0.0079    bab_iteration 1.9967    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 50.2456    pickout 3.6272    decision 0.0158    branching_decision 0.0141    set_bounds 2.2681    solve 44.0764    func 45.6415    prepare 1.8162    transfer 0.0035    finalize 2.0863    add 0.4306    
+max lb 0.0002703666687011719 min lb -0.04008162021636963
+Number of Verified Splits: 1254 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+80472 domains visited
+Length of domains: 13250
+Cumulative time: 52.12772989273071
+
+BaB round 38
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2320] [/input, 2387] [/input-8, 122] [/input-8, 1079] [/input-8, 1079] [/input-8, 1063] [/input, 2386] [/input-8, 236] [/input-8, 1063] [/input-8, 1063] 
+best_l after optimization: -16.04719352722168
+beta sum per layer: [82.58037567138672, 1140.4681396484375, 4.8090410232543945]
+alpha/beta optimization time: 0.6544756889343262
+pruning_in_iteration open status: True
+ratio of positive domain = 1198 / 3200 = 0.374375
+pruning-in-iteration extra time: 0.005866289138793945
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.3414    branching_decision 0.0005    decision 0.0005    set_bounds 0.0693    prepare 0.0737    transfer 0.0001    finalize 0.0709    func 1.6076    solve 1.5703    add 0.0083    bab_iteration 1.8058    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 52.0514    pickout 3.9686    decision 0.0163    branching_decision 0.0146    set_bounds 2.3375    solve 45.6468    func 47.2491    prepare 1.8899    transfer 0.0036    finalize 2.1572    add 0.4389    
+max lb 0.00012917816638946533 min lb -0.03915393352508545
+Number of Verified Splits: 1198 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+83672 domains visited
+Length of domains: 13652
+Cumulative time: 54.15600872039795
+
+BaB round 39
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 232] [/input-8, 277] [/input-8, 280] [/input-8, 232] [/input-8, 232] [/input-8, 232] [/input, 2334] [/input-8, 1063] [/input-8, 1069] [/input-8, 232] 
+best_l after optimization: -16.189910888671875
+beta sum per layer: [93.9924087524414, 1124.1962890625, 3.1026763916015625]
+alpha/beta optimization time: 0.6641204357147217
+pruning_in_iteration open status: True
+ratio of positive domain = 1142 / 3200 = 0.35687500000000005
+pruning-in-iteration extra time: 0.005789995193481445
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1578    branching_decision 0.0005    decision 0.0005    set_bounds 0.0709    prepare 0.0727    transfer 0.0001    finalize 0.0740    func 1.8282    solve 1.6077    add 0.0078    bab_iteration 2.0283    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 54.0797    pickout 4.1264    decision 0.0168    branching_decision 0.0150    set_bounds 2.4083    solve 47.2545    func 49.0773    prepare 1.9626    transfer 0.0036    finalize 2.2313    add 0.4467    
+max lb 9.999999747378752e-05 min lb -0.038379788398742676
+Number of Verified Splits: 1142 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+86872 domains visited
+Length of domains: 14110
+Cumulative time: 56.222614765167236
+
+BaB round 40
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2334] [/input, 2334] [/input, 2334] [/input, 2334] [/input, 2334] [/input, 2334] [/input, 2351] [/input, 2320] [/input-8, 236] [/input-8, 334] 
+best_l after optimization: -15.199747085571289
+beta sum per layer: [111.34220123291016, 1102.831787109375, 2.3151183128356934]
+alpha/beta optimization time: 0.6818194389343262
+pruning_in_iteration open status: True
+ratio of positive domain = 1112 / 3200 = 0.34750000000000003
+pruning-in-iteration extra time: 0.0072460174560546875
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1657    branching_decision 0.0006    decision 0.0006    set_bounds 0.0707    prepare 0.0763    transfer 0.0001    finalize 0.0748    func 1.6808    solve 1.8283    add 0.0074    bab_iteration 2.0666    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 56.1463    pickout 4.2921    decision 0.0174    branching_decision 0.0156    set_bounds 2.4790    solve 49.0828    func 50.7580    prepare 2.0389    transfer 0.0037    finalize 2.3060    add 0.4542    
+max lb 0.0001270771026611328 min lb -0.034810662269592285
+Number of Verified Splits: 1112 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+90072 domains visited
+Length of domains: 14598
+Cumulative time: 58.15170097351074
+
+BaB round 41
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 385] [/input, 2351] [/input-8, 334] [/input-8, 1069] [/input, 2305] [/input, 2351] [/input, 2320] [/input, 2371] [/input-8, 232] [/input, 2371] 
+best_l after optimization: -14.320547103881836
+beta sum per layer: [129.29920959472656, 1074.067626953125, 1.0218220949172974]
+alpha/beta optimization time: 0.6644175052642822
+pruning_in_iteration open status: True
+ratio of positive domain = 1179 / 3200 = 0.3684375
+pruning-in-iteration extra time: 0.0059587955474853516
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.3514    branching_decision 0.0006    decision 0.0006    set_bounds 0.0714    prepare 0.0759    transfer 0.0004    finalize 0.0728    func 1.6476    solve 1.6809    add 0.0093    bab_iteration 1.9291    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 58.0754    pickout 4.6435    decision 0.0181    branching_decision 0.0162    set_bounds 2.5505    solve 50.7637    func 52.4056    prepare 2.1148    transfer 0.0041    finalize 2.3789    add 0.4635    
+max lb 0.0001876354217529297 min lb -0.03368806838989258
+Number of Verified Splits: 1179 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+93272 domains visited
+Length of domains: 15019
+Cumulative time: 60.23299694061279
+
+BaB round 42
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2335] [/input-8, 1069] [/input, 2335] [/input-8, 334] [/input, 2371] [/input, 2334] [/input, 2320] [/input, 2334] [/input-8, 1069] [/input, 2289] 
+best_l after optimization: -13.423748016357422
+beta sum per layer: [145.55906677246094, 1048.4686279296875, 4.848338603973389]
+alpha/beta optimization time: 0.657174825668335
+pruning_in_iteration open status: True
+ratio of positive domain = 1222 / 3200 = 0.38187499999999996
+pruning-in-iteration extra time: 0.006932735443115234
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1671    branching_decision 0.0006    decision 0.0006    set_bounds 0.0706    prepare 0.0723    transfer 0.0001    finalize 0.0710    func 1.8013    solve 1.6477    add 0.0085    bab_iteration 2.0813    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 60.1567    pickout 4.8106    decision 0.0187    branching_decision 0.0168    set_bounds 2.6211    solve 52.4114    func 54.2069    prepare 2.1871    transfer 0.0042    finalize 2.4498    add 0.4720    
+max lb 0.00028270483016967773 min lb -0.03306388854980469
+Number of Verified Splits: 1222 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+96472 domains visited
+Length of domains: 15397
+Cumulative time: 62.281980752944946
+
+BaB round 43
+batch: 1600
+splitting decisions: 
+split level 0: [/input-12, 46] [/input-8, 1069] [/input, 2321] [/input-12, 46] [/input, 2320] [/input-8, 334] [/input, 2371] [/input, 2334] [/input, 2371] [/input, 1698] 
+best_l after optimization: -12.254532814025879
+beta sum per layer: [154.12704467773438, 1016.1157836914062, 9.459117889404297]
+alpha/beta optimization time: 0.6148009300231934
+pruning_in_iteration open status: True
+ratio of positive domain = 1369 / 3200 = 0.42781250000000004
+pruning-in-iteration extra time: 0.005812644958496094
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1730    branching_decision 0.0005    decision 0.0006    set_bounds 0.0706    prepare 0.0758    transfer 0.0001    finalize 0.0689    func 1.5069    solve 1.8014    add 0.0075    bab_iteration 2.0490    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 62.2056    pickout 4.9836    decision 0.0193    branching_decision 0.0173    set_bounds 2.6917    solve 54.2128    func 55.7138    prepare 2.2629    transfer 0.0043    finalize 2.5187    add 0.4795    
+max lb 0.0004722103476524353 min lb -0.030680060386657715
+Number of Verified Splits: 1369 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+99672 domains visited
+Length of domains: 15628
+Cumulative time: 64.04470324516296
+
+BaB round 44
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2320] [/input-12, 46] [/input, 2334] [/input, 2320] [/input-8, 1069] [/input-8, 334] [/input, 2335] [/input, 2320] [/input, 2320] [/input, 2320] 
+best_l after optimization: -12.592519760131836
+beta sum per layer: [165.85873413085938, 976.098388671875, 9.25683307647705]
+alpha/beta optimization time: 0.6337776184082031
+pruning_in_iteration open status: True
+ratio of positive domain = 1279 / 3200 = 0.3996875
+pruning-in-iteration extra time: 0.005831480026245117
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1686    branching_decision 0.0005    decision 0.0006    set_bounds 0.0704    prepare 0.0749    transfer 0.0002    finalize 0.0710    func 1.7928    solve 1.5070    add 0.0095    bab_iteration 1.7627    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 63.9683    pickout 5.1522    decision 0.0199    branching_decision 0.0178    set_bounds 2.7621    solve 55.7198    func 57.5066    prepare 2.3378    transfer 0.0044    finalize 2.5897    add 0.4890    
+max lb 0.00010204315185546875 min lb -0.029738426208496094
+Number of Verified Splits: 1279 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+102872 domains visited
+Length of domains: 15949
+Cumulative time: 66.08662486076355
+
+BaB round 45
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2335] [/input, 2335] [/input-8, 334] [/input, 2334] [/input-12, 46] [/input, 2334] [/input, 2335] [/input, 2306] [/input-8, 388] [/input-8, 388] 
+best_l after optimization: -12.335630416870117
+beta sum per layer: [176.70399475097656, 945.6280517578125, 8.867185592651367]
+alpha/beta optimization time: 0.6403408050537109
+pruning_in_iteration open status: True
+ratio of positive domain = 1266 / 3200 = 0.395625
+pruning-in-iteration extra time: 0.006388664245605469
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1764    branching_decision 0.0006    decision 0.0006    set_bounds 0.0734    prepare 0.0791    transfer 0.0001    finalize 0.0714    func 1.5820    solve 1.7931    add 0.0075    bab_iteration 2.0419    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 66.0102    pickout 5.3286    decision 0.0205    branching_decision 0.0184    set_bounds 2.8355    solve 57.5129    func 59.0887    prepare 2.4169    transfer 0.0046    finalize 2.6611    add 0.4965    
+max lb 0.0004163980484008789 min lb -0.028558731079101562
+Number of Verified Splits: 1266 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+106072 domains visited
+Length of domains: 16283
+Cumulative time: 67.93761825561523
+
+BaB round 46
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2320] [/input-8, 340] [/input, 2306] [/input, 2387] [/input, 2334] [/input-8, 1069] [/input-8, 334] [/input-8, 334] [/input, 2350] [/input, 2350] 
+best_l after optimization: -11.973196029663086
+beta sum per layer: [180.0792236328125, 915.3431396484375, 10.227846145629883]
+alpha/beta optimization time: 0.635735273361206
+pruning_in_iteration open status: True
+ratio of positive domain = 1280 / 3200 = 0.4
+pruning-in-iteration extra time: 0.005942583084106445
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1712    branching_decision 0.0005    decision 0.0006    set_bounds 0.0727    prepare 0.0809    transfer 0.0002    finalize 0.0710    func 1.7806    solve 1.5822    add 0.0163    bab_iteration 1.8510    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 67.8612    pickout 5.4998    decision 0.0211    branching_decision 0.0189    set_bounds 2.9082    solve 59.0951    func 60.8693    prepare 2.4979    transfer 0.0048    finalize 2.7321    add 0.5128    
+max lb 0.000301167368888855 min lb -0.028210461139678955
+Number of Verified Splits: 1280 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+109272 domains visited
+Length of domains: 16603
+Cumulative time: 70.03008532524109
+
+BaB round 47
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 334] [/input, 2372] [/input, 2350] [/input, 2334] [/input, 2350] [/input, 2305] [/input, 2371] [/input, 2349] [/input, 2350] [/input-8, 1069] 
+best_l after optimization: -11.771183013916016
+beta sum per layer: [180.09982299804688, 908.4391479492188, 6.433052062988281]
+alpha/beta optimization time: 0.6538071632385254
+pruning_in_iteration open status: True
+ratio of positive domain = 1228 / 3200 = 0.38375000000000004
+pruning-in-iteration extra time: 0.005857944488525391
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1728    branching_decision 0.0006    decision 0.0006    set_bounds 0.0714    prepare 0.0784    transfer 0.0002    finalize 0.0691    func 1.5993    solve 1.7808    add 0.0650    bab_iteration 2.0924    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 69.9537    pickout 5.6726    decision 0.0217    branching_decision 0.0195    set_bounds 2.9796    solve 60.8758    func 62.4686    prepare 2.5763    transfer 0.0050    finalize 2.8012    add 0.5778    
+max lb 0.0002898573875427246 min lb -0.02779388427734375
+Number of Verified Splits: 1228 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+112472 domains visited
+Length of domains: 16975
+Cumulative time: 71.88439059257507
+
+BaB round 48
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 334] [/input, 2334] [/input-8, 1079] [/input, 2372] [/input, 2321] [/input-8, 1069] [/input, 977] [/input-8, 334] [/input-8, 385] [/input, 2321] 
+best_l after optimization: -11.38425350189209
+beta sum per layer: [178.34738159179688, 905.00537109375, 2.2140369415283203]
+alpha/beta optimization time: 0.6578171253204346
+pruning_in_iteration open status: True
+ratio of positive domain = 1189 / 3200 = 0.3715625
+pruning-in-iteration extra time: 0.006119966506958008
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.3861    branching_decision 0.0005    decision 0.0006    set_bounds 0.0714    prepare 0.0844    transfer 0.0002    finalize 0.0712    func 1.6290    solve 1.5994    add 0.0083    bab_iteration 1.8543    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 71.8079    pickout 6.0586    decision 0.0223    branching_decision 0.0200    set_bounds 3.0511    solve 62.4752    func 64.0976    prepare 2.6606    transfer 0.0052    finalize 2.8724    add 0.5862    
+max lb 0.00017508119344711304 min lb -0.02670419216156006
+Number of Verified Splits: 1189 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+115672 domains visited
+Length of domains: 17386
+Cumulative time: 73.98068594932556
+
+BaB round 49
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2349] [/input, 977] [/input, 2306] [/input, 2349] [/input-8, 279] [/input, 2321] [/input, 977] [/input, 2321] [/input-8, 383] [/input-8, 383] 
+best_l after optimization: -10.850848197937012
+beta sum per layer: [181.43124389648438, 886.5545654296875, 0.0]
+alpha/beta optimization time: 0.6602537631988525
+pruning_in_iteration open status: True
+ratio of positive domain = 1187 / 3200 = 0.37093750000000003
+pruning-in-iteration extra time: 0.0061604976654052734
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1715    branching_decision 0.0005    decision 0.0006    set_bounds 0.0720    prepare 0.0737    transfer 0.0001    finalize 0.0710    func 1.8397    solve 1.6291    add 0.0073    bab_iteration 2.0963    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 73.9042    pickout 6.2301    decision 0.0228    branching_decision 0.0206    set_bounds 3.1230    solve 64.1044    func 65.9373    prepare 2.7344    transfer 0.0053    finalize 2.9434    add 0.5935    
+max lb 0.00012230873107910156 min lb -0.02451223134994507
+Number of Verified Splits: 1187 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+118872 domains visited
+Length of domains: 17799
+Cumulative time: 76.07470440864563
+
+BaB round 50
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 383] [/input, 977] [/input-8, 383] [/input, 2350] [/input, 2350] [/input, 2335] [/input, 2305] [/input-8, 340] [/input-8, 279] [/input-8, 388] 
+best_l after optimization: -10.03867244720459
+beta sum per layer: [180.95648193359375, 868.1800537109375, 0.0]
+alpha/beta optimization time: 0.6530041694641113
+pruning_in_iteration open status: True
+ratio of positive domain = 1197 / 3200 = 0.37406249999999996
+pruning-in-iteration extra time: 0.005728960037231445
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1722    branching_decision 0.0005    decision 0.0006    set_bounds 0.0728    prepare 0.0771    transfer 0.0002    finalize 0.0723    func 1.6203    solve 1.8398    add 0.0082    bab_iteration 2.0940    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 75.9982    pickout 6.4023    decision 0.0234    branching_decision 0.0211    set_bounds 3.1958    solve 65.9442    func 67.5576    prepare 2.8115    transfer 0.0055    finalize 3.0157    add 0.6017    
+max lb 0.0001678466796875 min lb -0.02390122413635254
+Number of Verified Splits: 1197 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+122072 domains visited
+Length of domains: 18202
+Cumulative time: 77.95063281059265
+
+BaB round 51
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 235] [/input, 2350] [/input-8, 848] [/input, 2335] [/input, 2319] [/input-8, 388] [/input, 2306] [/input-8, 848] [/input, 2349] [/input-8, 388] 
+best_l after optimization: -9.363997459411621
+beta sum per layer: [180.9072265625, 854.910400390625, 0.0]
+alpha/beta optimization time: 0.6528801918029785
+pruning_in_iteration open status: True
+ratio of positive domain = 1218 / 3200 = 0.380625
+pruning-in-iteration extra time: 0.00625157356262207
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1716    branching_decision 0.0006    decision 0.0006    set_bounds 0.0717    prepare 0.0782    transfer 0.0001    finalize 0.0683    func 1.8188    solve 1.6204    add 0.0077    bab_iteration 1.8759    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 77.8741    pickout 6.5738    decision 0.0240    branching_decision 0.0217    set_bounds 3.2675    solve 67.5646    func 69.3764    prepare 2.8896    transfer 0.0056    finalize 3.0840    add 0.6094    
+max lb 0.00029430538415908813 min lb -0.021353721618652344
+Number of Verified Splits: 1218 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+125272 domains visited
+Length of domains: 18584
+Cumulative time: 80.02257084846497
+
+BaB round 52
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2335] [/input, 2349] [/input-8, 340] [/input, 2306] [/input, 2373] [/input, 2372] [/input-8, 279] [/input-8, 340] [/input, 2349] [/input, 988] 
+best_l after optimization: -8.476753234863281
+beta sum per layer: [178.35964965820312, 833.0979614257812, 0.0]
+alpha/beta optimization time: 0.631737470626831
+pruning_in_iteration open status: True
+ratio of positive domain = 1258 / 3200 = 0.39312499999999995
+pruning-in-iteration extra time: 0.00584721565246582
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1741    branching_decision 0.0006    decision 0.0006    set_bounds 0.0723    prepare 0.0756    transfer 0.0001    finalize 0.0676    func 1.5584    solve 1.8189    add 0.0073    bab_iteration 2.0719    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 79.9461    pickout 6.7479    decision 0.0246    branching_decision 0.0223    set_bounds 3.3399    solve 69.3835    func 70.9348    prepare 2.9652    transfer 0.0057    finalize 3.1516    add 0.6167    
+max lb 0.00026488304138183594 min lb -0.020860493183135986
+Number of Verified Splits: 1258 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+128472 domains visited
+Length of domains: 18926
+Cumulative time: 81.8380925655365
+
+BaB round 53
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 340] [/input, 2351] [/input, 2306] [/input, 2335] [/input, 2351] [/input, 2349] [/input-8, 848] [/input, 2335] [/input-8, 340] [/input-8, 383] 
+best_l after optimization: -7.2517924308776855
+beta sum per layer: [182.6999053955078, 842.9867553710938, 0.0]
+alpha/beta optimization time: 0.5857601165771484
+pruning_in_iteration open status: True
+ratio of positive domain = 1445 / 3200 = 0.4515625
+pruning-in-iteration extra time: 0.005641460418701172
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.3940    branching_decision 0.0005    decision 0.0006    set_bounds 0.0687    prepare 0.0713    transfer 0.0001    finalize 0.0625    func 1.4320    solve 1.5585    add 0.0081    bab_iteration 1.8155    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 81.7616    pickout 7.1419    decision 0.0252    branching_decision 0.0228    set_bounds 3.4085    solve 70.9420    func 72.3668    prepare 3.0364    transfer 0.0058    finalize 3.2141    add 0.6248    
+max lb 0.00040531158447265625 min lb -0.01984846591949463
+Number of Verified Splits: 1445 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+131672 domains visited
+Length of domains: 19081
+Cumulative time: 83.75718784332275
+
+BaB round 54
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2349] [/input, 2305] [/input-8, 340] [/input, 2351] [/input-8, 383] [/input-8, 1069] [/input-8, 340] [/input-8, 340] [/input, 2372] [/input, 2334] 
+best_l after optimization: -7.078901290893555
+beta sum per layer: [186.89956665039062, 838.3544311523438, 0.0]
+alpha/beta optimization time: 0.6038401126861572
+pruning_in_iteration open status: True
+ratio of positive domain = 1415 / 3200 = 0.44218749999999996
+pruning-in-iteration extra time: 0.006309032440185547
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1945    branching_decision 0.0006    decision 0.0006    set_bounds 0.0730    prepare 0.0784    transfer 0.0003    finalize 0.0620    func 1.4742    solve 1.4323    add 0.0174    bab_iteration 1.9191    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 83.6806    pickout 7.3365    decision 0.0258    branching_decision 0.0233    set_bounds 3.4815    solve 72.3743    func 73.8410    prepare 3.1149    transfer 0.0061    finalize 3.2761    add 0.6422    
+max lb 0.00023472309112548828 min lb -0.01796621084213257
+Number of Verified Splits: 1415 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+134872 domains visited
+Length of domains: 19266
+Cumulative time: 85.50811982154846
+
+BaB round 55
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 986] [/input, 2305] [/input, 2335] [/input-8, 848] [/input, 2371] [/input-8, 848] [/input, 1690] [/input, 988] [/input, 2320] [/input, 2305] 
+best_l after optimization: -7.375262260437012
+beta sum per layer: [183.19671630859375, 799.6815795898438, 0.0]
+alpha/beta optimization time: 0.6341290473937988
+pruning_in_iteration open status: True
+ratio of positive domain = 1314 / 3200 = 0.410625
+pruning-in-iteration extra time: 0.006468772888183594
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1673    branching_decision 0.0005    decision 0.0006    set_bounds 0.3666    prepare 0.0825    transfer 0.0002    finalize 0.0670    func 1.5606    solve 1.4743    add 0.0066    bab_iteration 1.7509    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 85.4315    pickout 7.5037    decision 0.0264    branching_decision 0.0239    set_bounds 3.8481    solve 73.8486    func 75.4016    prepare 3.1974    transfer 0.0063    finalize 3.3431    add 0.6489    
+max lb 0.00018703937530517578 min lb -0.01668602228164673
+Number of Verified Splits: 1314 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+138072 domains visited
+Length of domains: 19552
+Cumulative time: 87.61237835884094
+
+BaB round 56
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 1690] [/input, 2371] [/input, 1876] [/input, 1876] [/input, 2321] [/input, 1876] [/input, 2387] [/input, 2305] [/input-8, 235] [/input-8, 280] 
+best_l after optimization: -7.679439544677734
+beta sum per layer: [183.8945770263672, 735.832275390625, 0.0]
+alpha/beta optimization time: 0.6412417888641357
+pruning_in_iteration open status: True
+ratio of positive domain = 1244 / 3200 = 0.38875000000000004
+pruning-in-iteration extra time: 0.00596928596496582
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1744    branching_decision 0.0005    decision 0.0006    set_bounds 0.0725    prepare 0.0729    transfer 0.0003    finalize 0.0705    func 1.5828    solve 1.5608    add 0.0072    bab_iteration 2.1042    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 87.5358    pickout 7.6782    decision 0.0270    branching_decision 0.0244    set_bounds 3.9206    solve 75.4094    func 76.9844    prepare 3.2703    transfer 0.0066    finalize 3.4135    add 0.6561    
+max lb 0.0005625486373901367 min lb -0.015680015087127686
+Number of Verified Splits: 1244 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+141272 domains visited
+Length of domains: 19908
+Cumulative time: 89.45402598381042
+
+BaB round 57
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2550] [/input, 2381] [/input, 2371] [/input, 2349] [/input, 2335] [/input, 2349] [/input, 2371] [/input, 986] [/input, 988] [/input, 2349] 
+best_l after optimization: -6.756712913513184
+beta sum per layer: [185.7494659423828, 702.90185546875, 0.0]
+alpha/beta optimization time: 0.6044940948486328
+pruning_in_iteration open status: True
+ratio of positive domain = 1400 / 3200 = 0.4375
+pruning-in-iteration extra time: 0.0058209896087646484
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.4277    branching_decision 0.0006    decision 0.0006    set_bounds 0.0728    prepare 0.0722    transfer 0.0001    finalize 0.0648    func 1.4788    solve 1.5829    add 0.0093    bab_iteration 1.8416    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 89.3774    pickout 8.1059    decision 0.0276    branching_decision 0.0250    set_bounds 3.9934    solve 76.9923    func 78.4632    prepare 3.3425    transfer 0.0066    finalize 3.4784    add 0.6654    
+max lb 0.00028067827224731445 min lb -0.014957427978515625
+Number of Verified Splits: 1400 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+144472 domains visited
+Length of domains: 20108
+Cumulative time: 91.44417643547058
+
+BaB round 58
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 1690] [/input, 956] [/input, 2349] [/input, 2381] [/input, 2550] [/input, 2349] [/input, 1876] [/input, 2349] [/input, 986] [/input-8, 280] 
+best_l after optimization: -6.559164047241211
+beta sum per layer: [180.12290954589844, 678.8740234375, 0.0]
+alpha/beta optimization time: 0.6161046028137207
+pruning_in_iteration open status: True
+ratio of positive domain = 1336 / 3200 = 0.4175
+pruning-in-iteration extra time: 0.005941152572631836
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1762    branching_decision 0.0006    decision 0.0006    set_bounds 0.0704    prepare 0.0724    transfer 0.0003    finalize 0.0679    func 1.5170    solve 1.4790    add 0.0082    bab_iteration 1.9901    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 91.3675    pickout 8.2821    decision 0.0282    branching_decision 0.0256    set_bounds 4.0638    solve 78.4713    func 79.9802    prepare 3.4149    transfer 0.0069    finalize 3.5463    add 0.6736    
+max lb 0.0004067420959472656 min lb -0.014308273792266846
+Number of Verified Splits: 1336 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+147672 domains visited
+Length of domains: 20372
+Cumulative time: 93.21913528442383
+
+BaB round 59
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 1690] [/input, 2319] [/input, 2321] [/input, 956] [/input, 2387] [/input, 1690] [/input, 1876] [/input, 2344] [/input, 2321] [/input, 2335] 
+best_l after optimization: -6.437317371368408
+beta sum per layer: [171.90936279296875, 646.6474609375, 0.0]
+alpha/beta optimization time: 0.6440987586975098
+pruning_in_iteration open status: True
+ratio of positive domain = 1250 / 3200 = 0.390625
+pruning-in-iteration extra time: 0.005971670150756836
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.4282    branching_decision 0.0006    decision 0.0006    set_bounds 0.0727    prepare 0.0771    transfer 0.0001    finalize 0.0735    func 1.5863    solve 1.5171    add 0.0086    bab_iteration 1.7749    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 93.1425    pickout 8.7104    decision 0.0288    branching_decision 0.0261    set_bounds 4.1365    solve 79.9884    func 81.5665    prepare 3.4920    transfer 0.0070    finalize 3.6199    add 0.6821    
+max lb 0.0003795027732849121 min lb -0.013557255268096924
+Number of Verified Splits: 1250 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+150872 domains visited
+Length of domains: 20722
+Cumulative time: 95.31698203086853
+
+BaB round 60
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2335] [/input, 2381] [/input-8, 232] [/input, 956] [/input-8, 232] [/input-8, 280] [/input, 956] [/input-8, 340] [/input, 2345] [/input, 2345] 
+best_l after optimization: -5.9155120849609375
+beta sum per layer: [166.74484252929688, 608.487548828125, 0.0]
+alpha/beta optimization time: 0.6653001308441162
+pruning_in_iteration open status: True
+ratio of positive domain = 1212 / 3200 = 0.37875000000000003
+pruning-in-iteration extra time: 0.006013631820678711
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1823    branching_decision 0.0005    decision 0.0006    set_bounds 0.0726    prepare 0.1253    transfer 0.0003    finalize 0.0709    func 1.9101    solve 1.5864    add 0.0077    bab_iteration 2.0978    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 95.2403    pickout 8.8927    decision 0.0294    branching_decision 0.0267    set_bounds 4.2090    solve 81.5748    func 83.4766    prepare 3.6173    transfer 0.0073    finalize 3.6907    add 0.6898    
+max lb 0.0006347894668579102 min lb -0.01199871301651001
+Number of Verified Splits: 1212 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+154072 domains visited
+Length of domains: 21110
+Cumulative time: 97.49278616905212
+
+BaB round 61
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2387] [/input, 977] [/input, 2345] [/input, 2381] [/input-8, 340] [/input-8, 340] [/input, 1690] [/input, 2349] [/input, 986] [/input, 986] 
+best_l after optimization: -4.8949689865112305
+beta sum per layer: [157.9765625, 586.9755249023438, 0.0]
+alpha/beta optimization time: 0.6016490459442139
+pruning_in_iteration open status: True
+ratio of positive domain = 1414 / 3200 = 0.441875
+pruning-in-iteration extra time: 0.0055158138275146484
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1704    branching_decision 0.0005    decision 0.0006    set_bounds 0.0698    prepare 0.0750    transfer 0.0001    finalize 0.0621    func 1.4748    solve 1.9102    add 0.0082    bab_iteration 2.1758    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 97.4161    pickout 9.0631    decision 0.0299    branching_decision 0.0272    set_bounds 4.2788    solve 83.4850    func 84.9514    prepare 3.6923    transfer 0.0074    finalize 3.7528    add 0.6980    
+max lb 0.0002815127372741699 min lb -0.011557281017303467
+Number of Verified Splits: 1414 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+157272 domains visited
+Length of domains: 21296
+Cumulative time: 99.21798038482666
+
+BaB round 62
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 121] [/input, 2386] [/input, 2349] [/input, 2345] [/input, 1690] [/input, 2386] [/input, 956] [/input-8, 121] [/input, 977] [/input, 2345] 
+best_l after optimization: -4.553945541381836
+beta sum per layer: [154.8885040283203, 566.9554443359375, 0.0]
+alpha/beta optimization time: 0.6261708736419678
+pruning_in_iteration open status: True
+ratio of positive domain = 1324 / 3200 = 0.41374999999999995
+pruning-in-iteration extra time: 0.0054759979248046875
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1695    branching_decision 0.0005    decision 0.0005    set_bounds 0.0700    prepare 0.0742    transfer 0.0002    finalize 0.0680    func 1.7961    solve 1.4749    add 0.0076    bab_iteration 1.7252    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 99.1413    pickout 9.2326    decision 0.0305    branching_decision 0.0277    set_bounds 4.3489    solve 84.9599    func 86.7475    prepare 3.7665    transfer 0.0077    finalize 3.8208    add 0.7055    
+max lb 0.00022298097610473633 min lb -0.010327339172363281
+Number of Verified Splits: 1324 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+160472 domains visited
+Length of domains: 21572
+Cumulative time: 101.26530694961548
+
+BaB round 63
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 232] [/input, 956] [/input, 2335] [/input, 2386] [/input-8, 121] [/input, 956] [/input-8, 121] [/input, 2386] [/input, 2320] [/input, 2335] 
+best_l after optimization: -3.9153382778167725
+beta sum per layer: [147.7051239013672, 542.802978515625, 0.0]
+alpha/beta optimization time: 0.6050903797149658
+pruning_in_iteration open status: True
+ratio of positive domain = 1418 / 3200 = 0.443125
+pruning-in-iteration extra time: 0.006103515625
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1932    branching_decision 0.0005    decision 0.0006    set_bounds 0.0727    prepare 0.0862    transfer 0.0001    finalize 0.0645    func 1.4809    solve 1.7962    add 0.0089    bab_iteration 2.0473    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 101.1886    pickout 9.4258    decision 0.0311    branching_decision 0.0282    set_bounds 4.4216    solve 86.7561    func 88.2284    prepare 3.8527    transfer 0.0078    finalize 3.8853    add 0.7144    
+max lb 0.00030738115310668945 min lb -0.00981283187866211
+Number of Verified Splits: 1418 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+163672 domains visited
+Length of domains: 21754
+Cumulative time: 103.02208209037781
+
+BaB round 64
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 956] [/input, 1876] [/input, 2320] [/input, 2334] [/input, 2320] [/input, 1876] [/input, 2349] [/input, 956] [/input, 1876] [/input, 2335] 
+best_l after optimization: -3.156670570373535
+beta sum per layer: [150.00271606445312, 507.9404602050781, 0.0]
+alpha/beta optimization time: 0.588672399520874
+pruning_in_iteration open status: True
+ratio of positive domain = 1527 / 3200 = 0.4771875
+pruning-in-iteration extra time: 0.00637054443359375
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1826    branching_decision 0.0006    decision 0.0006    set_bounds 0.0729    prepare 0.1137    transfer 0.0003    finalize 0.0735    func 1.4706    solve 1.4811    add 0.0071    bab_iteration 1.7568    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 102.9454    pickout 9.6083    decision 0.0317    branching_decision 0.0288    set_bounds 4.4945    solve 88.2372    func 89.6990    prepare 3.9665    transfer 0.0081    finalize 3.9588    add 0.7215    
+max lb 0.000364840030670166 min lb -0.009180128574371338
+Number of Verified Splits: 1527 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+166872 domains visited
+Length of domains: 21827
+Cumulative time: 104.75920581817627
+
+BaB round 65
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 121] [/input, 2345] [/input, 2345] [/input, 1876] [/input-8, 121] [/input-8, 121] [/input, 1876] [/input, 2335] [/input, 2348] [/input, 1876] 
+best_l after optimization: -2.543818473815918
+beta sum per layer: [152.7620391845703, 479.26934814453125, 0.0]
+alpha/beta optimization time: 0.5519475936889648
+pruning_in_iteration open status: True
+ratio of positive domain = 1641 / 3200 = 0.5128125
+pruning-in-iteration extra time: 0.0060994625091552734
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.4328    branching_decision 0.0006    decision 0.0006    set_bounds 0.0726    prepare 0.1075    transfer 0.0004    finalize 0.0578    func 1.3620    solve 1.4707    add 0.0082    bab_iteration 1.7371    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 104.6825    pickout 10.0411    decision 0.0323    branching_decision 0.0294    set_bounds 4.5671    solve 89.7079    func 91.0610    prepare 4.0739    transfer 0.0085    finalize 4.0166    add 0.7297    
+max lb 0.00044089555740356445 min lb -0.008358478546142578
+Number of Verified Splits: 1641 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+170072 domains visited
+Length of domains: 21786
+Cumulative time: 106.63611674308777
+
+BaB round 66
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 232] [/input, 1876] [/input-8, 121] [/input-8, 232] [/input, 1659] [/input, 2348] [/input, 1659] [/input, 2348] [/input, 2348] [/input, 2371] 
+best_l after optimization: -1.8968522548675537
+beta sum per layer: [146.91302490234375, 456.9614562988281, 0.0]
+alpha/beta optimization time: 0.4866797924041748
+pruning_in_iteration open status: True
+ratio of positive domain = 1834 / 3200 = 0.573125
+pruning-in-iteration extra time: 0.005584001541137695
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1842    branching_decision 0.0006    decision 0.0006    set_bounds 0.0702    prepare 0.0756    transfer 0.0002    finalize 0.0484    func 1.1797    solve 1.3621    add 0.0066    bab_iteration 1.8769    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 106.5594    pickout 10.2253    decision 0.0329    branching_decision 0.0299    set_bounds 4.6373    solve 91.0700    func 92.2406    prepare 4.1496    transfer 0.0087    finalize 4.0650    add 0.7363    
+max lb 0.0002631545066833496 min lb -0.007189691066741943
+Number of Verified Splits: 1834 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+173272 domains visited
+Length of domains: 21552
+Cumulative time: 108.07989764213562
+
+BaB round 67
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 1699] [/input, 2344] [/input, 956] [/input-8, 121] [/input, 1876] [/input-8, 121] [/input, 2345] [/input, 956] [/input, 2386] [/input, 2386] 
+best_l after optimization: -1.755140781402588
+beta sum per layer: [149.32183837890625, 446.9964904785156, 0.0]
+alpha/beta optimization time: 0.4777181148529053
+pruning_in_iteration open status: True
+ratio of positive domain = 1918 / 3200 = 0.599375
+pruning-in-iteration extra time: 0.005548000335693359
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1782    branching_decision 0.0005    decision 0.0006    set_bounds 0.0712    prepare 0.0762    transfer 0.0007    finalize 0.0483    func 1.4061    solve 1.1798    add 0.0067    bab_iteration 1.4438    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 108.0031    pickout 10.4036    decision 0.0335    branching_decision 0.0305    set_bounds 4.7085    solve 92.2498    func 93.6467    prepare 4.2258    transfer 0.0094    finalize 4.1133    add 0.7430    
+max lb 0.0005255937576293945 min lb -0.008955538272857666
+Number of Verified Splits: 1918 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+176472 domains visited
+Length of domains: 21234
+Cumulative time: 109.74458718299866
+
+BaB round 68
+batch: 1600
+splitting decisions: 
+split level 0: [/input-8, 121] [/input-8, 340] [/input-8, 232] [/input-8, 121] [/input, 1690] [/input-8, 121] [/input-8, 232] [/input, 988] [/input, 2334] [/input, 2386] 
+best_l after optimization: -2.2329020500183105
+beta sum per layer: [147.9193878173828, 461.0440673828125, 0.0]
+alpha/beta optimization time: 0.49268484115600586
+pruning_in_iteration open status: True
+ratio of positive domain = 1842 / 3200 = 0.575625
+pruning-in-iteration extra time: 0.005887269973754883
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1966    branching_decision 0.0006    decision 0.0006    set_bounds 0.0786    prepare 0.0756    transfer 0.0003    finalize 0.0481    func 1.1852    solve 1.4062    add 0.0062    bab_iteration 1.6647    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 109.6678    pickout 10.6001    decision 0.0341    branching_decision 0.0310    set_bounds 4.7871    solve 93.6560    func 94.8319    prepare 4.3014    transfer 0.0097    finalize 4.1614    add 0.7492    
+max lb 0.00032460689544677734 min lb -0.011374890804290771
+Number of Verified Splits: 1842 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+179672 domains visited
+Length of domains: 20992
+Cumulative time: 111.21487283706665
+
+BaB round 69
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2386] [/input, 2386] [/input, 2335] [/input, 2386] [/input-8, 340] [/input, 2335] [/input, 2386] [/input, 2349] [/input-8, 121] [/input, 1659] 
+best_l after optimization: -2.5673751831054688
+beta sum per layer: [151.76303100585938, 467.1806640625, 0.0]
+alpha/beta optimization time: 0.5130569934844971
+pruning_in_iteration open status: True
+ratio of positive domain = 1774 / 3200 = 0.5543750000000001
+pruning-in-iteration extra time: 0.005953311920166016
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1913    branching_decision 0.0006    decision 0.0006    set_bounds 0.0714    prepare 0.0924    transfer 0.0004    finalize 0.0508    func 1.2491    solve 1.1853    add 0.0070    bab_iteration 1.4703    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 111.1381    pickout 10.7914    decision 0.0347    branching_decision 0.0316    set_bounds 4.8585    solve 94.8413    func 96.0809    prepare 4.3938    transfer 0.0101    finalize 4.2122    add 0.7562    
+max lb 0.0004578232765197754 min lb -0.010228157043457031
+Number of Verified Splits: 1774 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+182872 domains visited
+Length of domains: 20818
+Cumulative time: 112.73649477958679
+
+BaB round 70
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2344] [/input-8, 340] [/input, 2335] [/input, 2381] [/input, 2387] [/input, 2349] [/input, 2386] [/input, 2335] [/input, 2348] [/input, 2386] 
+best_l after optimization: -2.6669580936431885
+beta sum per layer: [156.52957153320312, 471.71527099609375, 0.0]
+alpha/beta optimization time: 0.5276873111724854
+pruning_in_iteration open status: True
+ratio of positive domain = 1716 / 3200 = 0.53625
+pruning-in-iteration extra time: 0.005746364593505859
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.4225    branching_decision 0.0006    decision 0.0007    set_bounds 0.0740    prepare 0.0734    transfer 0.0004    finalize 0.0539    func 1.2698    solve 1.2492    add 0.0072    bab_iteration 1.5216    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 112.6597    pickout 11.2139    decision 0.0354    branching_decision 0.0322    set_bounds 4.9324    solve 96.0906    func 97.3508    prepare 4.4673    transfer 0.0106    finalize 4.2661    add 0.7634    
+max lb 0.0003470778465270996 min lb -0.0095672607421875
+Number of Verified Splits: 1716 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+186072 domains visited
+Length of domains: 20702
+Cumulative time: 114.51245832443237
+
+BaB round 71
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2335] [/input, 2345] [/input, 956] [/input, 2373] [/input, 1690] [/input, 2387] [/input, 2381] [/input, 2335] [/input, 2386] [/input-8, 340] 
+best_l after optimization: -2.638770580291748
+beta sum per layer: [161.3054962158203, 474.934326171875, 0.0]
+alpha/beta optimization time: 0.5349321365356445
+pruning_in_iteration open status: True
+ratio of positive domain = 1708 / 3200 = 0.53375
+pruning-in-iteration extra time: 0.007374286651611328
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1966    branching_decision 0.0005    decision 0.0006    set_bounds 0.0760    prepare 0.0852    transfer 0.0003    finalize 0.0648    func 1.3074    solve 1.2700    add 0.0065    bab_iteration 1.7759    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 114.4356    pickout 11.4106    decision 0.0359    branching_decision 0.0327    set_bounds 5.0084    solve 97.3606    func 98.6582    prepare 4.5525    transfer 0.0108    finalize 4.3308    add 0.7699    
+max lb 0.0002848505973815918 min lb -0.009821593761444092
+Number of Verified Splits: 1708 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+189272 domains visited
+Length of domains: 20594
+Cumulative time: 116.10385632514954
+
+BaB round 72
+batch: 1600
+splitting decisions: 
+split level 0: [/input, 2344] [/input, 2381] [/input, 1690] [/input, 2335] [/input-8, 232] [/input-8, 280] [/input, 2335] [/input, 2335] [/input, 2335] [/input, 2381] 
+best_l after optimization: -2.5700786113739014
+beta sum per layer: [167.73536682128906, 479.89154052734375, 0.0]
+alpha/beta optimization time: 0.5148355960845947
+pruning_in_iteration open status: True
+ratio of positive domain = 1756 / 3200 = 0.5487500000000001
+pruning-in-iteration extra time: 0.0057888031005859375
+Time: get_branching_decision.update_bounds 0.0347    pickout 0.1934    branching_decision 0.0006    decision 0.0007    set_bounds 0.0722    prepare 0.3362    transfer 0.0005    finalize 0.0555    func 1.5101    solve 1.3075    add 0.0077    bab_iteration 1.5914    
+Accumulated time: get_branching_decision.update_bounds 0.0347    bab_iteration 116.0270    pickout 11.6040    decision 0.0366    branching_decision 0.0334    set_bounds 5.0806    solve 98.6681    func 100.1682    prepare 4.8887    transfer 0.0114    finalize 4.3863    add 0.7776    
+max lb 0.0003699064254760742 min lb -0.009636402130126953
+Number of Verified Splits: 1756 of 3200
+Current worst splitting domains lb-rhs (depth):
+-0.10876 (20), -0.10464 (20), -0.10175 (18), -0.10046 (16), -0.10010 (18), -0.09906 (17), -0.09860 (19), -0.09758 (20), -0.09452 (17), -0.09431 (18), -0.09401 (20), -0.09366 (18), -0.09318 (20), -0.09240 (18), -0.09239 (20), -0.09219 (20), -0.09187 (17), -0.09135 (19), -0.09133 (18), -0.09073 (21), 
+Current (lb-rhs): -0.10876090079545975
+192472 domains visited
+Length of domains: 20438
+Time out!!!!!!!!
+Result: unknown in 120.6071 seconds
+############# Summary #############
+Final verified acc: 0.0% (total 1 examples)
+Problem instances count: 1 , total verified (safe/unsat): 0 , total falsified (unsafe/sat): 0 , timeout: 1
+mean time for ALL instances (total 1):120.60594330313104, max time: 120.60714936256409
+unknown (total 1), index: [0]

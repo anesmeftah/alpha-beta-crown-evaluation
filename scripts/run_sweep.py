@@ -34,6 +34,7 @@ LOG_DIR = PROJECT_ROOT / "data" / "experiments" / "txt"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 
 GEN_RESULTS = LOG_DIR / "gen_results.txt"
+ABCROWN_RESULTS = LOG_DIR / "abcrown_results.pkl"
 
 RESULTS = PROJECT_ROOT / "data" / "experiments" / "csv" / "results.csv"
 RESULTS.parent.mkdir(parents=True, exist_ok=True)
@@ -41,9 +42,30 @@ RESULTS.parent.mkdir(parents=True, exist_ok=True)
 
 IMAGES = [
     1189,
-    15,
-    42,
-    80,
+    0,
+    400,
+    800,
+    1200,
+    1600,
+    2000,
+    2400,
+    2800,
+    3200,
+    3600,
+    4000,
+    4400,
+    4800,
+    5200,
+    5600,
+    6000,
+    6400,
+    6800,
+    7200,
+    7600,
+    8000,
+    8400,
+    8800,
+    9200,
 ]
 
 EPSILONS = [1, 2, 4, 8, 16]
@@ -84,29 +106,22 @@ def write_instances(rows, timeout: int = TIMEOUT):
             writer.writerow(row)
 
 
-def append_csv(result):
-
-    exists = RESULTS.exists()
-
-    with open(RESULTS, "a", newline="") as f:
-
+def save_csv(rows: list[list[str]]):
+    RESULTS.parent.mkdir(parents=True, exist_ok=True)
+    with open(RESULTS, "w", newline="") as f:
         writer = csv.writer(f)
-
-        if not exists:
-
-            writer.writerow(
-                [
-                    "benchmark",
-                    "onnx_path",
-                    "vnnlib_path",
-                    "total_time",
-                    "result",
-                    "solver_time",
-                ]
-            )
-
-        writer.writerow(result)
-
+        writer.writerow(
+            [
+                "benchmark",
+                "onnx_path",
+                "vnnlib_path",
+                "total_time",
+                "result",
+                "solver_time",
+            ]
+        )
+        for row in rows:
+            writer.writerow(row)
 
 
 instance_rows = []
@@ -138,6 +153,7 @@ write_instances(instance_rows)
 
 start = time.perf_counter()
 
+print(f"Running alpha-beta-CROWN sweep and saving raw results to {GEN_RESULTS}...")
 with open(GEN_RESULTS, "w") as log:
     subprocess.run(
         [
@@ -145,21 +161,26 @@ with open(GEN_RESULTS, "w") as log:
             str(ABCROWN),
             "--config",
             str(CONFIG),
+            "--results_file",
+            str(ABCROWN_RESULTS),
         ],
         stdout=log,
         stderr=subprocess.STDOUT,
-        check=False,
+        cwd=ABCROWN.parent,
+        check=True,
     )
 
 runtime = time.perf_counter() - start
 
+print(f"Parsing raw results from {GEN_RESULTS}...")
 parsed_results = parse_results(str(GEN_RESULTS))
 
+csv_rows = []
 for idx, (_image, _epsilon, vnnlib_name) in enumerate(case_rows):
     parsed = parsed_results.get(idx)
     total_time = parsed.total_time if parsed and parsed.total_time else runtime
     result_text = normalize_result(parsed.status if parsed else "unknown")
-    append_csv(
+    csv_rows.append(
         [
             BENCHMARK_NAME,
             ONNX_PATH,
@@ -170,4 +191,5 @@ for idx, (_image, _epsilon, vnnlib_name) in enumerate(case_rows):
         ]
     )
 
-print("Sweep finished.")
+save_csv(csv_rows)
+print(f"Sweep finished. Parsed results saved to {RESULTS}.")
