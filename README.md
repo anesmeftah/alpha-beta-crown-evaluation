@@ -29,7 +29,6 @@ Key components of α,β-CROWN include:
 
 - **Official Repository:** [Verified-Intelligence/alpha-beta-CROWN](https://github.com/Verified-Intelligence/alpha-beta-CROWN)
 - **Core Library (`auto_LiRPA`):** [Verified-Intelligence/auto_LiRPA](https://github.com/Verified-Intelligence/auto_LiRPA)
-- **Official α,β-CROWN Web Page:** [alpha-beta-crown.pjla.org](https://alpha-beta-crown.pjla.org/)
 - **VNN-COMP Official Site:** [VNN-COMP Standardized Verification Competition](https://sites.google.com/view/vnn2020)
 - **VNN-COMP Benchmarks Repository:** [vnncomp/vnncomp2020_benchmarks](https://github.com/vnncomp/vnncomp2020_benchmarks)
 - **Key Publications:**
